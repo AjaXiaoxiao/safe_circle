@@ -6,7 +6,7 @@ import contactIcon from '../../assets/ContactsIcon.png';
 import userIcon from '../../assets/ProfileIcon.png'; 
 
 const Sidebar = () => {
-  const [active, setActive] = useState('null'); // Track active icon
+  const [active, setActive] = useState('chat'); // Track active icon
 
   return (
     <div className="sidebar">

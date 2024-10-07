@@ -1,16 +1,19 @@
 /* src/components/Sidebar.css */
 
 .sidebar {
-    width: 80px; /* Narrow width  */
-    height: 100vh; /* Full viewport height */
+    width: 120px; /* Narrow width  */
+    height: 90vh; /* Full viewport height */
     background-color: #fee180; 
     display: flex;
     flex-direction: column; /* Stack icons vertically */
-    justify-content: space-around; /* Space out the icons vertically */
+    justify-content: flex-start; /*icons vertically on the top */
     align-items: center; /* Center icons horizontally */
+    margin-top: 12vh;
     padding-top: 20px;
-  }
-  
+    padding-bottom: 20px;
+    padding-right: 30px
+}
+
   .sidebar ul {
     list-style-type: none;
     padding: 0;
