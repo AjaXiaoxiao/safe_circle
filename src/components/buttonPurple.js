@@ -16,9 +16,10 @@ const StyledButton = styled.button`
     props.type === "submit" ? "#BB65FF" : "#ccc"};
   color: white;
   cursor: pointer;
+  font-weight: bold;
 
   &:hover {
     background-color: ${(props) =>
-      props.type === "submit" ? "#0056b3" : "#aaa"};
+      props.type === "submit" ? "#9E54D9" : "#aaa"};
   }
 `;

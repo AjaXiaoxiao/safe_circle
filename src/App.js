@@ -1,5 +1,7 @@
 import logo from './logo.svg';
-import Button from './components/button';
+import ButtonPurple from './components/buttonPurple';
+import ButtonYellow from './components/buttonYellow';
+import Input from './components/LoginInput';
 import './App.css';
 
 function App() {
@@ -10,7 +12,18 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <Button type="submit" text="Send request" />
+        <Input
+          type="text"
+          placeholder="Username"
+          showPassword={false}
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          showPassword={false}
+        />
+        <ButtonPurple type="submit" text="Send request" />
+        <ButtonYellow type="submit" text="Child account" />
         <a
           className="App-link"
           href="https://reactjs.org"
