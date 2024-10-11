@@ -1,8 +1,13 @@
+
 import logo from './logo.svg';
 import ButtonPurple from './components/buttonPurple';
 import ButtonYellow from './components/buttonYellow';
 import Input from './components/LoginInput';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Sidebar from "./components/Sidebar/Sidebar.js";
+import Topbar from "./components/Topbar/Topbar.js";
+import TextField from "./components/TextField.js";
 
 function App() {
   return (
@@ -30,9 +35,11 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
         </a>
       </header>
+      <Sidebar />
+      <Topbar />
+      <TextField />
     </div>
   );
 }
