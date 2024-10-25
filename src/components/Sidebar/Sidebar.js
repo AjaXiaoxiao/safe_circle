@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sidebar.css';
 
 import chatIcon from '../../assets/ChatIcon.png';
-import contactIcon from '../../assets/ContactsIcon.png';
+import contactIcon from '../../assets/ContactBookIcon.png';
 import userIcon from '../../assets/ProfileIcon.png'; 
 
 const Sidebar = () => {
