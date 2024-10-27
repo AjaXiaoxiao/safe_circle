@@ -12,6 +12,7 @@ import Email from "./assets/Email.png";
 import Lock from "./assets/Lock.png";
 import ProfileIcon from "./assets/ProfileIcon.png";
 import NotificationCircle from "./components/NotificationCircle.js";
+import SideOverview from "./components/SideOverview.js";
 
 function App() {
   return (
