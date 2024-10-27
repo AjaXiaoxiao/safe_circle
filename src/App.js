@@ -22,15 +22,11 @@ function App() {
         <Input type="password" placeholder="Password" showPassword={false} />
         <ButtonPurple type="submit" text="Send request" />
         <ButtonYellow type="submit" text="Child account" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        ></a>
+        <a className="App-link" href="https://reactjs.org" target="_blank"></a>
       </header>
       <Sidebar />
       <Topbar />
+      <SideOverview title="Chats" />
       <TextField />
       <TextFieldWithIcon icon={Email} placeholder={"Your email"} />
       <NotificationCircle count={1} />
