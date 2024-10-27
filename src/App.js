@@ -11,6 +11,7 @@ import TextFieldWithIcon from "./components/TextFields/TextFieldWithIcon.js";
 import Email from "./assets/Email.png";
 import Lock from "./assets/Lock.png";
 import ProfileIcon from "./assets/ProfileIcon.png";
+import NotificationCircle from "./components/NotificationCircle.js";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Topbar />
       <TextField />
       <TextFieldWithIcon icon={Email} placeholder={"Your email"} />
+      <NotificationCircle counter={1} />
     </div>
   );
 }
