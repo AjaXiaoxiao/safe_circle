@@ -32,7 +32,7 @@ function App() {
       <Topbar />
       <TextField />
       <TextFieldWithIcon icon={Email} placeholder={"Your email"} />
-      <NotificationCircle counter={1} />
+      <NotificationCircle count={1} />
     </div>
   );
 }

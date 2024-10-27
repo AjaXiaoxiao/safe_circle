@@ -5,7 +5,7 @@ const Circle = styled.div`
   color: black; /*text color*/
   border: 1px solid black;
   border-radius: 50%; /*makes the border round*/
-  width: 30px;
+  width: 24px;
   display: flex;
   align-items: center; /*Vertically center*/
   justify-content: center; /*Horizonally center*/
