@@ -1,13 +1,13 @@
 
 import logo from './logo.svg';
-import ButtonPurple from './components/buttonPurple';
-import ButtonYellow from './components/buttonYellow';
+import ButtonPurple from './components/Buttons/ButtonPurple.js';
+import ButtonYellow from './components/Buttons/ButtonYellow.js';
 import Input from './components/LoginInput';
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar.js";
 import Topbar from "./components/Topbar/Topbar.js";
-import TextField from "./components/TextField.js";
+import TextField from "./components/TextFields/TextField.js";
 
 function App() {
   return (
