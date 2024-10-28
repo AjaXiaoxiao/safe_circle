@@ -10,6 +10,8 @@ import ButtonRed from './components/Buttons/ButtonRed.js';
 import ProfilePictureBig from './components/ProfilePictureBig.js';
 import PopUp from './components/PopUpWindow.js';
 import { useState } from 'react';
+import PendingIcon from './components/PendingIcon.js';
+import MessageBubble from './components/MessageBubble.js';
 
 function App() {
   const [isPopupVisible, setPopupVisible] = useState(true);
@@ -17,19 +19,18 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <ButtonPurple />
-        <ButtonYellow />
-        <ButtonRed />
-        <PopUp isVisible={isPopupVisible} onClose={togglePopup}/>
-        <ProfilePictureBig />
-        
+    
       </header>
+      <PendingIcon />
       <Sidebar />
       <Topbar />
       <TextField />
+      <ButtonPurple />
+      <ButtonYellow />
+      <ButtonRed />
+      <PopUp isVisible={isPopupVisible} onClose={togglePopup}/>
+      <ProfilePictureBig />
+      <MessageBubble />
     </div>
   );
 }
