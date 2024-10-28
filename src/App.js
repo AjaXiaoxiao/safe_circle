@@ -1,7 +1,6 @@
 
-import ButtonPurple from './components/Buttons/ButtonPurple';
-import ButtonYellow from './components/Buttons/ButtonYellow';
-import Input from './components/LoginInput';
+import ButtonPurple from './components/Buttons/ButtonPurple.js';
+import ButtonYellow from './components/Buttons/ButtonYellow.js';
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar.js";
@@ -9,7 +8,6 @@ import Topbar from "./components/Topbar/Topbar.js";
 import TextField from "./components/TextFields/TextField.js";
 import ButtonRed from './components/Buttons/ButtonRed.js';
 import ProfilePictureBig from './components/ProfilePictureBig.js';
-import ProfilePictureSmall from './components/ProfilePictureSmall.js';
 import PopUp from './components/PopUpWindow.js';
 import { useState } from 'react';
 
