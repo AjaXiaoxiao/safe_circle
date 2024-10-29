@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
-import profileIcon from "../assets/Contact.png";
+import ProfilePictureSmall from "./ProfilePictureSmall";
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
@@ -37,7 +37,7 @@ const Separator = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  height: cals(80vs - 100px);
+  height: calc(80vs - 100px);
 `;
 
 const Item = styled.div`
@@ -47,12 +47,13 @@ const Item = styled.div`
   border-top: solid #ccc 1px;
   border-bottom: solid #ccc 1px;
   display: flex;
+  align-item: center; /*center vertically*/
 `;
 
-const Profile = styled.img`
-  width: 70px;
-  height: 70px;
-  margin: 20px 20px;
+const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 20px; /* Align as close to the left as possible */
 `;
 
 const TextContainer = styled.div`
@@ -60,7 +61,8 @@ const TextContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  align-items: left;
+  margin-left: 25px;
+  margin-top: 10px;
 `;
 
 const Name = styled.div`
@@ -82,7 +84,9 @@ export default function SideOverview({ title }) {
       <Separator />
       <ItemContainer>
         <Item>
-          <Profile src={profileIcon} />
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
           <TextContainer>
             <Name>Johanna</Name>
             <MessageText>Hello. How are you doing..</MessageText>
