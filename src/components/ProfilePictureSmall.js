@@ -14,16 +14,17 @@ export default ProfilePictureSmall;
 const ProfileContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px; 
+  gap: 8px;
+  justify-content: center;
 `;
 
 const ProfilePic = styled.img`
-  width: 40px; 
+  width: 40px;
   height: 40px;
   object-fit: cover;
-  border-radius: ${(props) => (props.rounded ? "50%" : "0")}; 
+  border-radius: ${(props) => (props.rounded ? "50%" : "0")};
 
   /* Create an offset border */
-  box-shadow: 0 0 0 6px #FFF, 0 0 0 8px #A9E7EB;
-  background-color: #FFFFFF; 
+  box-shadow: 0 0 0 6px #fff, 0 0 0 8px #a9e7eb;
+  background-color: #ffffff;
 `;
