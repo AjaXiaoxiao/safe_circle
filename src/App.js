@@ -1,13 +1,12 @@
 import ButtonPurple from './components/Buttons/ButtonPurple'; 
 import ButtonYellow from './components/Buttons/ButtonYellow';
 
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar.js";
 import Topbar from "./components/Topbar/Topbar.js";
 import NamebarTop from './components/ChatComponent/NamebarTop.js';
 import Chatbar from './components/ChatComponent/Chatbar.js';
-import { useState } from 'react';
 import TextField from "./components/TextFields/TextField.js";
 import ButtonRed from "./components/Buttons/ButtonRed.js";
 
@@ -19,7 +18,7 @@ import ProfilePictureBig from "./components/ProfilePictureBig.js";
 import PopUp from "./components/PopUpWindow.js";
 import PendingIcon from "./components/PendingIcon.js";
 import MessageBubble from "./components/MessageBubble.js"; 
-  
+
 function App() {
   const [message, setMessage] = useState("");
 
