@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledTextField = styled.input`
   background-color: #f0f2f5;
-  width: 40%;
+  width: 70%;
   color: #6b7c85;
   border-radius: 7px;
   border: none;
@@ -11,6 +11,13 @@ const StyledTextField = styled.input`
   margin: 0.6em;
 `;
 
-export default function TextField() {
-  return <StyledTextField type="text" placeholder="Type a message" />;
+export default function TextField({ value, onChange }) {
+  return (
+    <StyledTextField
+      value={value}
+      onChange={onChange}
+      type="text"
+      placeholder="Type a message"
+    />
+  );
 }
