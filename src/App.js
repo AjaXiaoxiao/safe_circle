@@ -18,6 +18,8 @@ import ProfilePictureBig from "./components/ProfilePictureBig.js";
 import PopUp from "./components/PopUpWindow.js";
 import PendingIcon from "./components/PendingIcon.js";
 import MessageBubble from "./components/MessageBubble.js"; 
+import PopUpAddNewContact from './components/PopUpAddNewContact.js';
+import SmallTextField from './components/TextFields/SmallTextField.js';
 
 function App() {
   const [message, setMessage] = useState("");
@@ -41,12 +43,13 @@ function App() {
         onChange={(e) => setMessage(e.target.value)} onSelectEmoji={onEmojiSelect}/>
       <SideOverview title="Chats" />
       <TextField />
+      <SmallTextField />
       <TextFieldWithIcon icon={Email} placeholder={"Your email"} />
       <NotificationCircle count={1} />
       <ButtonPurple />
       <ButtonYellow />
       <ButtonRed />
-      <PopUp isVisible={isPopupVisible} onClose={togglePopup} />
+      <PopUpAddNewContact isVisible={isPopupVisible} onClose={togglePopup} />
       <ProfilePictureBig />
       <MessageBubble />
     </div>
