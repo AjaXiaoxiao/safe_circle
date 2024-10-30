@@ -1,7 +1,6 @@
 import React from 'react';
 import contact from  '../../assets/Contact.png'
 
-import './NamebarTop.css';  
 const NamebarTop = () => {
     return (
       <div className="namebar-top">

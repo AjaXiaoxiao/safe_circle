@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import ButtonPurple from './components/Buttons/ButtonPurple'; 
 import ButtonYellow from './components/Buttons/ButtonYellow';
-import Input from './components/LoginInput';
 
 import React from "react";
 import "./App.css";
@@ -15,8 +13,6 @@ import ButtonRed from "./components/Buttons/ButtonRed.js";
 
 import TextFieldWithIcon from "./components/TextFields/TextFieldWithIcon.js";
 import Email from "./assets/Email.png";
-import Lock from "./assets/Lock.png";
-import ProfileIcon from "./assets/ProfileIcon.png";
 import NotificationCircle from "./components/NotificationCircle.js";
 import SideOverview from "./components/SideOverview.js";
 import ProfilePictureBig from "./components/ProfilePictureBig.js";

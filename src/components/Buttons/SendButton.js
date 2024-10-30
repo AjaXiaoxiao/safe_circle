@@ -1,5 +1,4 @@
 import SendIcon from '../../assets/Send.png';
-import './SendButton.css';
 
 const SendButton = () => {
     return (
