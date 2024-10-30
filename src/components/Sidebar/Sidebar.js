@@ -1,15 +1,56 @@
 import React, { useState } from 'react';
-import './Sidebar.css';
-
+import styled from "styled-components";
 import chatIcon from '../../assets/ChatIcon.png';
 import contactIcon from '../../assets/ContactBookIcon.png';
-import userIcon from '../../assets/ProfileIcon.png'; 
+import userIcon from '../../assets/ProfileIcon.png';
+
+const StyledSidebar = styled.div`
+
+  width: 120px;
+  height: 90vh;
+  background-color: #fee180;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 12vh;
+  padding: 20px 0;
+  padding-right: 30px;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    margin-bottom: 30px;
+    cursor: pointer;
+    position: relative;
+
+    &.active::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      height: 22px;
+      width: 4px;
+      background-color: #bb65ff;
+      border-radius: 4px;
+    }
+  }
+
+  .sidebar-icon {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
+`;
 
 const Sidebar = () => {
-  const [active, setActive] = useState('chat'); // Track active icon
+  const [active, setActive] = useState('chat');
 
   return (
-    <div className="sidebar">
+    <StyledSidebar>
       <ul>
         <li
           className={active === 'chat' ? 'active' : ''}
@@ -30,7 +71,7 @@ const Sidebar = () => {
           <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
         </li>
       </ul>
-    </div>
+    </StyledSidebar>
   );
 };
 

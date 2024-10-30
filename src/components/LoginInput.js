@@ -2,16 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 // Input component definition
-const Input = ({
-  type,
-  placeholder,
-  showPassword,
-}) => {
+const Input = () => {
   return (
     <InputWrapper>
       <StyledInput
-        type={type === "password" && showPassword ? "text" : type}
-        placeholder={placeholder}
+        type="text"
+        placeholder="Username"
       />
     </InputWrapper>
   );
