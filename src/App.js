@@ -1,15 +1,23 @@
 
 import logo from './logo.svg';
-import ButtonPurple from './components/buttonPurple';
-import ButtonYellow from './components/buttonYellow';
+import ButtonPurple from './components/Buttons/ButtonPurple'; 
+import ButtonYellow from './components/Buttons/ButtonYellow';
 import Input from './components/LoginInput';
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar.js";
 import Topbar from "./components/Topbar/Topbar.js";
-import TextField from "./components/TextField.js";
+import NamebarTop from './components/ChatComponent/NamebarTop.js';
+import Chatbar from './components/ChatComponent/Chatbar.js';
+import { useState } from 'react';
 
 function App() {
+  const [message, setMessage] = useState("");
+
+  const onEmojiSelect = (emoji) => {
+    setMessage((prevMessage) => prevMessage + emoji);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -39,7 +47,10 @@ function App() {
       </header>
       <Sidebar />
       <Topbar />
-      <TextField />
+      <NamebarTop/>
+      <Chatbar value={message}
+        onChange={(e) => setMessage(e.target.value)} onSelectEmoji={onEmojiSelect}/>
+
     </div>
   );
 }
