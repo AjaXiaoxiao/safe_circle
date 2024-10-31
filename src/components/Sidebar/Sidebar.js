@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
-import chatIcon from '../../assets/ChatIcon.png';
-import contactIcon from '../../assets/ContactBookIcon.png';
-import userIcon from '../../assets/ProfileIcon.png';
+import chatIcon from "../../assets/ChatIcon.png";
+import contactIcon from "../../assets/ContactBookIcon.png";
+import userIcon from "../../assets/ProfileIcon.png";
 
 const StyledSidebar = styled.div`
-
-  width: 120px;
+  width: 140px;
   height: 90vh;
   background-color: #fee180;
   display: flex;
@@ -16,20 +15,22 @@ const StyledSidebar = styled.div`
   margin-top: 12vh;
   padding: 20px 0;
   padding-right: 30px;
+  position: fixed;
+  z-index: 1;
 
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
-  
+
   li {
     margin-bottom: 30px;
     cursor: pointer;
     position: relative;
 
     &.active::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 10px;
       height: 22px;
@@ -47,26 +48,26 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = () => {
-  const [active, setActive] = useState('chat');
+  const [active, setActive] = useState("chat");
 
   return (
     <StyledSidebar>
       <ul>
         <li
-          className={active === 'chat' ? 'active' : ''}
-          onClick={() => setActive('chat')}
+          className={active === "chat" ? "active" : ""}
+          onClick={() => setActive("chat")}
         >
           <img src={chatIcon} alt="Chat" className="sidebar-icon" />
         </li>
         <li
-          className={active === 'contacts' ? 'active' : ''}
-          onClick={() => setActive('contacts')}
+          className={active === "contacts" ? "active" : ""}
+          onClick={() => setActive("contacts")}
         >
           <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
         </li>
         <li
-          className={active === 'child-overview' ? 'active' : ''}
-          onClick={() => setActive('child-overview')}
+          className={active === "child-overview" ? "active" : ""}
+          onClick={() => setActive("child-overview")}
         >
           <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
         </li>

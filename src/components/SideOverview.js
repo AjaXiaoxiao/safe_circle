@@ -4,11 +4,15 @@ import ProfilePictureSmall from "./ProfilePictureSmall";
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
-  background-color: #white;
+  background-color: white;
   border: solid #ccc 1px;
-  width: 30vw;
-  height: 80vh;
-  margin-left: 130px;
+  width: calc(30vw + 110px);
+  height: 100vh;
+  left: 120px;
+  top: 12vh;
+  z-index: 10;
+  position: fixed;
+  border-top-left-radius: 25px;
 `;
 
 const HeaderContainer = styled.div`

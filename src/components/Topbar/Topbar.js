@@ -1,9 +1,9 @@
-import logo from '../../assets/Logo.png';
-import React from 'react';
+import logo from "../../assets/Logo.png";
+import React from "react";
 import styled from "styled-components";
 
 const StyledTopbar = styled.div`
- width: 100%;
+  width: 100%;
   height: 12vh;
   background-color: #fee180;
   display: flex;
@@ -21,13 +21,13 @@ const StyledTopbar = styled.div`
 `;
 
 const Topbar = () => {
-    return (
-      <StyledTopbar>
-        <div className="top-bar">
+  return (
+    <StyledTopbar>
+      <div className="top-bar">
         <img src={logo} alt="Logo" className="top-bar-logo" />
       </div>
-      </StyledTopbar>
-    );
-  };
-  
-  export default Topbar;
+    </StyledTopbar>
+  );
+};
+
+export default Topbar;
