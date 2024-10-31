@@ -2,6 +2,7 @@ import Topbar from "../components/Topbar/Topbar";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar/Sidebar";
 import SideOverview from "../components/SideOverview";
+import ChatComponent from "../components/ChatComponent";
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ export default function ChatOverview({ title }) {
       <ColumnContainer>
         <Sidebar />
         <SideOverview title={title} />
+        <ChatComponent />
       </ColumnContainer>
     </div>
   );
