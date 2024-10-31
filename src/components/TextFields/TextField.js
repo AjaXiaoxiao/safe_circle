@@ -11,7 +11,6 @@ const StyledTextField = styled.input`
   margin: 0.6em;
   margin-right: 2em;
   margin-left: 2em;
-  
 `;
 
 export default function TextField({ value, onChange }) {
