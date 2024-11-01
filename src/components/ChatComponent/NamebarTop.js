@@ -18,6 +18,7 @@ const StyledNamebarTop = styled.div`
   justify-content: left;
   font-size: large;
   font-weight: 700;
+  background-color: white;
   font-family: Arial, Helvetica, sans-serif
 
 `;

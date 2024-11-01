@@ -1,0 +1,28 @@
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar/Sidebar.js";
+import Topbar from "../components/Topbar/Topbar.js";
+import styled from "styled-components";
+
+function TopAndSideBar() {
+  return (
+    <AppContainer>
+        <Sidebar />
+        <Topbar />
+    </AppContainer>
+  );
+}
+
+export default TopAndSideBar;
+
+// Styled components for layout
+const AppContainer = styled.div`
+  display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+`;
+
+
+
+
+

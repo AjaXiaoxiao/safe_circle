@@ -20,38 +20,15 @@ import PendingIcon from "./components/PendingIcon.js";
 import MessageBubble from "./components/MessageBubble.js"; 
 import PopUpAddNewContact from './components/PopUpAddNewContact.js';
 import SmallTextField from './components/TextFields/SmallTextField.js';
+import AddNewContactScreen from './screens/addNewContactRequestScreen.js';
+import TopAndSideBar from './components/TopAndSideBar.js';
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  const onEmojiSelect = (emoji) => {
-    setMessage((prevMessage) => prevMessage + emoji);
-  };
-
-  const [isPopupVisible, setPopupVisible] = useState(true);
-  const togglePopup = () => setPopupVisible(!isPopupVisible);
   
   return (
     <div className="App">
       <header className="App-header"></header>
-      <PendingIcon />
-      <Sidebar />
-      <Topbar />
-
-      <NamebarTop/>
-      <Chatbar value={message}
-        onChange={(e) => setMessage(e.target.value)} onSelectEmoji={onEmojiSelect}/>
-      <SideOverview title="Chats" />
-      <TextField />
-      <SmallTextField />
-      <TextFieldWithIcon icon={Email} placeholder={"Your email"} />
-      <NotificationCircle count={1} />
-      <ButtonPurple />
-      <ButtonYellow />
-      <ButtonRed />
-      <PopUpAddNewContact isVisible={isPopupVisible} onClose={togglePopup} />
-      <ProfilePictureBig />
-      <MessageBubble />
+      <AddNewContactScreen />
     </div>
   );
 }

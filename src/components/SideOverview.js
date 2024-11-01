@@ -8,7 +8,9 @@ const OverviewContainer = styled.div`
   border: solid #ccc 1px;
   width: 30vw;
   height: 80vh;
-  margin-left: 130px;
+  margin-left: 0px;
+  border-top-left-radius: 20px;
+  z.index: 2;
 `;
 
 const HeaderContainer = styled.div`
