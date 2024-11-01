@@ -6,13 +6,11 @@ import ProfilePictureSmall from "./ProfilePictureSmall";
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
-  width: calc(30vw + 110px);
-  height: 100vh;
-  left: 120px;
-  top: 12vh;
-  z-index: 10;
-  position: fixed;
-  border-top-left-radius: 25px;
+  width: 30vw;
+  height: 80vh;
+  margin-left: 0px;
+  border-top-left-radius: 20px;
+  z.index: 2;
 `;
 
 const HeaderContainer = styled.div`

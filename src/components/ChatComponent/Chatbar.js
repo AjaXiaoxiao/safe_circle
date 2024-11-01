@@ -17,6 +17,7 @@ const StyledChatbar = styled.div`
   fill: #ffffff;
   align-items: center;
   justify-content: center;
+  background-color: white;
 `;
 
 const Chatbar = () => {
