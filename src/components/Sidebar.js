@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import chatIcon from "../../assets/ChatIcon.png";
-import contactIcon from "../../assets/ContactBookIcon.png";
-import userIcon from "../../assets/ProfileIcon.png";
+import chatIcon from "../assets/ChatIcon.png";
+import contactIcon from "../assets/ContactBookIcon.png";
+import userIcon from "../assets/ProfileIcon.png";
 
 const StyledSidebar = styled.div`
   width: 140px;

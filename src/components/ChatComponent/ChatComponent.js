@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import NamebarTop from "../components/ChatComponent/NamebarTop";
-import Chatbar from "../components/ChatComponent/Chatbar";
-import ChatBubble from "../components/MessageBubble";
+import NamebarTop from "./NamebarTop";
+import Chatbar from "./Chatbar";
+import ChatBubble from "./MessageBubble";
 
 const ChatContainer = styled.div`
   width: calc(100vw-120px);

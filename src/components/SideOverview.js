@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
-import ProfilePictureSmall from "./ProfilePictureSmall";
+import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`

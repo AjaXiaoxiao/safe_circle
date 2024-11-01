@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar/Sidebar.js";
-import Topbar from "../components/Topbar/Topbar.js";
+import Sidebar from "../components/Sidebar.js";
+import Topbar from "./Topbar.js";
 import styled from "styled-components";
 
 function TopAndSideBar() {
   return (
     <AppContainer>
-        <Sidebar />
-        <Topbar />
+      <Sidebar />
+      <Topbar />
     </AppContainer>
   );
 }
@@ -21,8 +21,3 @@ const AppContainer = styled.div`
   height: 100vh;
   width: 100vw;
 `;
-
-
-
-
-

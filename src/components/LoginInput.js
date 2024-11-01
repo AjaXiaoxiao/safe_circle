@@ -5,10 +5,7 @@ import styled from "styled-components";
 const Input = () => {
   return (
     <InputWrapper>
-      <StyledInput
-        type="text"
-        placeholder="Username"
-      />
+      <StyledInput type="text" placeholder="Username" />
     </InputWrapper>
   );
 };
@@ -26,6 +23,5 @@ const StyledInput = styled.input`
   border-radius: 20px;
   border: 1px solid #ccc;
   width: 100%;
-  background-color: #FEE180;
+  background-color: #fee180;
 `;
-
