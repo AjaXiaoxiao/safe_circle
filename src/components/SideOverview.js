@@ -7,17 +7,16 @@ const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
   width: 30vw;
-  left: 120px;
   height: 88vh;
   border-top-left-radius: 20px;
   margin-top: 12vh;
-  z.index: 2;
+  z-index: 10;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 40px 50px;
+  margin: 30px 50px;
 `;
 
 const Header = styled.h2`
