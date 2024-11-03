@@ -9,17 +9,18 @@ const ChatContainer = styled.div`
   margin-top: 12vh;
   display: flex;
   flex-direction: column;
-  justify-conent: flex-end;
+  justify-content: flex-end;
   position: relative;
   margin-left: 0;
+  background-color: #ebf9fb;
 `;
 
 const StyledMessageBubble = styled.div`
-  height: 75%;
+  height: 71vh;
   width: 100%;
   display: flex;
-  margin-top: 19vh;
   align-items: center;
+  margin-top: 10vh;
 `;
 
 export default function ChatComponent() {

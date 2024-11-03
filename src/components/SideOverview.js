@@ -16,7 +16,7 @@ const OverviewContainer = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 30px 50px;
+  margin: 1.95vw 50px;
 `;
 
 const Header = styled.h2`

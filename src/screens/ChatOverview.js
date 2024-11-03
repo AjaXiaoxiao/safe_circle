@@ -4,7 +4,6 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-const ChatOverviewContainer = styled.div``;
 const ColumnContainer = styled.div`
   display: flex;
   width: 100vw;

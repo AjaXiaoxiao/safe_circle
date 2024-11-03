@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "../App.css";
-import Topbar from "../components/Topbar.js";
 import NamebarTop from "../components/ChatComponent/NamebarTop.js";
 import Chatbar from "../components/ChatComponent/Chatbar.js";
 import SideOverview from "../components/SideOverview.js";
