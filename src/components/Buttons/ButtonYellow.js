@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const ButtonYellow = () => {
@@ -12,12 +11,12 @@ const StyledButton = styled.button`
   padding: 10px 20px;
   border-radius: 20px;
   border: none;
-  background-color: #FEE180;
+  background-color: #fee180;
   color: black;
   cursor: pointer;
   font-weight: bold;
 
   &:hover {
-    background-color: #ECC544;
+    background-color: #ecc544;
   }
 `;

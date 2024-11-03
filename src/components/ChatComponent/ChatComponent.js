@@ -4,26 +4,32 @@ import Chatbar from "./Chatbar";
 import ChatBubble from "./MessageBubble";
 
 const ChatContainer = styled.div`
-  width: calc(100vw-120px);
-  height: 685px;
-  margin-left: auto;
-  margin-top: 94px;
-  display: flex;
-  flex-direction: column;
+  width: 60vw;
+  height: 88vh;
+  margin-top: 12vh;
+  margin-left: 0;
+  display: grid;
+  grid-template-rows: 60px 1fr 80px; /* Define heights for each row */
 `;
 
-const Spacer = styled.div`
-  height: 40vh;
+const StyledMessageBubble = styled.div`
+  height: 75%;
+  width: 100%;
+  display: flex;
+  margin-top: 15vh;
+  align-items: center;
 `;
 
 export default function ChatComponent() {
   return (
-    <ChatContainer>
-      <NamebarTop />
-      <Spacer />
-      <ChatBubble />
-      <Spacer />
-      <Chatbar />
-    </ChatContainer>
+    <div>
+      <ChatContainer>
+        <NamebarTop />
+        <StyledMessageBubble>
+          <ChatBubble />
+        </StyledMessageBubble>
+        <Chatbar />
+      </ChatContainer>
+    </div>
   );
 }

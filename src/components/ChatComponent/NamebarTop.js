@@ -1,10 +1,9 @@
-import React from "react";
 import contact from "../../assets/Contact.png";
 import styled from "styled-components";
 
 const StyledNamebarTop = styled.div`
-  width: 895px;
-  height: 195px; 
+  width: 100%;
+  height: 15vh; 
   display: flex;
   flex-direction: row ;
   flex-grow: 0 1 0;

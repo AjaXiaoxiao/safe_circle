@@ -1,10 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 
 const StyledMessageBubble = styled.div`
   width: 400px;
-  height: 150px;
+  height: 110px;
   padding: 15px 20px;
+  display: flex;
+  align-items: center;
   margin: 10px;
   background-color: #ffffff;
   color: #000; /* Black text color */

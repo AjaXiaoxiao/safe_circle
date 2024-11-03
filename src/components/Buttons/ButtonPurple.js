@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const ButtonPurple = () => {
@@ -12,12 +11,12 @@ const StyledButton = styled.button`
   padding: 10px 20px;
   border-radius: 20px;
   border: none;
-  background-color: #BB65FF;
+  background-color: #bb65ff;
   color: white;
   cursor: pointer;
   font-weight: bold;
 
   &:hover {
-    background-color: #9E54D9;
+    background-color: #9e54d9;
   }
 `;

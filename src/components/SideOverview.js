@@ -7,9 +7,10 @@ const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
   width: 30vw;
-  height: 80vh;
-  margin-left: 0px;
+  left: 120px;
+  height: 88vh;
   border-top-left-radius: 20px;
+  margin-top: 12vh;
   z.index: 2;
 `;
 
