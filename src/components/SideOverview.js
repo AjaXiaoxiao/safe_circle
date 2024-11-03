@@ -1,22 +1,22 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
-import ProfilePictureSmall from "./ProfilePictureSmall";
+import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
   width: 30vw;
-  height: 80vh;
-  margin-left: 0px;
+  height: 88vh;
   border-top-left-radius: 20px;
-  z.index: 2;
+  margin-top: 12vh;
+  z-index: 10;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 40px 50px;
+  margin: 1.95vw 50px;
 `;
 
 const Header = styled.h2`

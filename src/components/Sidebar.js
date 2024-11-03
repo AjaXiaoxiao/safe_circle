@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import chatIcon from "../../assets/ChatIcon.png";
-import contactIcon from "../../assets/ContactBookIcon.png";
-import userIcon from "../../assets/ProfileIcon.png";
+import chatIcon from "../assets/ChatIcon.png";
+import contactIcon from "../assets/ContactBookIcon.png";
+import userIcon from "../assets/ProfileIcon.png";
 
 const StyledSidebar = styled.div`
-  width: 140px;
-  height: 90vh;
+  width: 11vw;
+  height: 88vh;
   background-color: #fee180;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   margin-top: 12vh;
-  padding: 20px 0;
+  padding: 60px 0;
   padding-right: 30px;
-  position: fixed;
   z-index: 1;
+  margin-right: -1vw;
 
   ul {
     list-style-type: none;

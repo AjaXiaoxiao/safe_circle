@@ -1,9 +1,9 @@
-import logo from "../../assets/Logo.png";
+import logo from "../assets/Logo.png";
 import React from "react";
 import styled from "styled-components";
 
 const StyledTopbar = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 12vh;
   background-color: #fee180;
   display: flex;

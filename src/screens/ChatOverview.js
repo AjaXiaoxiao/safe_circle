@@ -1,8 +1,8 @@
-import Topbar from "../components/Topbar/Topbar";
+import Topbar from "../components/Topbar";
 import styled from "styled-components";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
-import ChatComponent from "../components/ChatComponent";
+import ChatComponent from "../components/ChatComponent/ChatComponent";
 
 const ColumnContainer = styled.div`
   display: flex;

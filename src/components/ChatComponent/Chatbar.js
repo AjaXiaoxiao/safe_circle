@@ -1,4 +1,3 @@
-import React from "react";
 import TextField from "../TextFields/TextField";
 import styled from "styled-components";
 
@@ -8,10 +7,9 @@ import { useState } from "react";
 
 const StyledChatbar = styled.div`
   width: 100%;
-  height: 73px;
+  height: 10vh;
   display: flex;
   flex-direction: row;
-  justify-self: right;
   border: solid 2px;
   border-color: #c6c6c6;
   fill: #ffffff;
