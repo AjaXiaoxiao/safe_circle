@@ -55,7 +55,7 @@ export default AddNewContactScreen;
 // Styled components for layout
 const AppContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: 88vh;
   width: 100vw;
   background-color: #f0f0f0; /* Adjust to your background color */
 `;
