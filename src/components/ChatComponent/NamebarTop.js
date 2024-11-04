@@ -20,13 +20,23 @@ const StyledNamebarTop = styled.div`
   background-color: white;
   font-family: Arial, Helvetica, sans-serif
   margin-left: auto;
+`;
 
+const StyledImage = styled.img`
+  max-height: 80%; /* Limit the height to 80% of the parent container */
+  height: auto; /* Maintain aspect ratio */
+  width: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image scales properly */
 `;
 
 const NamebarTop = () => {
   return (
     <StyledNamebarTop>
-      <img src={contact} alt="contact" className="namebar-top-contact"></img>
+      <StyledImage
+        src={contact}
+        alt="contact"
+        className="namebar-top-contact"
+      ></StyledImage>
       <text className="namebar-top-text"> Mom </text>
     </StyledNamebarTop>
   );
