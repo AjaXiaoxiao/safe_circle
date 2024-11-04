@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
-import { PersonComponent } from './components/PersonComponent';
 import Parse from 'parse/dist/parse.min.js';
 
 // Parse initialization configuration
