@@ -4,13 +4,13 @@ import Chatbar from "./Chatbar";
 import ChatBubble from "./MessageBubble";
 
 const ChatContainer = styled.div`
-  width: 62vw;
+  width: 60vw;
   height: 88vh;
   margin-top: 12vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  position: relative;
+  position: absolute;
   margin-left: 0;
   background-color: #ebf9fb;
 `;

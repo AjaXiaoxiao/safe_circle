@@ -11,6 +11,7 @@ const StyledTextField = styled.input`
   margin: 0.6em;
   margin-right: 2em;
   margin-left: 2em;
+  max-height: 90%;
 `;
 
 export default function TextField({ value, onChange }) {

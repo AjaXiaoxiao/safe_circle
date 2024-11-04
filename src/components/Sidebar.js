@@ -5,7 +5,7 @@ import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
 
 const StyledSidebar = styled.div`
-  width: 10vw;
+  width: 12vw;
   height: 88vh;
   background-color: #fee180;
   display: flex;
