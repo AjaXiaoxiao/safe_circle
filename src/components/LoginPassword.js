@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 
 // Input component definition
-const Input = ({icon}) => {
+const Input = ({icon, placeholder}) => {
   return (
     <InputWrapper>
       <Icon src={icon} />
-      <StyledInput type="text" placeholder="Username" />
+      <StyledInput type="text" placeholder={placeholder} />
     </InputWrapper>
   );
 };
@@ -23,7 +23,7 @@ const Icon = styled.img`
   position: absolute;
   margin-top: 21px;
   margin-left: 10px;
-  width: 1.5em; /* Adjust icon size */
+  width: 1.4em; /* Adjust icon size */
   height: auto; /* Maintain aspect ratio */
 `;
 
