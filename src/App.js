@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
+import PopUpContactPage from "./screens/PopUpContactPage";
 import Parse from 'parse/dist/parse.min.js';
 
 // Parse initialization configuration
@@ -15,7 +16,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
-      </Routes>
+        <Route path="/Contacts" element={<PopUpContactPage />} />
+        </Routes>
     </Router>
   );
 }

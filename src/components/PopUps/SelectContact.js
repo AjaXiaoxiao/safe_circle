@@ -29,9 +29,9 @@ export default SelectContact;
 const PopUpContainer = styled.div`
   position: fixed;
   top: 20%; /* Adjust this value to move it vertically */
-  right: 30px; /* Set right distance from the right edge */
-  width: 700px; /* Increase width */
-  height: 500px; /* Increase height */
+  right: 100px; /* Set right distance from the right edge */
+  width: 600px; 
+  height: 500px; 
   background-color: white;
   color: black;
   border-radius: 8px;
@@ -51,15 +51,15 @@ const CloseButton = styled.div`
 `;
 
 const ContactIcon = styled.img`
-  width: 100px; /* Adjust size as needed */
-  height: 100px; /* Adjust size as needed */
-  margin-bottom: 10px; /* Space below the icon */
+  width: 120px; 
+  height: 120px; 
+  margin-bottom: 20px; /* Space below the icon */
 `;
 
 const ContactName = styled.h2`
   font-weight: bold;
   color: black;
-  margin: 10px 0; /* Space above and below the name */
+  margin: 5px 0; /* Space above and below the name */
 `;
 
 const AboutText = styled.p`
@@ -73,7 +73,7 @@ const DescriptionText = styled.p`
 `;
 
 const Spacer = styled.div`
-  margin: 15px 0; /* Space between sections */
+  margin: 10px 0; /* Space between sections */
 `;
 
 const EmailText = styled.p`
