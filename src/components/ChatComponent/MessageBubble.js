@@ -9,7 +9,7 @@ const StyledMessageBubble = styled.div`
   margin: 10px;
   background-color: #ffffff;
   color: #000; /* Black text color */
-  border: 2px solid ${(props) => (props.isSender ? "#FEE180" : "#BB65FF")}; /* Purple border for receiver, yellow border for sender */
+  border: 2px solid ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")}; /* Purple border for sender, yellow border for receiver */
   border-radius: 5px;
   position: relative;
   align-self: ${(props) =>
@@ -22,16 +22,16 @@ const StyledMessageBubble = styled.div`
     bottom: -15px; /* Position it below the bubble */
     ${(props) =>
       props.isSender
-        ? "left: 15px;"
-        : "right: 15px;"} /* Left for receiver, right for sender */
+        ? "right: 15px;" /* Tail on the right for sender */
+        : "left: 15px;"} /* Tail on the left for receiver */
     width: 0;
     height: 0;
     border-left: ${(props) =>
-      props.isSender ? "10px solid transparent" : "none"}; /* Sender tail */
-    border-right: ${(props) =>
       props.isSender ? "none" : "10px solid transparent"}; /* Receiver tail */
+    border-right: ${(props) =>
+      props.isSender ? "10px solid transparent" : "none"}; /* Sender tail */
     border-top: 15px solid
-      ${(props) => (props.isSender ? "#FEE180" : "#BB65FF")}; /* Tail color matches border */
+      ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")}; /* Tail color matches border */
   }
 `;
 
