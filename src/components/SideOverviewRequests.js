@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
+import PendingIcon from "./Notifications/PendingIcon";
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
@@ -44,7 +45,7 @@ const ItemContainer = styled.div`
 
 const Item = styled.div`
   height: 110px;
-  width: 100%;
+  width: 100%; 
   background-color: white; 
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
@@ -72,15 +73,11 @@ const Name = styled.div`
   font-weight: bold;
 `;
 
-const MessageText = styled.p`
-  font-size: 0.9em;
-`;
-
 export default function SideOverview({ title }) {
   return (
     <OverviewContainer>
       <HeaderContainer>
-        <Header>{title}</Header>
+        <Header>Child Overview</Header>
         <StyledPlusIcon src={plusIcon} />
       </HeaderContainer>
       <Separator />
@@ -90,8 +87,8 @@ export default function SideOverview({ title }) {
             <ProfilePictureSmall />
           </ProfileContainer>
           <TextContainer>
-            <Name>Johanna</Name>
-            <MessageText>Hello. How are you doing..</MessageText>
+            <Name>Anna</Name>
+            <PendingIcon/>
           </TextContainer>
         </Item>
       </ItemContainer>
