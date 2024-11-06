@@ -5,6 +5,7 @@ import ButtonPurple from "../Buttons/ButtonPurple";
 
 const SelectContact = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
+  
 
   return (
     <PopUpContainer>
@@ -29,8 +30,8 @@ export default SelectContact;
 const PopUpContainer = styled.div`
   position: fixed;
   top: 20%; /* Adjust this value to move it vertically */
-  right: 100px; /* Set right distance from the right edge */
-  width: 600px;
+  right: 150px; /* Set right distance from the right edge */
+  width: 500px;
   height: 500px;
   background-color: white;
   color: black;
@@ -41,6 +42,7 @@ const PopUpContainer = styled.div`
   align-items: center;
   justify-content: flex-start; /* Align items to the start vertically */
   z-index: 1000; /* Ensures the popup is on top */
+  border: 1px solid #ccc;
 `;
 
 const CloseButton = styled.div`

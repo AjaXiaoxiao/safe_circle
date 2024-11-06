@@ -1,14 +1,17 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react'; 
 import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
 import SideOverviewContacts from "../components/SideOverviewContacts";
 import SelectContact from "../components/PopUps/SelectContact";
-import EmptyChatContainer from '../components/ChatComponent/EmptyChatContainer';
+import ChatComponent from '../components/ChatComponent/ChatComponent';
 
 const ColumnContainer = styled.div`
   display: flex;
   width: 100vw;
+`;
+const BlurredComponent = styled.div`
+  filter: blur(2px); 
 `;
 
 export default function PopUpContactPage() {
@@ -22,7 +25,8 @@ export default function PopUpContactPage() {
         <Sidebar />
         <SideOverviewContacts title= "Contacts" />
                 <SelectContact isVisible={isPopupVisible}/>
-        <EmptyChatContainer/>
+                <BlurredComponent> <ChatComponent/>
+                </BlurredComponent>
       </ColumnContainer>
     </div>
   );
