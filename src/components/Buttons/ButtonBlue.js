@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
-const ButtonYellow = ({title}) => {
+const ButtonBlue = ({title}) => {
   return <StyledButton type="button">{title}</StyledButton>;
 };
 
-export default ButtonYellow;
+export default ButtonBlue;
 
 const StyledButton = styled.button`
-  margin: 20px;
+  margin: 10px;
+  width: 100%;
   padding: 10px 20px;
   border-radius: 20px;
   border: none;
-  background-color: #fee180;
+  background-color: #A9E7EB;
   color: black;
   cursor: pointer;
   font-weight: bold;
 
   &:hover {
-    background-color: #ecc544;
+    background-color: #A4E1E5;
   }
 `;

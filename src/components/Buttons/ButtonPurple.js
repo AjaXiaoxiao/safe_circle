@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
-const ButtonPurple = ({ text = "Send request" }) => {
-  return <StyledButton type="button">{text}</StyledButton>;
+const ButtonPurple = ({title}) => {
+  return <StyledButton type="button">{title}</StyledButton>;
 };
 
 export default ButtonPurple;
 
 const StyledButton = styled.button`
-  margin: 20px;
-  padding: 10px 50px;
+  margin: 10px;
+  padding: 10px 20px;
   border-radius: 20px;
+  width: 100%;
   border: none;
   background-color: #bb65ff;
   color: white;
