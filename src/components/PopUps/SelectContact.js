@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
-import Contact from "../../assets/Contact.png"; 
+import Contact from "../../assets/Contact.png";
 import ButtonPurple from "../Buttons/ButtonPurple";
 
 const SelectContact = ({ isVisible, onClose }) => {
@@ -13,7 +13,7 @@ const SelectContact = ({ isVisible, onClose }) => {
       </CloseButton>
       <ContactIcon src={Contact} alt="Contact Icon" />
       <ContactName>Mom</ContactName>
-      <ButtonPurple text="Chat" />
+      <ButtonPurple title="Chat" />
       <AboutText>About</AboutText>
       <DescriptionText>Guardian*</DescriptionText>
       <DescriptionText>MY MOMMMM xD</DescriptionText>
@@ -30,8 +30,8 @@ const PopUpContainer = styled.div`
   position: fixed;
   top: 20%; /* Adjust this value to move it vertically */
   right: 100px; /* Set right distance from the right edge */
-  width: 600px; 
-  height: 500px; 
+  width: 600px;
+  height: 500px;
   background-color: white;
   color: black;
   border-radius: 8px;
@@ -51,8 +51,8 @@ const CloseButton = styled.div`
 `;
 
 const ContactIcon = styled.img`
-  width: 120px; 
-  height: 120px; 
+  width: 120px;
+  height: 120px;
   margin-bottom: 20px; /* Space below the icon */
 `;
 

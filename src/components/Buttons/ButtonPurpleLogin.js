@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   margin: 10px;
   padding: 10px 20px;
   border-radius: 20px;
-  width: 30%;
+  width: 100%;
   border: none;
   background-color: #bb65ff;
   color: white;
