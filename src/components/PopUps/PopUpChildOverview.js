@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
-import ButtonPurple from "../Buttons/ButtonPurple";
+import ButtonPurpleApprove from "../Buttons/ButtonPurpleApprove";
 import ButtonRed from "../Buttons/ButtonRed";
 import SmallTextField from "../TextFields/SmallTextField";
 
@@ -26,7 +26,7 @@ const PopUpChildOverview= ({ isVisible, onClose }) => {
         <Label>Email</Label>
         <SmallTextField placeholder="This is their email" />
         <ButtonContainer>
-          <ButtonPurple>Approve</ButtonPurple>
+          <ButtonPurpleApprove>Approve</ButtonPurpleApprove>
           <ButtonRed>Decline</ButtonRed>
         </ButtonContainer>
       </FormContainer>
