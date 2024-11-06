@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ButtonPurple = ({title}) => {
+const ButtonPurple = ({ title }) => {
   return <StyledButton type="button">{title}</StyledButton>;
 };
 
@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   margin: 10px;
   padding: 10px 20px;
   border-radius: 20px;
-  width: 100%;
+  width: 30%;
   border: none;
   background-color: #bb65ff;
   color: white;
