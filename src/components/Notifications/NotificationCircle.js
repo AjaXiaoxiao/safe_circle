@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+const NotificationCircle = ({ count }) => {
+  return <Circle>{count}</Circle>;
+};
+
+export default NotificationCircle;
+
 const Circle = styled.div`
   background-color: white;
   color: black; /*text color*/
@@ -12,7 +18,3 @@ const Circle = styled.div`
   font-size: 14px;
   font-weight: bold;
 `;
-
-export default function NotificationCircle({ count }) {
-  return <Circle>{count}</Circle>;
-}

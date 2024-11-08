@@ -2,6 +2,30 @@ import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
+const SideOverview = ({ title }) => {
+  return (
+    <OverviewContainer>
+      <HeaderContainer>
+        <Header>{title}</Header>
+        <StyledPlusIcon src={plusIcon} />
+      </HeaderContainer>
+      <Separator />
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Johanna</Name>
+            <MessageText>Hello. How are you doing..</MessageText>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+    </OverviewContainer>
+  );
+};
+export default SideOverview;
+
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
   background-color: white;
@@ -45,11 +69,11 @@ const ItemContainer = styled.div`
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: white; 
+  background-color: white;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;
-  align-items: center; 
+  align-items: center;
 `;
 
 const ProfileContainer = styled.div`
@@ -75,26 +99,3 @@ const Name = styled.div`
 const MessageText = styled.p`
   font-size: 0.9em;
 `;
-
-export default function SideOverview({ title }) {
-  return (
-    <OverviewContainer>
-      <HeaderContainer>
-        <Header>{title}</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
-      <Separator />
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Johanna</Name>
-            <MessageText>Hello. How are you doing..</MessageText>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-    </OverviewContainer>
-  );
-}
