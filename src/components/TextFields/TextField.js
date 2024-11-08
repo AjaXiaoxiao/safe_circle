@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+const TextField = ({ value, onChange }) => {
+  return (
+    <StyledTextField
+      value={value}
+      onChange={onChange}
+      type="text"
+      placeholder="Type a message"
+    />
+  );
+};
+export default TextField;
+
 const StyledTextField = styled.input`
   background-color: #f0f2f5;
   width: 70%;
@@ -13,14 +25,3 @@ const StyledTextField = styled.input`
   margin-left: 2em;
   max-height: 90%;
 `;
-
-export default function TextField({ value, onChange }) {
-  return (
-    <StyledTextField
-      value={value}
-      onChange={onChange}
-      type="text"
-      placeholder="Type a message"
-    />
-  );
-}

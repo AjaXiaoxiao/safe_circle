@@ -4,11 +4,7 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-const ColumnContainer = styled.div`
-  display: flex;
-  width: 100vw;
-`;
-export default function ChatOverview({ title }) {
+const ChatOverview = ({ title }) => {
   return (
     <div>
       <Topbar />
@@ -19,4 +15,10 @@ export default function ChatOverview({ title }) {
       </ColumnContainer>
     </div>
   );
-}
+};
+export default ChatOverview;
+
+const ColumnContainer = styled.div`
+  display: flex;
+  width: 100vw;
+`;

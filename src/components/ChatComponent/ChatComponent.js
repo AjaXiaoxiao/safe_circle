@@ -3,6 +3,22 @@ import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
 import ChatBubble from "./MessageBubble";
 
+const ChatComponent = () => {
+  return (
+    <div>
+      <ChatContainer>
+        <NamebarTop />
+        <StyledMessageBubble>
+          <ChatBubble />
+        </StyledMessageBubble>
+        <Chatbar />
+      </ChatContainer>
+    </div>
+  );
+};
+
+export default ChatComponent;
+
 const ChatContainer = styled.div`
   width: 60vw;
   height: 88vh;
@@ -22,17 +38,3 @@ const StyledMessageBubble = styled.div`
   align-items: center;
   margin-top: 10vh;
 `;
-
-export default function ChatComponent() {
-  return (
-    <div>
-      <ChatContainer>
-        <NamebarTop />
-        <StyledMessageBubble>
-          <ChatBubble />
-        </StyledMessageBubble>
-        <Chatbar />
-      </ChatContainer>
-    </div>
-  );
-}
