@@ -28,13 +28,13 @@ export default SideOverview;
 
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
-  background-color: white;
+  background-color: #ffffff;
   border: solid #ccc 1px;
   width: 30vw;
   height: 88vh;
   border-top-left-radius: 20px;
   margin-top: 12vh;
-  z-index: 10;
+  z-index: 2;
 `;
 
 const HeaderContainer = styled.div`
@@ -69,7 +69,7 @@ const ItemContainer = styled.div`
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: white;
+  background-color: #ffffff;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;

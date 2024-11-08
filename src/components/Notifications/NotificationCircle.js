@@ -7,14 +7,14 @@ const NotificationCircle = ({ count }) => {
 export default NotificationCircle;
 
 const Circle = styled.div`
-  background-color: white;
-  color: black; /*text color*/
+  background-color: #ffffff;
+  color: black;
   border: 1px solid black;
-  border-radius: 50%; /*makes the border round*/
+  border-radius: 50%;
   width: 24px;
   display: flex;
-  align-items: center; /*Vertically center*/
-  justify-content: center; /*Horizonally center*/
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: bold;
 `;
