@@ -2,15 +2,39 @@ import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
+const SideOverview = ({ title }) => {
+  return (
+    <OverviewContainer>
+      <HeaderContainer>
+        <Header>{title}</Header>
+        <StyledPlusIcon src={plusIcon} />
+      </HeaderContainer>
+      <Separator />
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Johanna</Name>
+            <MessageText>Hello. How are you doing..</MessageText>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+    </OverviewContainer>
+  );
+};
+export default SideOverview;
+
 //Container for the overview rectangle
 const OverviewContainer = styled.div`
-  background-color: white;
+  background-color: #ffffff;
   border: solid #ccc 1px;
   width: 30vw;
   height: 88vh;
   border-top-left-radius: 20px;
   margin-top: 12vh;
-  z-index: 10;
+  z-index: 2;
 `;
 
 const HeaderContainer = styled.div`
@@ -23,7 +47,7 @@ const Header = styled.h2`
   font-size: 1.8em;
   color: #222;
   text-align: left;
-  margin: 40px 50px;
+  margin: 15px 25px;
 `;
 
 const StyledPlusIcon = styled.img`
@@ -45,11 +69,11 @@ const ItemContainer = styled.div`
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: white; 
+  background-color: #ffffff;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;
-  align-items: center; 
+  align-items: center;
 `;
 
 const ProfileContainer = styled.div`
@@ -75,26 +99,3 @@ const Name = styled.div`
 const MessageText = styled.p`
   font-size: 0.9em;
 `;
-
-export default function SideOverview({ title }) {
-  return (
-    <OverviewContainer>
-      <HeaderContainer>
-        <Header>{title}</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
-      <Separator />
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Johanna</Name>
-            <MessageText>Hello. How are you doing..</MessageText>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-    </OverviewContainer>
-  );
-}
