@@ -6,13 +6,6 @@ import SideOverviewContacts from "../components/SideOverviewContacts";
 import SelectContact from "../components/PopUps/SelectContact";
 import ChatComponent from '../components/ChatComponent/ChatComponent';
 
-const ColumnContainer = styled.div`
-  display: flex;
-  width: 100vw;
-`;
-const BlurredComponent = styled.div`
-  filter: blur(2px); 
-`;
 
 export default function PopUpContactPage() {
   // Set isVisible to true to show the SelectContact popup by default
@@ -32,3 +25,10 @@ export default function PopUpContactPage() {
   );
 }
 
+const ColumnContainer = styled.div`
+  display: flex;
+  width: 100vw;
+`;
+const BlurredComponent = styled.div`
+  filter: blur(2px); 
+`;

@@ -29,8 +29,8 @@ export default SelectContact;
 
 const PopUpContainer = styled.div`
   position: fixed;
-  top: 20%; /* Adjust this value to move it vertically */
-  right: 150px; /* Set right distance from the right edge */
+  top: 20%; 
+  right: 150px; 
   width: 500px;
   height: 500px;
   background-color: white;
@@ -40,8 +40,8 @@ const PopUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Align items to the start vertically */
-  z-index: 1000; /* Ensures the popup is on top */
+  justify-content: flex-start; 
+  z-index: 2; 
   border: 1px solid #ccc;
 `;
 
@@ -55,35 +55,35 @@ const CloseButton = styled.div`
 const ContactIcon = styled.img`
   width: 120px;
   height: 120px;
-  margin-bottom: 20px; /* Space below the icon */
+  margin-bottom: 20px; 
 `;
 
 const ContactName = styled.h2`
   font-weight: bold;
   color: black;
-  margin: 5px 0; /* Space above and below the name */
+  margin: 5px 0; 
 `;
 
 const AboutText = styled.p`
   color: grey;
-  margin: 5px 0; /* Space around about text */
+  margin: 5px 0; 
 `;
 
 const DescriptionText = styled.p`
   color: black;
-  margin: 5px 0; /* Space around description text */
+  margin: 5px 0; 
 `;
 
 const Spacer = styled.div`
-  margin: 10px 0; /* Space between sections */
+  margin: 10px 0; 
 `;
 
 const EmailText = styled.p`
   color: grey;
-  margin: 5px 0; /* Space around email label */
+  margin: 5px 0;
 `;
 
 const EmailValue = styled.p`
   color: black;
-  margin: 5px 0; /* Space around email value */
+  margin: 5px 0; 
 `;
