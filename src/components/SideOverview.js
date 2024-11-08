@@ -47,7 +47,7 @@ const Header = styled.h2`
   font-size: 1.8em;
   color: #222;
   text-align: left;
-  margin: 40px 50px;
+  margin: 15px 25px;
 `;
 
 const StyledPlusIcon = styled.img`
