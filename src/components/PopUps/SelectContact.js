@@ -15,12 +15,12 @@ const SelectContact = ({ isVisible, onClose }) => {
       <ContactIcon src={Contact} alt="Contact Icon" />
       <ContactName>Mom</ContactName>
       <ButtonPurple title="Chat" />
-      <AboutText>About</AboutText>
-      <DescriptionText>Guardian*</DescriptionText>
-      <DescriptionText>MY MOMMMM xD</DescriptionText>
+      <FieldTitle>About</FieldTitle>
+      <FieldValue>Guardian*</FieldValue>
+      <FieldValue>MY MOMMMM xD</FieldValue>
       <Spacer />
-      <EmailText>Email</EmailText>
-      <EmailValue>mom@gmail.com</EmailValue>
+      <FieldTitle>Email</FieldTitle>
+      <FieldValue>mom@gmail.com</FieldValue>
     </PopUpContainer>
   );
 };
@@ -64,13 +64,8 @@ const ContactName = styled.h2`
   margin: 5px 0; 
 `;
 
-const AboutText = styled.p`
+const FieldTitle = styled.p`
   color: grey;
-  margin: 5px 0; 
-`;
-
-const DescriptionText = styled.p`
-  color: black;
   margin: 5px 0; 
 `;
 
@@ -78,12 +73,7 @@ const Spacer = styled.div`
   margin: 10px 0; 
 `;
 
-const EmailText = styled.p`
-  color: grey;
-  margin: 5px 0;
-`;
-
-const EmailValue = styled.p`
+const FieldValue = styled.p`
   color: black;
   margin: 5px 0; 
 `;
