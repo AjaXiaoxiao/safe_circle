@@ -3,10 +3,13 @@ import ChatOverview from "./screens/ChatOverview";
 import PopUpContactPage from "./screens/PopUpContactPage";
 import ChildOverviewPage from "./screens/ChildOverviewPage";
 import Parse from "parse/dist/parse.min.js";
-import LogIn from "./screens/LogIn";
+import LogInUI from "./screens/LogInUI";
 import SignUpChild from "./screens/SignUpChild";
 import SignUpParent from "./screens/SignUpParent";
 import Contacts from "./screens/Contacts";
+import UserRegistrationParent from "./screens/UserRegistrationParent";
+import UserLogin from "./screens/UserLogIn";
+
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = "DTmn145degEZbGPGdfOE2zxrYRLWRG8WOO135pKw";
@@ -26,9 +29,11 @@ function App() {
 
         <Route path="/contactspopup" element={<PopUpContactPage />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/login" element={<LogInUI />} />
         <Route path="/signupchild" element={<SignUpChild />} />
         <Route path="/signupparent" element={<SignUpParent />} />
+        <Route path="/userregistrationparent" element={<UserRegistrationParent />} />
+        <Route path="/userlogin" element={<UserLogin />} />
       </Routes>
     </Router>
   );

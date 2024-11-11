@@ -10,6 +10,28 @@ import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
 
+
+
+export default function ChatOverview() {
+  return (
+    <LogInContainer>
+      <Topbar />  
+      <BackArrowContainer src={BackArrow} alt="Back Arrow" />
+      <Title>Create child account</Title>
+      <SubTitle>Sign up as a child</SubTitle>
+
+      <FormContainer>
+        <LoginInput icon={ProfileIcon}/>
+        <LoginEmail icon={Email} placeholder="Email"/>
+        <LoginEmail icon={Email} placeholder="Guardian email"/>
+        <LoginPassword icon={Lock} placeholder="Password"/>
+        <LoginPassword icon={Lock} placeholder="Confirm password"/>
+        <ButtonBlue title= "Get started" />
+      </FormContainer>
+    </LogInContainer>
+  );
+}
+
 const LogInContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,7 +39,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
 `;
 
 const BackArrowContainer = styled.img`
@@ -49,24 +71,3 @@ const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
-
-export default function ChatOverview() {
-  return (
-    <LogInContainer>
-      <Topbar />  
-      <BackArrowContainer src={BackArrow} alt="Back Arrow" />
-      <Title>Create child account</Title>
-      <SubTitle>Sign up as a child</SubTitle>
-
-      <FormContainer>
-        <LoginInput icon={ProfileIcon}/>
-        <LoginEmail icon={Email} placeholder="Email"/>
-        <LoginEmail icon={Email} placeholder="Guardian email"/>
-        <LoginPassword icon={Lock} placeholder="Password"/>
-        <LoginPassword icon={Lock} placeholder="Confirm password"/>
-        <ButtonBlue title= "Get started" />
-      </FormContainer>
-    </LogInContainer>
-  );
-}

@@ -8,6 +8,26 @@ import ButtonBlue from '../components/Buttons/ButtonBlue';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 
+
+export default function ChatOverview() {
+  return (
+    <LogInContainer>
+      <Logo src={logo} alt="Logo" />
+      <Title>Login</Title>
+      <SubTitle>Log in to your account</SubTitle>
+
+      <FormContainer>
+        <LoginInput icon={ProfileIcon}/>
+        <LoginPassword icon={Lock} placeholder="Password"/>
+        <ButtonPurpleLogin title= "Log in" />
+        <ForgotPassword>Forgot password?</ForgotPassword>
+        <Separator><span>or</span></Separator>
+        <ButtonBlue title= "Sign up" />
+      </FormContainer>
+    </LogInContainer>
+  );
+}
+
 const LogInContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,7 +35,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
 `;
 
 const Logo = styled.img`
@@ -34,7 +54,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: black;
+  color: #000000;
   margin-top: 5px;
   margin-bottom: 5px;
 `;
@@ -65,7 +85,7 @@ const Separator = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background: black;
+    background: #000000;
   }
 
   &::before {
@@ -82,22 +102,3 @@ const Separator = styled.div`
     font-weight: bold;
   }
 `;
-
-export default function ChatOverview() {
-  return (
-    <LogInContainer>
-      <Logo src={logo} alt="Logo" />
-      <Title>Login</Title>
-      <SubTitle>Log in to your account</SubTitle>
-
-      <FormContainer>
-        <LoginInput icon={ProfileIcon}/>
-        <LoginPassword icon={Lock} placeholder="Password"/>
-        <ButtonPurpleLogin title= "Log in" />
-        <ForgotPassword>Forgot password?</ForgotPassword>
-        <Separator><span>or</span></Separator>
-        <ButtonBlue title= "Sign up" />
-      </FormContainer>
-    </LogInContainer>
-  );
-}

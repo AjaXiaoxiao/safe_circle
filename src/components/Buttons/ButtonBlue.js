@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const ButtonBlue = ({title}) => {
-  return <StyledButton type="button">{title}</StyledButton>;
+const ButtonBlue = ({ title, onClick }) => {
+  return <StyledButton onClick={onClick}>{title}</StyledButton>;
 };
 
 export default ButtonBlue;
