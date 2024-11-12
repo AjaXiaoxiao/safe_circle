@@ -8,7 +8,6 @@ import LogIn from "./screens/LogIn";
 import SignUpChild from "./screens/SignUpChild";
 import SignUpParent from "./screens/SignUpParent";
 import Contacts from "./screens/Contacts";
-import { PersonComponent } from "./components/TestDatabaseComponents/PersonComponent";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -31,7 +30,6 @@ function App() {
         <Route path="/signupchild" element={<SignUpChild />} />
         <Route path="/signupparent" element={<SignUpParent />} />
       </Routes>
-      <PersonComponent />
     </Router>
   );
 }
