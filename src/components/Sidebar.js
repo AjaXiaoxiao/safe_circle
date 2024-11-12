@@ -1,32 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
 
 const Sidebar = () => {
-  const [active, setActive] = useState("chat");
-
   return (
     <StyledSidebar>
       <ul>
-        <li
-          className={active === "chat" ? "active" : ""}
-          onClick={() => setActive("chat")}
-        >
-          <img src={chatIcon} alt="Chat" className="sidebar-icon" />
+        <li>
+          <NavLink to="/" className={({isActive}) => (isActive ? "active" : "")}> 
+            <img src={chatIcon} alt="Chat" className="sidebar-icon" />
+          </NavLink>
         </li>
-        <li
-          className={active === "contacts" ? "active" : ""}
-          onClick={() => setActive("contacts")}
-        >
-          <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
+        <li>
+          <NavLink to="/Contacts" className={({ isActive }) => (isActive ? "active" : "")}>
+            <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
+          </NavLink>
         </li>
-        <li
-          className={active === "child-overview" ? "active" : ""}
-          onClick={() => setActive("child-overview")}
-        >
-          <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
+        <li>
+          <NavLink to="/ChildOverview" className={({ isActive }) => (isActive ? "active" : "")}>
+            <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
+          </NavLink>
         </li>
       </ul>
     </StyledSidebar>
@@ -34,6 +30,7 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
 
 const StyledSidebar = styled.div`
   width: 12vw;
@@ -59,16 +56,21 @@ const StyledSidebar = styled.div`
     margin-bottom: 30px;
     cursor: pointer;
     position: relative;
+  }
+    
 
-    &.active::before {
-      content: "";
-      position: absolute;
-      top: 10px;
-      height: 22px;
-      width: 4px;
-      background-color: #bb65ff;
-      border-radius: 4px;
-    }
+  .active {
+    position: relative;
+  }
+
+  .active::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    height: 22px;
+    width: 4px;
+    background-color: #bb65ff;
+    border-radius: 4px;
   }
 
   .sidebar-icon {

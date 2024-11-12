@@ -1,8 +1,16 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
+import React, { useState } from "react";
 
-const SideOverview = ({ title }) => {
+const SideOverview = ({ title, onContactClick }) => {
+  const [selectedContact, setSelectedContact] = useState(null); 
+
+  const handleContactClick = (contactName) => {
+    setSelectedContact(contactName); 
+    onContactClick(contactName); 
+  };
+
   return (
     <OverviewContainer>
       <HeaderContainer>
@@ -11,7 +19,10 @@ const SideOverview = ({ title }) => {
       </HeaderContainer>
       <Separator />
       <ItemContainer>
-        <Item>
+        <Item
+          onClick={() => handleContactClick("Johanna")} 
+          isSelected={selectedContact === "Johanna"} 
+        >
           <ProfileContainer>
             <ProfilePictureSmall />
           </ProfileContainer>
@@ -26,7 +37,7 @@ const SideOverview = ({ title }) => {
 };
 export default SideOverview;
 
-//Container for the overview rectangle
+
 const OverviewContainer = styled.div`
   background-color: #ffffff;
   border: solid #ccc 1px;
@@ -63,23 +74,29 @@ const Separator = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  height: calc(80vs - 100px);
+  height: calc(80vh - 100px); /* Corrected vh, not vs */
 `;
 
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: ${({ isSelected }) => (isSelected ? "#f0f0f0" : "#ffffff")};
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: #f8f8f8;
+  }
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Align as close to the left as possible */
+  margin-left: 20px;
 `;
 
 const TextContainer = styled.div`
@@ -92,7 +109,7 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 1.4 em;
+  font-size: 1.4em;
   font-weight: bold;
 `;
 

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
-import PopUpContactPage from "./screens/PopUpContactPage";
 import ChildOverviewPage from "./screens/ChildOverviewPage";
 import Parse from "parse/dist/parse.min.js";
 import LogIn from "./screens/LogIn";
@@ -21,11 +20,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
-        <Route path="/Contacts" element={<PopUpContactPage />} />
+        <Route path="/Contacts" element={<Contacts />} />
         <Route path="/ChildOverview" element={<ChildOverviewPage/>} />
-
-        <Route path="/contactspopup" element={<PopUpContactPage />} />
-        <Route path="/contacts" element={<Contacts />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signupchild" element={<SignUpChild />} />
         <Route path="/signupparent" element={<SignUpParent />} />
