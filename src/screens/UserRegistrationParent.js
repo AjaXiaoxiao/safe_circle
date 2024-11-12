@@ -13,7 +13,7 @@ import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from 'react-router-dom';
 
 const UserRegistrationParent = () => {
-    // State variables
+    // State var
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -47,7 +47,7 @@ const UserRegistrationParent = () => {
             user.set("password", password);
             user.set("email", email);
 
-            // Since the signUp method returns a Promise, we need to call it using await
+            // signUp method returns a Promise. we need to call it using await
             const createdUser = await user.signUp();
         	alert(
         	    `Success! User ${createdUser.getUsername()} was successfully created!`
@@ -128,7 +128,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: black;
+  color: #000000;
   margin-top: 5px;
   margin-bottom: 5px;
 `;

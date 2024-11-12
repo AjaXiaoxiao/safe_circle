@@ -12,16 +12,16 @@ import { useNavigate } from 'react-router-dom';
 
 	
 export const UserLogin = () => {
-    // State variables
+    // state var
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
-    const navigate = useNavigate(); //Navigation
+    const navigate = useNavigate(); //Navigation setup
     	
-    // Function that will return current user and also update current username
+    // will return current user and update current username
     const getCurrentUser = async function () {
     	const currentUser = await Parse.User.current();
-    	// Update state variable holding current user
+    	// Update state var holding current user
     	setCurrentUser(currentUser);
     	return currentUser;
     };
@@ -31,18 +31,18 @@ const doUserLogIn = async function () {
     const passwordValue = password;
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-      // logIn returns the corresponding ParseUser object
-      alert(
+      
+      alert( // logIn returns corresponding ParseUser object
         	`Success! User ${loggedInUser.get(
         	'username'
         	)} has successfully signed in!`
       );
-      // To verify that this is in fact the current user, `current` can be used
+      // verify that this is the current user, use current
     const currentUser = await Parse.User.current();
       console.log(loggedInUser === currentUser);
-      setUsername(''); //clear input
+      setUsername('');
       setPassword('');
-      getCurrentUser(); // Update state variable holding current user
+      getCurrentUser(); // Update state var current user
       navigate('/');
       return true;
     } catch (error) {
@@ -100,7 +100,7 @@ const Logo = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: #000;
+  color: #000000;
   margin: 10px 0;
 `;
 
@@ -120,7 +120,7 @@ const FormContainer = styled.div`
 
 const ForgotPassword = styled.a`
   font-size: 0.8rem;
-  color: black;
+  color: #000000;
   margin: 10px 0;
   cursor: pointer;
   text-decoration: underline;
@@ -149,7 +149,7 @@ const Separator = styled.div`
   }
 
   span {
-    color: black;
+    color: #000000;
     font-size: 1rem;
     font-weight: bold;
   }
