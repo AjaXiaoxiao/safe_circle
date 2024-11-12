@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SendButton from "../Buttons/SendButton";
 import EmojiButton from "../Buttons/EmojiButton";
 import { useState } from "react";
-import Parse from "parse";
+import Parse from "parse/dist/parse.min.js";
 
 const StyledChatbar = styled.div`
   width: 100%;
@@ -29,17 +29,17 @@ const Chatbar = () => {
     const Message = Parse.Object.extend("Message");
     const messageObject = new Message();
 
-    const senderQuery = new Parse.Query(Parse._User);
+    const senderQuery = new Parse.Query("User");
     senderQuery.equalTo("username", "Chloe");
 
-    const receiverQuery = new Parse.Query(Parse._User);
+    const receiverQuery = new Parse.Query("User");
     receiverQuery.equalTo("username", "Aja");
 
     try {
       const sender = await senderQuery.first();
       const receiver = await receiverQuery.first();
-      alert(JSON.stringify(sender));
-      alert(JSON.stringify(receiver));
+
+      alert(sender.get("username"));
 
       if (!sender || !receiver) {
         throw new Error("Sender or receiver not found");
