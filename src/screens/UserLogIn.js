@@ -8,6 +8,7 @@ import ButtonPurpleLogin from '../components/Buttons/ButtonPurpleLogin';
 import ButtonBlue from '../components/Buttons/ButtonBlue';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
+import { useNavigate } from 'react-router-dom';
 
 	
 export const UserLogin = () => {
@@ -15,6 +16,7 @@ export const UserLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
+    const navigate = useNavigate(); //Navigation
     	
     // Function that will return current user and also update current username
     const getCurrentUser = async function () {
@@ -24,32 +26,33 @@ export const UserLogin = () => {
     	return currentUser;
     };
 
-	const doUserLogIn = async function () {
-        const usernameValue = username;
-        const passwordValue = password;
-        try {
-        	const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-        	// logIn returns the corresponding ParseUser object
-        	alert(
-        	    `Success! User ${loggedInUser.get(
-        	    'username'
-        	    )} has successfully signed in!`
-            );
-        	// To verify that this is in fact the current user, `current` can be used
-        	const currentUser = await Parse.User.current();
-        	console.log(loggedInUser === currentUser);
-        	setUsername(''); //clear input
-        	setPassword('');
-        	getCurrentUser(); // Update state variable holding current user
-        	return true;
-        }   catch (error) {
-        	alert(`Error! ${error.message}`);
-        	return false;
-            }
-    };
+const doUserLogIn = async function () {
+    const usernameValue = username;
+    const passwordValue = password;
+    try {
+      const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
+      // logIn returns the corresponding ParseUser object
+      alert(
+        	`Success! User ${loggedInUser.get(
+        	'username'
+        	)} has successfully signed in!`
+      );
+      // To verify that this is in fact the current user, `current` can be used
+    const currentUser = await Parse.User.current();
+      console.log(loggedInUser === currentUser);
+      setUsername(''); //clear input
+      setPassword('');
+      getCurrentUser(); // Update state variable holding current user
+      navigate('/');
+      return true;
+    } catch (error) {
+        alert(`Error! ${error.message}`);
+        return false;
+      }
+  };
 	
 	return (
-        <LogInContainer>
+    <LogInContainer>
       <Logo src={logo} alt="Logo" />
       <Title>Login</Title>
       <SubTitle>Log in to your account</SubTitle>
@@ -59,21 +62,18 @@ export const UserLogin = () => {
         icon={ProfileIcon}
         placeholder="Username"
         value={username}
-	    onChange={(event) => setUsername(event.target.value)}
+	      onChange={(event) => setUsername(event.target.value)}
         />
         <LoginPassword 
         icon={Lock} 
         placeholder="Password"
         value={password}
-	    onChange={(event) => setPassword(event.target.value)}
+        onChange={(event) => setPassword(event.target.value)}
         />
-        <ButtonPurpleLogin 
-        title= "Log in" 
-        onClick={() => doUserLogIn()}
-        />
+        <ButtonPurpleLogin title= "Log in" onClick={ () => doUserLogIn() }/>
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <ButtonBlue title= "Sign up" />
+        <ButtonBlue title= "Sign up" onClick={() => navigate('/userregistrationparent')}/>
       </FormContainer>
     </LogInContainer>
     );

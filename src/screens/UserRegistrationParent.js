@@ -10,6 +10,7 @@ import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
+import { useNavigate } from 'react-router-dom';
 
 const UserRegistrationParent = () => {
     // State variables
@@ -17,7 +18,7 @@ const UserRegistrationParent = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
+    const navigate = useNavigate(); //Navigation
 
 	const doUserRegistration = async function () {
         if (!username) {
@@ -51,6 +52,7 @@ const UserRegistrationParent = () => {
         	alert(
         	    `Success! User ${createdUser.getUsername()} was successfully created!`
         	);
+          navigate('/');
         	return true;
         }   catch (error) {
         	    alert(`Error! ${error}`);
@@ -59,9 +61,9 @@ const UserRegistrationParent = () => {
     };
     	
     return (
-        <LogInContainer>
+    <LogInContainer>
       <Topbar />  
-      <BackArrowContainer src={BackArrow} alt="Back Arrow" />
+      <BackArrowContainer src={BackArrow} alt="Back Arrow" onClick={() => navigate('/userlogin')}/>
       <Title>Create parent account</Title>
       <SubTitle>Sign up as a parent</SubTitle>
 
