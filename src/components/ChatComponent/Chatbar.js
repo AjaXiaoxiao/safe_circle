@@ -38,24 +38,23 @@ const Chatbar = () => {
       const senderQuery = new Parse.Query("Person");
       const sender = await senderQuery.equalTo("name", "Johnnyyy").first();
 
-      const receiverQuery = new Parse.Query("_User");
-      const receiver = await receiverQuery.equalTo("username", "otto").first();
+      //const receiverQuery = new Parse.Query("Person");
+      //const receiver = await receiverQuery.equalTo("name", "Johnnyyy").first();
 
-      alert(sender.get("name") + " " + receiver);
+      //if (!sender || !receiver) {
+      //alert("Sender or receiver not found. Please check usernames.");
+      //return;
+      //}
 
-      if (!sender || !receiver) {
-        alert("Sender or receiver not found. Please check usernames.");
-        return;
-      }
-
-      Message.set("Sender", sender);
-      Message.set("Receiver", receiver);
+      //Message.set("Sender", sender);
+      //Message.set("Receiver", receiver);
 
       await Message.save();
       alert("Message sent");
       setMessage("");
     } catch (error) {
       console.log("error", error);
+      alert("There was an error sending the message.");
     }
   }
   return (
