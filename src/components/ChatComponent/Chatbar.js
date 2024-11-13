@@ -1,8 +1,8 @@
 import TextField from "../TextFields/TextField";
 import styled from "styled-components";
 
-import SendButton from "../Buttons/SendButton";
-import EmojiButton from "../Buttons/EmojiButton";
+import Button from "../Buttons/Button";
+import EmojiPickerButton from "../Buttons/EmojiPickerButton";
 import { useState } from "react";
 
 const StyledChatbar = styled.div`
@@ -27,9 +27,9 @@ const Chatbar = () => {
 
   return (
     <StyledChatbar>
-      <EmojiButton onSelectEmoji={handleEmojiSelect} />
+      <EmojiPickerButton onSelectEmoji={handleEmojiSelect} />
       <TextField value={message} onChange={(e) => setMessage(e.target.value)} />
-      <SendButton />
+      <Button icon="send"/>
     </StyledChatbar>
   );
 };
