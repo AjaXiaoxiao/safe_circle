@@ -25,38 +25,36 @@ const Chatbar = () => {
     setMessage((prevMessage) => prevMessage + emoji);
   };
 
-  const sendMessage = async () => {
-    const Message = Parse.Object.extend("Message");
-    const messageObject = new Message();
+  async function sendMessage() {
+    //create a new Parse Message Object
+    const Message = new Parse.Object("Message");
 
-    const senderQuery = new Parse.Query("User");
+    //Define the attributes you want for your Object
+    Message.set("Text", message);
+    Message.set("Timestamp", new Date());
+
+    //Create another instance with a pointer to another object
+    const senderQuery = new Parse.Query("_User");
     senderQuery.equalTo("username", "Chloe");
 
-    const receiverQuery = new Parse.Query("User");
+    const receiverQuery = new Parse.Query("_User");
     receiverQuery.equalTo("username", "Aja");
 
-    try {
-      const sender = await senderQuery.first();
-      const receiver = await receiverQuery.first();
+    const sender = await senderQuery.first();
+    const receiver = await receiverQuery.first();
 
-      alert(sender.get("username"));
-
-      if (!sender || !receiver) {
-        throw new Error("Sender or receiver not found");
-      }
-
-      messageObject.set("Text", message);
-      messageObject.set("Sender", sender);
-      messageObject.set("Receiver", receiver);
-      messageObject.set("Timestamp", new Date());
-
-      await messageObject.save();
-      alert("Message sent");
-      setMessage("");
-    } catch (error) {
-      console.error("Error", error);
+    if (!sender || !receiver) {
+      alert("Sender or receiver not found. Please check usernames.");
+      return;
     }
-  };
+
+    Message.set("Sender", sender);
+    Message.set("Receiver", receiver);
+
+    await Message.save();
+    alert("Message sent");
+    setMessage("");
+  }
   return (
     <StyledChatbar>
       <EmojiButton onSelectEmoji={handleEmojiSelect} />
