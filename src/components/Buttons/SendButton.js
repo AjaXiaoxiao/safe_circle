@@ -5,8 +5,8 @@ const StyledSendButton = styled.div`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1rem;
+  padding: 8px;
+  font-size: 16 px;
   display: inline-flex;
   align-items: center;
   justify-content: center;

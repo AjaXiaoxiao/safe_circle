@@ -6,8 +6,8 @@ const StyledEmojiButton = styled.div`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1rem;
+  padding: 8px;
+  font-size: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@ function EmojiButton({ onSelectEmoji }) {
       </StyledEmojiButton>
 
       {showPicker && (
-        <div style={{ position: "absolute", top: "2rem" }}>
+        <div style={{ position: "absolute", top: "32 px" }}>
           <EmojiPicker onEmojiClick={onEmojiClick} />
         </div>
       )}
