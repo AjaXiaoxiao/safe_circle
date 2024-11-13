@@ -35,8 +35,8 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
-      const senderQuery = new Parse.Query("Person");
-      const sender = await senderQuery.equalTo("name", "Johnnyyy").first();
+      const senderQuery = new Parse.Query("_User");
+      const sender = await senderQuery.equalTo("username", "Aja").first();
 
       //const receiverQuery = new Parse.Query("Person");
       //const receiver = await receiverQuery.equalTo("name", "Johnnyyy").first();
@@ -46,7 +46,7 @@ const Chatbar = () => {
       //return;
       //}
 
-      //Message.set("Sender", sender);
+      Message.set("Sender", sender);
       //Message.set("Receiver", receiver);
 
       await Message.save();
