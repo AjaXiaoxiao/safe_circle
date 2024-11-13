@@ -15,7 +15,6 @@ const StyledSendButton = styled.div`
 const SendButton = () => {
   return (
     <StyledSendButton>
-      {" "}
       <img alt="send" src={SendIcon} />
     </StyledSendButton>
   );

@@ -4,7 +4,6 @@ import logo from '../assets/Logo.png';
 import LoginInput from "../components/LoginInput";
 import LoginPassword from "../components/LoginPassword";
 import Button from '../components/Buttons/Button';
-import ButtonBlue from '../components/Buttons/ButtonBlue';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 
@@ -96,7 +95,7 @@ export default function ChatOverview() {
         <Button fullWidth title= "Log in" />
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <ButtonBlue title= "Sign up" />
+        <Button color="blue" title= "Sign up" />
       </FormContainer>
     </LogInContainer>
   );
