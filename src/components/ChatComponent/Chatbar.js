@@ -10,12 +10,11 @@ const StyledChatbar = styled.div`
   height: 10vh;
   display: flex;
   flex-direction: row;
-  border: solid 2px;
-  border-color: #c6c6c6;
+  border: solid #ccc 1px;
   fill: #ffffff;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: #ffffff;
 `;
 
 const Chatbar = () => {

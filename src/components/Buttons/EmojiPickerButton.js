@@ -2,6 +2,32 @@ import styled from "styled-components";
 import EmojiPicker from "emoji-picker-react";
 import { useState } from "react";
 
+function EmojiButton({ onSelectEmoji }) {
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onEmojiClick = (emojiObject) => {
+    onSelectEmoji(emojiObject.emoji);
+    setShowPicker(false);
+  };
+
+  return (
+    <EmojiButtonWrapper>
+      <StyledEmojiButton onClick={() => setShowPicker(!showPicker)}>
+        😀
+      </StyledEmojiButton>
+
+      {showPicker && (
+        <EmojiPickerWrapper >
+          <EmojiPicker onEmojiClick={onEmojiClick} />
+        </EmojiPickerWrapper>
+      )}
+    </EmojiButtonWrapper>
+  );
+}
+
+export default EmojiButton;
+
+
 const StyledEmojiButton = styled.div`
   background-color: transparent;
   border: none;
@@ -14,27 +40,10 @@ const StyledEmojiButton = styled.div`
   font-size: x-large;
 `;
 
-function EmojiButton({ onSelectEmoji }) {
-  const [showPicker, setShowPicker] = useState(false);
-
-  const onEmojiClick = (event, emojiObject) => {
-    onSelectEmoji(emojiObject.emoji);
-    setShowPicker(false);
-  };
-
-  return (
-    <div style={{ position: "relative" }}>
-      <StyledEmojiButton onClick={() => setShowPicker(!showPicker)}>
-        😀
-      </StyledEmojiButton>
-
-      {showPicker && (
-        <div style={{ position: "absolute", top: "32 px" }}>
-          <EmojiPicker onEmojiClick={onEmojiClick} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default EmojiButton;
+const EmojiButtonWrapper= styled.div`
+  position: relative;
+`;
+const EmojiPickerWrapper=styled.div`
+  position: absolute;
+  bottom: 32px;
+`;
