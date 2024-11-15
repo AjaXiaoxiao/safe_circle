@@ -1,6 +1,21 @@
 import contact from "../../assets/Contact.png";
 import styled from "styled-components";
 
+const NamebarTop = () => {
+  return (
+    <StyledNamebarTop>
+      <StyledImage
+        src={contact}
+        alt="contact"
+        className="namebar-top-contact"
+      ></StyledImage>
+      <text className="namebar-top-text"> Mom </text>
+    </StyledNamebarTop>
+  );
+};
+
+export default NamebarTop;
+
 const StyledNamebarTop = styled.div`
   width: 100%;
   height: 23vh; 
@@ -17,27 +32,12 @@ const StyledNamebarTop = styled.div`
   font-size: large;
   font-weight: 700;
   background-color: #FFFFFF;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 `;
 
 const StyledImage = styled.img`
-  max-height: 80%; /* Limit the height to 80% of the parent container */
-  height: auto; /* Maintain aspect ratio */
-  width: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Ensure the image scales properly */
+  max-height: 80%; 
+  height: auto;
+  width: auto; 
+  object-fit: contain; 
 `;
-
-const NamebarTop = () => {
-  return (
-    <StyledNamebarTop>
-      <StyledImage
-        src={contact}
-        alt="contact"
-        className="namebar-top-contact"
-      ></StyledImage>
-      <text className="namebar-top-text"> Mom </text>
-    </StyledNamebarTop>
-  );
-};
-
-export default NamebarTop;

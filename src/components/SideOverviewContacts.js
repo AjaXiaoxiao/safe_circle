@@ -2,6 +2,52 @@ import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
+export default function SideOverview({ title }) {
+  return (
+    <OverviewContainer>
+      <HeaderContainer>
+        <Header>{title}</Header>
+        <StyledPlusIcon src={plusIcon} />
+      </HeaderContainer>
+      <Separator />
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Mom</Name>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Dad</Name>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Johanna</Name>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+    </OverviewContainer>
+  );
+}
+
+
+
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
@@ -56,7 +102,7 @@ const Item = styled.div`
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Align as close to the left as possible */
+  margin-left: 20px; 
 `;
 
 const TextContainer = styled.div`
@@ -71,47 +117,3 @@ const Name = styled.div`
   font-size: 1.4 em;
   font-weight: bold;
 `;
-
-export default function SideOverview({ title }) {
-  return (
-    <OverviewContainer>
-      <HeaderContainer>
-        <Header>{title}</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
-      <Separator />
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Mom</Name>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Dad</Name>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Johanna</Name>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-    </OverviewContainer>
-  );
-}

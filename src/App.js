@@ -11,7 +11,6 @@ import Contacts from "./screens/Contacts";
 import UserRegistrationParent from "./screens/UserRegistrationParent";
 import UserLogin from "./screens/UserLogIn";
 
-
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
 const PARSE_HOST_URL = process.env.REACT_APP_PARSE_HOST_URL;

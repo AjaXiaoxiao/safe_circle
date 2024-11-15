@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+export default function SmallTextField({ value, onChange }) {
+  return (
+    <StyledTextField
+      value={value}
+      onChange={onChange}
+      type="text"
+      placeholder="Type a message"
+    />
+  );
+}
+
 const StyledTextField = styled.input`
   background-color: #f0f2f5;
   width: 80%;
@@ -14,14 +25,3 @@ const StyledTextField = styled.input`
   margin-left: 2em;
   
 `;
-
-export default function SmallTextField({ value, onChange }) {
-  return (
-    <StyledTextField
-      value={value}
-      onChange={onChange}
-      type="text"
-      placeholder="Type a message"
-    />
-  );
-}

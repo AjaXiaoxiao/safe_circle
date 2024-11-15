@@ -47,7 +47,7 @@ const PopUpContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* Ensures the popup is on top */
+  z-index: 2; 
 `;
 
 const CloseButton = styled.div`
@@ -78,5 +78,5 @@ const Label = styled.label`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 20px; /* Adjust this value to move the button down */
+  margin-top: 20px;
 `;

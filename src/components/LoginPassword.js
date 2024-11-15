@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-
 const Input = ({icon, placeholder, value, onChange }) => {
   return (
     <InputWrapper>

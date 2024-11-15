@@ -81,7 +81,7 @@ const Item = styled.div`
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Align as close to the left as possible */
+  margin-left: 20px; 
 `;
 
 const TextContainer = styled.div`

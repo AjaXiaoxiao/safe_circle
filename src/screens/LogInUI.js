@@ -7,6 +7,25 @@ import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 
+export default function ChatOverview() {
+  return (
+    <LogInContainer>
+      <Logo src={logo} alt="Logo" />
+      <Title>Login</Title>
+      <SubTitle>Log in to your account</SubTitle>
+
+      <FormContainer>
+        <LoginInput icon={ProfileIcon}/>
+        <LoginPassword icon={Lock} placeholder="Password"/>
+        <Button color="purple" fullWidth title= "Log in" />
+        <ForgotPassword>Forgot password?</ForgotPassword>
+        <Separator><span>or</span></Separator>
+        <Button color="blue" fullWidth title= "Sign up" />
+      </FormContainer>
+    </LogInContainer>
+  );
+}
+
 const LogInContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -82,21 +101,4 @@ const Separator = styled.div`
   }
 `;
 
-export default function ChatOverview() {
-  return (
-    <LogInContainer>
-      <Logo src={logo} alt="Logo" />
-      <Title>Login</Title>
-      <SubTitle>Log in to your account</SubTitle>
 
-      <FormContainer>
-        <LoginInput icon={ProfileIcon}/>
-        <LoginPassword icon={Lock} placeholder="Password"/>
-        <Button color="purple" fullWidth title= "Log in" />
-        <ForgotPassword>Forgot password?</ForgotPassword>
-        <Separator><span>or</span></Separator>
-        <Button color="blue" fullWidth title= "Sign up" />
-      </FormContainer>
-    </LogInContainer>
-  );
-}

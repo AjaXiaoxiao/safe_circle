@@ -3,6 +3,30 @@ import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import PendingIcon from "./Notifications/PendingIcon";
 
+export default function SideOverview({ title }) {
+  return (
+    <OverviewContainer>
+      <HeaderContainer>
+        <Header>Child Overview</Header>
+        <StyledPlusIcon src={plusIcon} />
+      </HeaderContainer>
+      <Separator />
+      <ItemContainer>
+        <Item>
+          <ProfileContainer>
+            <ProfilePictureSmall />
+          </ProfileContainer>
+          <TextContainer>
+            <Name>Anna</Name>
+            <PendingIcon/>
+          </TextContainer>
+        </Item>
+      </ItemContainer>
+    </OverviewContainer>
+  );
+}
+
+
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
@@ -73,26 +97,3 @@ const Name = styled.div`
   font-size: 1.4 em;
   font-weight: bold;
 `;
-
-export default function SideOverview({ title }) {
-  return (
-    <OverviewContainer>
-      <HeaderContainer>
-        <Header>Child Overview</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
-      <Separator />
-      <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Anna</Name>
-            <PendingIcon/>
-          </TextContainer>
-        </Item>
-      </ItemContainer>
-    </OverviewContainer>
-  );
-}

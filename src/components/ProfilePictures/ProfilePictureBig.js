@@ -22,7 +22,7 @@ const ProfilePic = styled.img`
   object-fit: cover;
   border-radius: ${(props) => (props.rounded ? "50%" : "0")};
 
-  /* Create an offset border */
+
   box-shadow: 0 0 0 9px #fff, 0 0 0 13px #a9e7eb;
   background-color: #ffffff;
 `;
