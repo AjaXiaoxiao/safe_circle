@@ -1,14 +1,11 @@
 import styled from "styled-components";
-import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
+import SideOverviewHeader from "./SideOverviewHeader";
 
 const SideOverview = ({ title }) => {
   return (
     <OverviewContainer>
-      <HeaderContainer>
-        <Header>{title}</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
+      <SideOverviewHeader title={title}/>
       <Separator />
       <ItemContainer>
         <Item>

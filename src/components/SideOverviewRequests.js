@@ -1,15 +1,12 @@
 import styled from "styled-components";
-import plusIcon from "../assets/Plus.png";
+import SideOverviewHeader from "./SideOverviewHeader";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import PendingIcon from "./Notifications/PendingIcon";
 
 export default function SideOverview({ title }) {
   return (
     <OverviewContainer>
-      <HeaderContainer>
-        <Header>Child Overview</Header>
-        <StyledPlusIcon src={plusIcon} />
-      </HeaderContainer>
+       <SideOverviewHeader title={title}/>
       <Separator />
       <ItemContainer>
         <Item>
