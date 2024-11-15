@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 
-export default function SideOverview({ title }) {
+export default function SideOverviewHeader({ title }) {
   return (
     <HeaderContainer>
       <Header>{title}</Header>

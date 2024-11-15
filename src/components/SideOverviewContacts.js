@@ -55,27 +55,6 @@ const OverviewContainer = styled.div`
   z-index: 10;
 `;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 1vw;
-`;
-
-const Header = styled.h2`
-  font-size: 18px;
-  color: #222;
-  text-align: left;
-  margin: 20px 20px;
-`;
-
-const StyledPlusIcon = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
-`;
-
 const Separator = styled.div`
   height: 1px;
   background-color: #ccc;
