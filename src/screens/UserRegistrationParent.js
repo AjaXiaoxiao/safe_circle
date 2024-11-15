@@ -13,12 +13,11 @@ import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from 'react-router-dom';
 
 const UserRegistrationParent = () => {
-    // State var
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate(); //Navigation
+    const navigate = useNavigate(); 
 
 	const doUserRegistration = async function () {
         if (!username) {
@@ -47,7 +46,7 @@ const UserRegistrationParent = () => {
             user.set("password", password);
             user.set("email", email);
 
-            // signUp method returns a Promise. we need to call it using await
+            // signUp method returns a Promise??, call it using await
             const createdUser = await user.signUp();
         	alert(
         	    `Success! User ${createdUser.getUsername()} was successfully created!`

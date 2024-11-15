@@ -12,16 +12,14 @@ import { useNavigate } from 'react-router-dom';
 
 	
 export const UserLogin = () => {
-    // state var
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
-    const navigate = useNavigate(); //Navigation setup
+    const navigate = useNavigate(); 
     	
-    // will return current user and update current username
-    const getCurrentUser = async function () {
+    const getCurrentUser = async function () { 
     	const currentUser = await Parse.User.current();
-    	// Update state var holding current user
     	setCurrentUser(currentUser);
     	return currentUser;
     };
@@ -32,17 +30,17 @@ const doUserLogIn = async function () {
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
       
-      alert( // logIn returns corresponding ParseUser object
+      alert( // logIn returns ParseUser object/ the logged in user in database..
         	`Success! User ${loggedInUser.get(
         	'username'
         	)} has successfully signed in!`
       );
-      // verify that this is the current user, use current
+
     const currentUser = await Parse.User.current();
       console.log(loggedInUser === currentUser);
       setUsername('');
       setPassword('');
-      getCurrentUser(); // Update state var current user
+      getCurrentUser(); 
       navigate('/');
       return true;
     } catch (error) {
