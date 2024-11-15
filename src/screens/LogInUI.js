@@ -6,7 +6,6 @@ import LoginPassword from "../components/LoginPassword";
 import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
-import colors from "../assets/colors.js";
 
 const LogInContainer = styled.div`
   display: flex;

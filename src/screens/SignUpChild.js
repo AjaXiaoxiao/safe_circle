@@ -9,9 +9,6 @@ import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
-import colors from "../assets/colors.js";
-
-
 
 export default function ChatOverview() {
   return (
