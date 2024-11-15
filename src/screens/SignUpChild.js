@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LoginInput from "../components/LoginInput";
 import LoginPassword from "../components/LoginPassword";
 import LoginEmail from "../components/LoginEmail";
-import ButtonBlue from '../components/Buttons/ButtonBlue';
+import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
@@ -65,7 +65,7 @@ export default function ChatOverview() {
         <LoginEmail icon={Email} placeholder="Guardian email"/>
         <LoginPassword icon={Lock} placeholder="Password"/>
         <LoginPassword icon={Lock} placeholder="Confirm password"/>
-        <ButtonBlue title= "Get started" />
+        <Button color="blue" title= "Get started" />
       </FormContainer>
     </LogInContainer>
   );

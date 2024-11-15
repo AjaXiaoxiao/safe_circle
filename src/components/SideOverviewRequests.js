@@ -3,7 +3,6 @@ import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import PendingIcon from "./Notifications/PendingIcon";
 
-//Container for the overview rectangle
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
@@ -21,7 +20,7 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = styled.h2`
-  font-size: 1.1em;
+  font-size: 18px;
   color: #222;
   text-align: left;
   margin: 20px 20px;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
-import ButtonPurple from "../Buttons/ButtonPurple";
+import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 
 const PopUpAddNewContact = ({ isVisible, onClose }) => {
@@ -23,7 +23,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         <Label>Email</Label>
         <SmallTextField placeholder="Type something" />
         <ButtonContainer>
-          <ButtonPurple>Send request</ButtonPurple>
+          <Button title = "Send request"></Button>
         </ButtonContainer>
       </FormContainer>
     </PopUpContainer>

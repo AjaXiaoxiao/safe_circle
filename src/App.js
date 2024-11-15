@@ -22,8 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
         <Route path="/Contacts" element={<PopUpContactPage />} />
-        <Route path="/ChildOverview" element={<ChildOverviewPage/>} />
-
+        <Route path="/ChildOverview" element={<ChildOverviewPage/>} />6y
         <Route path="/contactspopup" element={<PopUpContactPage />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/login" element={<LogIn />} />

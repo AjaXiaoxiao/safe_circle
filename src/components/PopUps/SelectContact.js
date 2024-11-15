@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import Contact from "../../assets/Contact.png";
-import ButtonPurple from "../Buttons/ButtonPurple";
+import Button from "../Buttons/Button";
 
 const SelectContact = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
@@ -14,7 +14,7 @@ const SelectContact = ({ isVisible, onClose }) => {
       </CloseButton>
       <ContactIcon src={Contact} alt="Contact Icon" />
       <ContactName>Mom</ContactName>
-      <ButtonPurple title="Chat" />
+      <Button title="Chat" />
       <AboutText>About</AboutText>
       <DescriptionText>Guardian*</DescriptionText>
       <DescriptionText>MY MOMMMM xD</DescriptionText>

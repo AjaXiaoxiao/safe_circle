@@ -2,12 +2,11 @@ import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
-//Container for the overview rectangle
 const OverviewContainer = styled.div`
   background-color: white;
   border: solid #ccc 1px;
   width: 30vw;
-  height: 88vh;
+  height: 950px;
   border-top-left-radius: 20px;
   margin-top: 12vh;
   z-index: 10;
@@ -16,20 +15,22 @@ const OverviewContainer = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1.95vw 50px;
+  margin: 1vw;
 `;
 
 const Header = styled.h2`
-  font-size: 1.8em;
+  font-size: 18px;
   color: #222;
   text-align: left;
-  margin; 40px 50px;
+  margin: 20px 20px;
 `;
 
 const StyledPlusIcon = styled.img`
   width: 40px;
   height: 40px;
   margin-left: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
 `;
 
 const Separator = styled.div`
@@ -45,11 +46,11 @@ const ItemContainer = styled.div`
 const Item = styled.div`
   height: 110px;
   width: 99.9%;
-  background-color: #white;
+  background-color: #FFFFFF;
   border-top: solid #ccc 1px;
   border-bottom: solid #ccc 1px;
   display: flex;
-  align-item: center; /*center vertically*/
+  align-items: center; 
 `;
 
 const ProfileContainer = styled.div`

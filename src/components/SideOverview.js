@@ -16,20 +16,22 @@ const OverviewContainer = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1.95vw 50px;
+  margin: 1vw;
 `;
 
 const Header = styled.h2`
-  font-size: 1.8em;
+  font-size: 18px;
   color: #222;
   text-align: left;
-  margin: 40px 50px;
+  margin: 20px 20px;
 `;
 
 const StyledPlusIcon = styled.img`
   width: 40px;
   height: 40px;
   margin-left: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
 `;
 
 const Separator = styled.div`

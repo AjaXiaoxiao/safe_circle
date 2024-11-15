@@ -1,12 +1,9 @@
 import React from 'react'; 
 import styled from "styled-components";
-
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
-import ButtonPurpleApprove from "../Buttons/ButtonPurpleApprove";
-import ButtonRed from "../Buttons/ButtonRed";
+import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
-
 
 const PopUpChildOverview= ({ isVisible, onClose }) => {
     if (!isVisible) return null;
@@ -26,8 +23,8 @@ const PopUpChildOverview= ({ isVisible, onClose }) => {
         <Label>Email</Label>
         <SmallTextField placeholder="This is their email" />
         <ButtonContainer>
-          <ButtonPurpleApprove>Approve</ButtonPurpleApprove>
-          <ButtonRed>Decline</ButtonRed>
+          <Button title="Approve"/>
+          <Button title="Decline" color="red"/>
         </ButtonContainer>
       </FormContainer>
       </PopUpContainer>

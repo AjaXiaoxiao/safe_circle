@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
@@ -48,28 +49,36 @@ const StyledSidebar = styled.div`
 `;
 
 const Sidebar = () => {
-  const [active, setActive] = useState("chat");
+  const location = useLocation(); 
+  const [active, setActive] = useState(location.pathname); 
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location]);
 
   return (
     <StyledSidebar>
       <ul>
         <li
-          className={active === "chat" ? "active" : ""}
-          onClick={() => setActive("chat")}
+          className={active === "/" ? "active" : ""}
         >
-          <img src={chatIcon} alt="Chat" className="sidebar-icon" />
+          <Link to="/" onClick={() => setActive("/")}>
+            <img src={chatIcon} alt="Chat" className="sidebar-icon" />
+          </Link>
         </li>
         <li
-          className={active === "contacts" ? "active" : ""}
-          onClick={() => setActive("contacts")}
+          className={active === "/Contacts" ? "active" : ""}
         >
-          <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
+          <Link to="/Contacts" onClick={() => setActive("/Contacts")}>
+            <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
+          </Link>
         </li>
         <li
-          className={active === "child-overview" ? "active" : ""}
-          onClick={() => setActive("child-overview")}
+          className={active === "/ChildOverview" ? "active" : ""}
         >
-          <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
+          <Link to="/ChildOverview" onClick={() => setActive("/ChildOverview")}>
+            <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
+          </Link>
         </li>
       </ul>
     </StyledSidebar>

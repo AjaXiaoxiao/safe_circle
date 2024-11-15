@@ -10,16 +10,14 @@ const StyledNamebarTop = styled.div`
   gap: 2em;
   padding-left: 40px;
   justify-self: right;
-  border: solid 2px;
-  border-color: #C6C6C6;
+  border: solid #ccc 1px;
   fill: #FFFFFF;
   align-items: center;
   justify-content: left;
   font-size: large;
   font-weight: 700;
-  background-color: white;
+  background-color: #FFFFFF;
   font-family: Arial, Helvetica, sans-serif
-  margin-left: auto;
 `;
 
 const StyledImage = styled.img`
