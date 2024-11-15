@@ -93,10 +93,10 @@ export default function ChatOverview() {
       <FormContainer>
         <LoginInput icon={ProfileIcon}/>
         <LoginPassword icon={Lock} placeholder="Password"/>
-        <Button color={colors.purple} fullWidth title= "Log in" />
+        <Button color="purple" fullWidth title= "Log in" />
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <Button color={colors.blue} fullWidth title= "Sign up" />
+        <Button color="blue" fullWidth title= "Sign up" />
       </FormContainer>
     </LogInContainer>
   );

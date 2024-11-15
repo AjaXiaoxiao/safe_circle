@@ -11,7 +11,6 @@ import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from 'react-router-dom';
-import colors from "../assets/colors.js";
 
 const UserRegistrationParent = () => {
     const [username, setUsername] = useState('');
@@ -92,7 +91,7 @@ const UserRegistrationParent = () => {
         value={confirmPassword}
         onChange={(event) => setConfirmPassword(event.target.value)}
         />
-        <Button color={colors.blue}  fullWidth title= "Get started" onClick={ () => doUserRegistration() }/>
+        <Button color="blue" fullWidth title= "Get started" onClick={ () => doUserRegistration() }/>
       </FormContainer>
     </LogInContainer>
 

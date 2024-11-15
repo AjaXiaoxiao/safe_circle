@@ -27,7 +27,7 @@ export default function ChatOverview() {
         <LoginEmail icon={Email} placeholder="Guardian email"/>
         <LoginPassword icon={Lock} placeholder="Password"/>
         <LoginPassword icon={Lock} placeholder="Confirm password"/>
-        <Button color={colors.blue} title= "Get started" />
+        <Button color="blue" title= "Get started" />
       </FormContainer>
     </LogInContainer>
   );

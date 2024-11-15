@@ -8,8 +8,7 @@ import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import { useNavigate } from 'react-router-dom';
-import colors from "../assets/colors.js";
-	
+
 export const UserLogin = () => {
     
     const [username, setUsername] = useState('');
@@ -67,10 +66,10 @@ const doUserLogIn = async function () {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         />
-         <Button color={colors.purple} fullWidth title= "Log in" onClick={ () => doUserLogIn() }/>
+         <Button color="purple" fullWidth title= "Log in" onClick={ () => doUserLogIn() }/>
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <Button colo={colors.blue} fullWidth title= "Sign up" onClick={() => navigate('/userregistrationparent')}/>
+        <Button color="blue" fullWidth title= "Sign up" onClick={() => navigate('/userregistrationparent')}/>
       </FormContainer>
     </LogInContainer>
     );
