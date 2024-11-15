@@ -58,7 +58,6 @@ const getWidth = (width) => {
 const Button = ({ title, color, icon, width }) => {
   return (
     <StyledButton type="button" color={color} width={width} iconOnly={!!icon}>
-      {" "}
       {icon ? <img src={getIcon(icon)} alt={`${icon} icon`} /> : title}
     </StyledButton>
   );

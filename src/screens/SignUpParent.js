@@ -11,7 +11,6 @@ import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
 import colors from "../assets/colors"
 
-
 export default function SignUpParent() {
   return (
     <LogInContainer>

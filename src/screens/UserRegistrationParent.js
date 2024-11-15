@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import LoginInput from "../components/LoginInput";
 import LoginPassword from "../components/LoginPassword";
 import LoginEmail from "../components/LoginEmail";
-import ButtonBlue from '../components/Buttons/ButtonBlue';
+import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from 'react-router-dom';
+import colors from "../assets/colors.js";
 
 const UserRegistrationParent = () => {
     const [username, setUsername] = useState('');
@@ -91,7 +92,7 @@ const UserRegistrationParent = () => {
         value={confirmPassword}
         onChange={(event) => setConfirmPassword(event.target.value)}
         />
-        <ButtonBlue title= "Get started" onClick={ () => doUserRegistration() }/>
+        <Button color={colors.blue}  fullWidth title= "Get started" onClick={ () => doUserRegistration() }/>
       </FormContainer>
     </LogInContainer>
 
@@ -106,7 +107,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffffs;
+  background-color: #ffffff;
 `;
 
 const BackArrowContainer = styled.img`
