@@ -55,9 +55,9 @@ const getWidth = (width) => {
   }
 };
 
-const Button = ({ title, color, icon, width }) => {
+const Button = ({ title, color, icon, width, onClick }) => {
   return (
-    <StyledButton type="button" color={color} width={width} iconOnly={!!icon}>
+    <StyledButton type="button" color={color} width={width} iconOnly={!!icon} onClick={onClick}>
       {icon ? <img src={getIcon(icon)} alt={`${icon} icon`} /> : title}
     </StyledButton>
   );
