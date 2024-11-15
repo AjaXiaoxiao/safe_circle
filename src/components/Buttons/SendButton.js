@@ -12,10 +12,9 @@ const StyledSendButton = styled.div`
   justify-content: center;
 `;
 
-const SendButton = () => {
+const SendButton = ({ onClick }) => {
   return (
-    <StyledSendButton>
-      {" "}
+    <StyledSendButton onClick={onClick}>
       <img alt="send" src={SendIcon} />
     </StyledSendButton>
   );
