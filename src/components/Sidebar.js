@@ -5,6 +5,47 @@ import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
 
+
+const Sidebar = () => {
+  const location = useLocation(); 
+  const [active, setActive] = useState(location.pathname); 
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location]);
+
+  return (
+    <StyledSidebar>
+      <ul>
+        <li
+          className={active === "/" ? "active" : ""}
+        >
+          <Link to="/" onClick={() => setActive("/")}>
+            <img src={chatIcon} alt="Chat" className="sidebar-icon" />
+          </Link>
+        </li>
+        <li
+          className={active === "/Contacts" ? "active" : ""}
+        >
+          <Link to="/Contacts" onClick={() => setActive("/Contacts")}>
+            <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
+          </Link>
+        </li>
+        <li
+          className={active === "/ChildOverview" ? "active" : ""}
+        >
+          <Link to="/ChildOverview" onClick={() => setActive("/ChildOverview")}>
+            <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
+          </Link>
+        </li>
+      </ul>
+    </StyledSidebar>
+  );
+};
+
+export default Sidebar;
+
+
 const StyledSidebar = styled.div`
   width: 12vw;
   height: 88vh;
@@ -48,41 +89,3 @@ const StyledSidebar = styled.div`
   }
 `;
 
-const Sidebar = () => {
-  const location = useLocation(); 
-  const [active, setActive] = useState(location.pathname); 
-
-  useEffect(() => {
-    setActive(location.pathname);
-  }, [location]);
-
-  return (
-    <StyledSidebar>
-      <ul>
-        <li
-          className={active === "/" ? "active" : ""}
-        >
-          <Link to="/" onClick={() => setActive("/")}>
-            <img src={chatIcon} alt="Chat" className="sidebar-icon" />
-          </Link>
-        </li>
-        <li
-          className={active === "/Contacts" ? "active" : ""}
-        >
-          <Link to="/Contacts" onClick={() => setActive("/Contacts")}>
-            <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
-          </Link>
-        </li>
-        <li
-          className={active === "/ChildOverview" ? "active" : ""}
-        >
-          <Link to="/ChildOverview" onClick={() => setActive("/ChildOverview")}>
-            <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
-          </Link>
-        </li>
-      </ul>
-    </StyledSidebar>
-  );
-};
-
-export default Sidebar;

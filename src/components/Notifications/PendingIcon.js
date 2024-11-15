@@ -8,7 +8,7 @@ const StyledPendingIcon = styled.div`
   color: #000;
   width: 80px;
   height: 25px;
-  border-radius: 15px; /* Rounds the corners */
+  border-radius: 15px;
   font-size: 12px;
   font-weight: bold;
 `;

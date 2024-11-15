@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledNamebarTop = styled.div`
   width: 100%;
-  height: 18vh; 
+  height: 23vh; 
   display: flex;
   flex-direction: row ;
   flex-grow: 0 1 0;

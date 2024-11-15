@@ -9,6 +9,27 @@ import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from '../components/Topbar';
 import BackArrow from "../assets/BackArrow.png";
+import colors from "../assets/colors"
+
+
+export default function SignUpParent() {
+  return (
+    <LogInContainer>
+      <Topbar />  
+      <BackArrowContainer src={BackArrow} alt="Back Arrow" />
+      <Title>Create parent account</Title>
+      <SubTitle>Sign up as a parent</SubTitle>
+
+      <FormContainer>
+        <LoginInput icon={ProfileIcon}/>
+        <LoginEmail icon={Email} placeholder="Email"/>
+        <LoginPassword icon={Lock} placeholder="Password"/>
+        <LoginPassword icon={Lock} placeholder="Confirm password"/>
+        <Button color={colors.blue} title= "Get started" />
+      </FormContainer>
+    </LogInContainer>
+  );
+}
 
 const LogInContainer = styled.div`
   display: flex;
@@ -17,7 +38,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
 `;
 
 const BackArrowContainer = styled.img`
@@ -51,21 +72,3 @@ const FormContainer = styled.div`
 `;
 
 
-export default function ChatOverview() {
-  return (
-    <LogInContainer>
-      <Topbar />  
-      <BackArrowContainer src={BackArrow} alt="Back Arrow" />
-      <Title>Create parent account</Title>
-      <SubTitle>Sign up as a parent</SubTitle>
-
-      <FormContainer>
-        <LoginInput icon={ProfileIcon}/>
-        <LoginEmail icon={Email} placeholder="Email"/>
-        <LoginPassword icon={Lock} placeholder="Password"/>
-        <LoginPassword icon={Lock} placeholder="Confirm password"/>
-        <Button color="blue"  title= "Get started" />
-      </FormContainer>
-    </LogInContainer>
-  );
-}

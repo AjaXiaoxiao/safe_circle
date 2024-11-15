@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import LoginInput from "../components/LoginInput";
 import LoginPassword from "../components/LoginPassword";
-import Button from '../components/Buttons/Button';
+import ButtonPurpleLogin from '../components/Buttons/ButtonPurpleLogin';
+import ButtonBlue from '../components/Buttons/ButtonBlue';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 
@@ -92,10 +93,10 @@ export default function ChatOverview() {
       <FormContainer>
         <LoginInput icon={ProfileIcon}/>
         <LoginPassword icon={Lock} placeholder="Password"/>
-        <Button fullWidth title= "Log in" />
+        <ButtonPurpleLogin title= "Log in" />
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <Button color="blue" title= "Sign up" />
+        <ButtonBlue title= "Sign up" />
       </FormContainer>
     </LogInContainer>
   );
