@@ -70,7 +70,7 @@ const ItemContainer = styled.div`
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: ${({ isSelected }) => (isSelected ? "#f0f0f0" : "#ffffff")};
+  background-color: ${({ isSelected }) => (isSelected ? "#fee180" : "#ffffff")};
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;
