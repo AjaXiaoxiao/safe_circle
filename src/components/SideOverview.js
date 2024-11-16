@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import SideOverviewHeader from "./SideOverviewHeader"
+import ContactItem from "./ContactItem";
 
 const SideOverview = ({ title }) => {
   return (
@@ -8,15 +8,7 @@ const SideOverview = ({ title }) => {
       <SideOverviewHeader title={title}/>
       <Separator/>
       <ItemContainer>
-        <Item>
-          <ProfileContainer>
-            <ProfilePictureSmall />
-          </ProfileContainer>
-          <TextContainer>
-            <Name>Johanna</Name>
-            <MessageText>Hello. How are you doing..</MessageText>
-          </TextContainer>
-        </Item>
+        <ContactItem userId="UeBIhGKTZR"/>
       </ItemContainer>
     </OverviewContainer>
   );
@@ -65,36 +57,3 @@ const ItemContainer = styled.div`
   height: calc(80vs - 100px);
 `;
 
-const Item = styled.div`
-  height: 110px;
-  width: 100%;
-  background-color: #ffffff;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-`;
-
-const ProfileContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 20px; 
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
-  margin-left: 25px;
-  margin-top: 10px;
-`;
-
-const Name = styled.div`
-  font-size: 1.4 em;
-  font-weight: bold;
-`;
-
-const MessageText = styled.p`
-  font-size: 0.9em;
-`;
