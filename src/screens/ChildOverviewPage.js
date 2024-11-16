@@ -1,16 +1,30 @@
-import React, { useState } from 'react'; 
+import React, { useState } from "react";
 import Topbar from "../components/Topbar";
-import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
-import SideOverviewRequests from "../components/SideOverviewRequests";
-import PopUpChildOverview from '../components/PopUps/PopUpChildOverview';
-import ChatComponent from '../components/ChatComponent/ChatComponent';
+import SideOverview from "../components/SideOverview";
+import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
+import styled from "styled-components";
 
-export default function ChildOverviewPage() {
-  const [isPopupVisible, setPopupVisible] = useState(true); 
+const ColumnContainer = styled.div`
+  display: flex;
+  width: 100vw;
+`;
 
-  const togglePopup = () => {
-    setPopupVisible(!isPopupVisible);
+const ChildOverviewPage = () => {
+  const [selectedChild, setSelectedChild] = useState(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [clearSelection, setClearSelection] = useState(false);
+
+  const handleChildClick = (childName) => {
+    setSelectedChild(childName); 
+    setIsPopupVisible(true); 
+    setClearSelection(false); 
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupVisible(false); 
+    setSelectedChild(null); 
+    setClearSelection(true); 
   };
 
   return (
@@ -18,20 +32,22 @@ export default function ChildOverviewPage() {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverviewRequests title= "Child Overview" />
-                <PopUpChildOverview isVisible={isPopupVisible} onClose={togglePopup}/>
-        <BlurredComponent isBlurred={isPopupVisible}><ChatComponent/>
-        </BlurredComponent>
+        <SideOverview 
+          title="Child Overview" 
+          onContactClick={handleChildClick} 
+          context="ChildOverview" 
+          clearSelection={clearSelection} 
+        />
       </ColumnContainer>
+      {isPopupVisible && (
+        <PopUpChildOverview 
+          isVisible={isPopupVisible} 
+          onClose={handleClosePopup} 
+          childName={selectedChild} 
+        />
+      )}
     </div>
   );
-}
+};
 
-const ColumnContainer = styled.div`
-  display: flex;
-  width: 100vw;
-`;
-
-const BlurredComponent = styled.div`
-  filter: ${({ isBlurred }) => (isBlurred ? 'blur(2px)' : 'none')}; 
-`;
+export default ChildOverviewPage;

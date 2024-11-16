@@ -1,14 +1,36 @@
 import styled from "styled-components";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
-import SideOverviewHeader from "./SideOverviewHeader"
+import SideOverviewHeader from "./SideOverviewHeader";
+import React, { useState, useEffect } from "react";
 
-const SideOverview = ({ title }) => {
+const SideOverview = ({ title, onContactClick, context, clearSelection }) => {
+  const [selectedContact, setSelectedContact] = useState(null);
+
+  const handleContactClick = (contactName) => {
+    setSelectedContact(contactName);
+
+    if (context === "Contacts" || context === "ChildOverview") {
+      onContactClick(contactName); 
+    } else if (context === "Chat") {
+      onContactClick(contactName); 
+    }
+  };
+
+  useEffect(() => {
+    if (clearSelection) {
+      setSelectedContact(null);
+    }
+  }, [clearSelection]);
+
   return (
     <OverviewContainer>
-      <SideOverviewHeader title={title}/>
-      <Separator/>
+      <SideOverviewHeader title={title} />
+      <Separator />
       <ItemContainer>
-        <Item>
+        <Item
+          onClick={() => handleContactClick("Johanna")}
+          isSelected={selectedContact === "Johanna"}
+        >
           <ProfileContainer>
             <ProfilePictureSmall />
           </ProfileContainer>
@@ -21,6 +43,7 @@ const SideOverview = ({ title }) => {
     </OverviewContainer>
   );
 };
+
 export default SideOverview;
 
 //Container for the overview rectangle
@@ -34,27 +57,6 @@ const OverviewContainer = styled.div`
   z-index: 2;
 `;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 1vw;
-`;
-
-const Header = styled.h2`
-  font-size: 18px;
-  color: #222;
-  text-align: left;
-  margin: 40px 50px;
-`;
-
-const StyledPlusIcon = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
-`;
-
 const Separator = styled.div`
   height: 1px;
   background-color: #ccc;
@@ -62,23 +64,25 @@ const Separator = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  height: calc(80vs - 100px);
+  height: calc(80vh - 100px);
 `;
 
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: ${({ isSelected }) => (isSelected ? "#f0f0f0" : "#ffffff")};
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px; 
+  margin-left: 20px;
 `;
 
 const TextContainer = styled.div`
@@ -91,7 +95,7 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 1.4 em;
+  font-size: 1.4em;
   font-weight: bold;
 `;
 
