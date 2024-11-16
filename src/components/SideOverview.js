@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import SideOverviewHeader from "./SideOverviewHeader"
 import ContactItem from "./ContactItem";
+import PersonList from "./ContactItem";
+
 
 const SideOverview = ({ title }) => {
   return (
@@ -8,7 +10,7 @@ const SideOverview = ({ title }) => {
       <SideOverviewHeader title={title}/>
       <Separator/>
       <ItemContainer>
-        <ContactItem userId="UeBIhGKTZR"/>
+        <PersonList/>
       </ItemContainer>
     </OverviewContainer>
   );

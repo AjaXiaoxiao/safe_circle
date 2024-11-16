@@ -11,6 +11,7 @@ import Contacts from "./screens/Contacts";
 import UserRegistrationParent from "./screens/UserRegistrationParent";
 import UserLogin from "./screens/UserLogIn";
 import { PersonComponent } from "./components/TestDatabaseComponents/PersonComponent";
+import PersonList from "./components/ContactItem";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -34,7 +35,7 @@ function App() {
         <Route path="/signupparent" element={<SignUpParent />} />
         <Route path="/userregistrationparent" element={<UserRegistrationParent />} />
         <Route path="/userlogin" element={<UserLogin />} />
-        <Route path="/person" element={<PersonComponent />} />
+        <Route path="/person" element={<PersonList />} />
       </Routes>
     </Router>
   );
