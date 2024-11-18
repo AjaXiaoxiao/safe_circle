@@ -22,22 +22,53 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
+      const currentUser = Parse.User.current();
+      if (currentUser === null || currentUser === undefined) {
+        alert("No user is currently logged in. So there is no sender");
+        return;
+      }
+
+      const senderUsername = currentUser.get("username");
       const senderQuery = new Parse.Query("UserProfile");
-      const sender = await senderQuery.equalTo("username", "Jennie").first();
+      const sender = await senderQuery
+        .equalTo("username", senderUsername)
+        .first();
 
+      if (sender === null || senderQuery === undefined) {
+        alert("The sender profile does not exist");
+        return;
+      }
       const receiverQuery = new Parse.Query("UserProfile");
-      const receiver = await receiverQuery.equalTo("username", "Kim").first();
+      const receiver = await receiverQuery.equalTo("username", "Thore").first();
 
-      //if (!sender || !receiver) {
-      //alert("Sender or receiver not found. Please check usernames.");
-      //return;
-      //}
+      if (receiver === null || receiver === undefined) {
+        alert("The receiver profile does not exist");
+        return;
+      }
 
       Message.set("Sender", sender);
       Message.set("Receiver", receiver);
 
+      const chatQuery = new Parse.Query("Chat");
+      chatQuery.containsAll("Participants", [sender, receiver]);
+
+      let Chat = await chatQuery.first();
+
+      //if the a chat between the participants does not exist. Create a new one.
+      if (Chat === null || Chat === undefined) {
+        Chat = new Parse.Object("Chat");
+        Chat.set("Participants", [sender, receiver]);
+        Chat.set("Messages", [Message]);
+      } else {
+        let messages = Chat.get("Messages");
+        messages.push(Message);
+        Chat.set("Messages", messages);
+      }
+
       await Message.save();
-      alert("Message sent");
+      await Chat.save();
+
+      alert("Message sent and chat updated");
       setMessage("");
     } catch (error) {
       console.log("error", error);
