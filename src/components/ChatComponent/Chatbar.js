@@ -22,11 +22,11 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
-      const senderQuery = new Parse.Query("Person");
-      const sender = await senderQuery.equalTo("name", "Johanna").first();
+      const senderQuery = new Parse.Query("UserProfile");
+      const sender = await senderQuery.equalTo("username", "Kanel").first();
 
-      const receiverQuery = new Parse.Query("Person");
-      const receiver = await receiverQuery.equalTo("name", "Hanna").first();
+      const receiverQuery = new Parse.Query("UserProfile");
+      const receiver = await receiverQuery.equalTo("username", "Karry").first();
 
       //if (!sender || !receiver) {
       //alert("Sender or receiver not found. Please check usernames.");
@@ -55,7 +55,6 @@ const Chatbar = () => {
 
 export default Chatbar;
 
-
 const StyledChatbar = styled.div`
   width: 100%;
   height: 10vh;
@@ -67,4 +66,3 @@ const StyledChatbar = styled.div`
   justify-content: center;
   background-color: #ffffff;
 `;
-
