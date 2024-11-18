@@ -4,21 +4,6 @@ import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 
 
-// Individual Contact Item Component
-const ContactItem = ({ username }) => {
-  return (
-    <Item>
-      <ProfileContainer>
-        <ProfilePictureSmall />
-      </ProfileContainer>
-      <TextContainer>
-        <Name>{username}</Name>
-        <MessageText>Hello. How are you doing..</MessageText>
-      </TextContainer>
-    </Item>
-  );
-};
-
 const ContactList = () => {
   const [usernames, setUsernames] = useState([]); 
   const [error, setError] = useState(null); 
@@ -58,6 +43,20 @@ const ContactList = () => {
 };
 
 export default ContactList;
+
+const ContactItem = ({ username }) => {
+  return (
+    <Item>
+      <ProfileContainer>
+        <ProfilePictureSmall />
+      </ProfileContainer>
+      <TextContainer>
+        <Name>{username}</Name>
+        <MessageText>Hello. How are you doing..</MessageText>
+      </TextContainer>
+    </Item>
+  );
+};
 
 const Item = styled.div`
   height: 110px;
