@@ -28,16 +28,35 @@ const Chatbar = () => {
       const receiverQuery = new Parse.Query("UserProfile");
       const receiver = await receiverQuery.equalTo("username", "Kim").first();
 
-      //if (!sender || !receiver) {
-      //alert("Sender or receiver not found. Please check usernames.");
-      //return;
-      //}
+      if (!sender || !receiver) {
+        alert("Sender or receiver not found. Please check usernames.");
+        return;
+      }
 
       Message.set("Sender", sender);
       Message.set("Receiver", receiver);
 
+      const chatQuery = new Parse.Query("Chat");
+      chatQuery.containsAll("Participants", [sender, receiver]);
+
+      let Chat = await chatQuery.first();
+
+      //if the a chat between the participants does not exist. Create a new one.
+      if (Chat === null || Chat === undefined) {
+        Chat = new Parse.Object("Chat");
+        Chat.set("Participants", [sender, receiver]);
+        Chat.set("Messages", [Message]);
+      } else {
+        let messages = Chat.get("Messages");
+        messages.push(Message);
+        Chat.set("Messages", messages);
+      }
+
+      await Chat.save();
+
       await Message.save();
-      alert("Message sent");
+
+      alert("Message sent and chat updated");
       setMessage("");
     } catch (error) {
       console.log("error", error);
