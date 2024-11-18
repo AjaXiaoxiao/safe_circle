@@ -23,10 +23,10 @@ const Chatbar = () => {
 
       //Create another instance with a pointer to another object
       const senderQuery = new Parse.Query("UserProfile");
-      const sender = await senderQuery.equalTo("username", "Jennie").first();
+      const sender = await senderQuery.equalTo("username", "Olga").first();
 
       const receiverQuery = new Parse.Query("UserProfile");
-      const receiver = await receiverQuery.equalTo("username", "Kim").first();
+      const receiver = await receiverQuery.equalTo("username", "Thore").first();
 
       if (!sender || !receiver) {
         alert("Sender or receiver not found. Please check usernames.");
@@ -37,7 +37,8 @@ const Chatbar = () => {
       Message.set("Receiver", receiver);
 
       const chatQuery = new Parse.Query("Chat");
-      chatQuery.containsAll("Participants", [sender, receiver]);
+      chatQuery.equalTo("Participants", sender);
+      chatQuery.equalTo("Participants", receiver);
 
       let Chat = await chatQuery.first();
 
