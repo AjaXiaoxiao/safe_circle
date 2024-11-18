@@ -1,14 +1,34 @@
 import styled from "styled-components";
-import SideOverviewHeader from "./SideOverviewHeader"
+import SideOverviewHeader from "./SideOverviewHeader";
 import ContactItem from "./ContactItem";
 import Plus from "../assets/Plus.png";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Parse from "parse/dist/parse.min.js";
 import { useLocation } from "react-router-dom";
 
 const SideOverview = ({ title }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false); // State for popup visibility
+  const [contacts, setContacts] = useState([]); // State to store contacts
   const location = useLocation();
+
+  const fetchContacts = async () => {
+    try {
+      const query = new Parse.Query("ContactList"); // Query the ContactList table
+      const results = await query.find(); // Fetch all entries
+      const fetchedContacts = results.map((contact) => ({
+        username: contact.get("username"),
+        message: contact.get("message"), // Additional field
+      }));
+      setContacts(fetchedContacts); // Update state with fetched contacts
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchContacts(); // Fetch contacts when component mounts
+  }, []);
 
   const handleOpenPopup = () => {
     if (location.pathname === "/Contacts") {
@@ -17,7 +37,22 @@ const SideOverview = ({ title }) => {
   };
 
   const handleClosePopup = () => {
-    setIsPopupVisible(false); 
+    setIsPopupVisible(false);
+  };
+
+  const handleAddContact = async (newContact) => {
+    try {
+      const Contact = new Parse.Object("ContactList"); // Create a new entry in ContactList
+      Contact.set("username", newContact.username);
+      Contact.set("about", newContact.about);
+      Contact.set("email", newContact.email);
+      await Contact.save();
+
+      fetchContacts(); // Refresh the contact list
+      setIsPopupVisible(false); // Close the popup
+    } catch (error) {
+      console.error("Error adding contact:", error);
+    }
   };
 
   return (
@@ -25,21 +60,34 @@ const SideOverview = ({ title }) => {
       <HeaderContainer>
         <Header>{title}</Header>
         <StyledPlusIcon
-          src={Plus} 
+          src={Plus}
           alt="Add"
-          onClick={handleOpenPopup} 
+          onClick={handleOpenPopup}
         />
       </HeaderContainer>
       <Separator />
       <ItemContainer>
-        <ContactItem />
+        {contacts.map((contact, index) => (
+          <ContactItem
+            key={index}
+            username={contact.username}
+            message={contact.message}
+            showMessage={false} // Messages not shown in contacts view
+          />
+        ))}
       </ItemContainer>
-      <PopUpAddNewContact isVisible={isPopupVisible} onClose={handleClosePopup} />
+      <PopUpAddNewContact
+        isVisible={isPopupVisible}
+        onClose={handleClosePopup}
+        onAddContact={handleAddContact}
+      />
     </OverviewContainer>
   );
 };
+
 export default SideOverview;
 
+// Styled Components
 const OverviewContainer = styled.div`
   background-color: #ffffff;
   border: solid #ccc 1px;
@@ -78,6 +126,5 @@ const Separator = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  height: calc(80vs - 100px);
+  height: calc(80vh - 100px);
 `;
-
