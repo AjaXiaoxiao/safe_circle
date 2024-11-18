@@ -46,6 +46,13 @@ const UserRegistrationParent = () => {
       user.set("password", password);
       user.set("email", email);
 
+      const userProfile = new Parse.Object("UserProfile");
+      userProfile.set("username", username);
+      userProfile.set("email", email);
+      userProfile.set("userPointer", Parse.User.current());
+
+      await userProfile.save();
+
       // signUp method returns a Promise??, call it using await
       const createdUser = await user.signUp();
       alert(
