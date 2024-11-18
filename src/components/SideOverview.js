@@ -1,23 +1,45 @@
 import styled from "styled-components";
 import SideOverviewHeader from "./SideOverviewHeader"
 import ContactItem from "./ContactItem";
-import PersonList from "./ContactItem";
-
+import Plus from "../assets/Plus.png";
+import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const SideOverview = ({ title }) => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // State for popup visibility
+  const location = useLocation();
+
+  const handleOpenPopup = () => {
+    if (location.pathname === "/Contacts") {
+      setIsPopupVisible(true);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupVisible(false); 
+  };
+
   return (
     <OverviewContainer>
-      <SideOverviewHeader title={title}/>
-      <Separator/>
+      <HeaderContainer>
+        <Header>{title}</Header>
+        <StyledPlusIcon
+          src={Plus} 
+          alt="Add"
+          onClick={handleOpenPopup} 
+        />
+      </HeaderContainer>
+      <Separator />
       <ItemContainer>
-        <PersonList/>
+        <ContactItem />
       </ItemContainer>
+      <PopUpAddNewContact isVisible={isPopupVisible} onClose={handleClosePopup} />
     </OverviewContainer>
   );
 };
 export default SideOverview;
 
-//Container for the overview rectangle
 const OverviewContainer = styled.div`
   background-color: #ffffff;
   border: solid #ccc 1px;
@@ -31,7 +53,7 @@ const OverviewContainer = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1vw;
+  margin: 0.4vw;
 `;
 
 const Header = styled.h2`
@@ -44,9 +66,9 @@ const Header = styled.h2`
 const StyledPlusIcon = styled.img`
   width: 40px;
   height: 40px;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
+  margin-top: 30px;
+  margin-right: 10px;
+  cursor: pointer;
 `;
 
 const Separator = styled.div`

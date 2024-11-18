@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export default function SmallTextField({ value, onChange }) {
+export default function SmallTextField({ name, value, placeholder, onChange }) {
   return (
     <StyledTextField
+      name={name}
       value={value}
       onChange={onChange}
       type="text"
-      placeholder="Type a message"
+      placeholder={placeholder}
     />
   );
 }
