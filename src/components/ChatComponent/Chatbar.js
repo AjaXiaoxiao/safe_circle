@@ -22,14 +22,27 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
-      const senderQuery = new Parse.Query("UserProfile");
-      const sender = await senderQuery.equalTo("username", "Olga").first();
+      const currentUser = Parse.User.current();
+      if (currentUser === null || currentUser === undefined) {
+        alert("No user is currently logged in. So there is no sender");
+        return;
+      }
 
+      const senderUsername = currentUser.get("username");
+      const senderQuery = new Parse.Query("UserProfile");
+      const sender = await senderQuery
+        .equalTo("username", senderUsername)
+        .first();
+
+      if (sender === null || senderQuery === undefined) {
+        alert("The sender profile does not exist");
+        return;
+      }
       const receiverQuery = new Parse.Query("UserProfile");
       const receiver = await receiverQuery.equalTo("username", "Thore").first();
 
-      if (!sender || !receiver) {
-        alert("Sender or receiver not found. Please check usernames.");
+      if (receiver === null || receiver === undefined) {
+        alert("The receiver profile does not exist");
         return;
       }
 
@@ -37,8 +50,7 @@ const Chatbar = () => {
       Message.set("Receiver", receiver);
 
       const chatQuery = new Parse.Query("Chat");
-      chatQuery.equalTo("Participants", sender);
-      chatQuery.equalTo("Participants", receiver);
+      chatQuery.containsAll("Participants", [sender, receiver]);
 
       let Chat = await chatQuery.first();
 
@@ -53,9 +65,8 @@ const Chatbar = () => {
         Chat.set("Messages", messages);
       }
 
-      await Chat.save();
-
       await Message.save();
+      await Chat.save();
 
       alert("Message sent and chat updated");
       setMessage("");
