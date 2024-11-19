@@ -40,8 +40,8 @@ const PopUpContainer = styled.div`
   width: 340px;
   height: 450px;
   margin-left: 20%;
-  background-color: white;
-  color: black;
+  background-color: #ffffff;
+  color: #000000;
   border-radius: 8px;
   padding: 20px;
   display: flex;

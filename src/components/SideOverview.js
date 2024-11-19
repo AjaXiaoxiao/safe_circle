@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const SideOverview = ({ title }) => {
-  const [isPopupVisible, setIsPopupVisible] = useState(false); // State for popup visibility
+  const [isPopupVisible, setIsPopupVisible] = useState(false); 
   const location = useLocation();
 
   const handleOpenPopup = () => {
@@ -74,7 +74,7 @@ const StyledPlusIcon = styled.img`
 const Separator = styled.div`
   height: 1px;
   background-color: #ccc;
-  width: 99.9%;
+  width: 100%;
 `;
 
 const ItemContainer = styled.div`

@@ -20,7 +20,7 @@ const ContactList = () => {
         setContacts(fetchedContacts); 
       } catch (error) {
         console.error("Error fetching contacts:", error);
-        setError("Failed to fetch contacts. Please try again later.");
+        setError("Failed to fetch contact.");
       }
     };
 
@@ -31,19 +31,17 @@ const ContactList = () => {
 
   return (
     <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {contacts.length > 0 ? (
-        contacts.map((contact, index) => (
-          <ContactItem
-            key={index}
-            username={contact.username}
-            message={contact.message}
-            showMessage={showMessage} 
-          />
-        ))
-      ) : (
-        <p>Loading contacts...</p>
-      )}
+    {!error && contacts.length === 0 && <p>Loading...</p>}
+    {!error &&
+      contacts.length > 0 &&
+      contacts.map((contact, index) => (
+        <ContactItem
+          key={index}
+          username={contact.username}
+          message={contact.message}
+          showMessage={showMessage}
+        />
+      ))}
     </div>
   );
 };
