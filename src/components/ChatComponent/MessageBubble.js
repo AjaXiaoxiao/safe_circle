@@ -11,7 +11,7 @@ export default MessageBubble;
 
 const StyledMessageBubble = styled.div`
   width: 400px;
-  height: 110px;
+  height: 90px;
   padding: 15px 20px;
   display: flex;
   align-items: center;
@@ -35,10 +35,10 @@ const StyledMessageBubble = styled.div`
         : "left: 15px;"} 
     width: 0;
     height: 0;
-    border-left: ${(props) =>
-      props.isSender ? "none" : "10px solid transparent"}; 
-    border-right: ${(props) =>
+     border-left: ${(props) =>
       props.isSender ? "10px solid transparent" : "none"}; 
+    border-right: ${(props) =>
+      props.isSender ? "none" : "10px solid transparent"};
     border-top: 15px solid
       ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")};
   }
