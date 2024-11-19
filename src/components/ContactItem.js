@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
-import { useLocation } from "react-router-dom";
 
 const ContactList = () => {
-  const [contacts, setContacts] = useState([]); // Store contacts from ContactList table
+  const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const query = new Parse.Query("ContactList"); // Query the ContactList table
-        const results = await query.find(); // Fetch all entries
+        const query = new Parse.Query("ContactList"); 
+        const results = await query.find();
         const fetchedContacts = results.map((contact) => ({
-          username: contact.get("username"), // Adjust field names as per your table structure
-          message: contact.get("message"), // Example additional field
+          username: contact.get("username"),
         }));
-        setContacts(fetchedContacts); // Update state with fetched contacts
+        setContacts(fetchedContacts); 
       } catch (error) {
         console.error("Error fetching contacts:", error);
         setError("Failed to fetch contacts. Please try again later.");
@@ -28,7 +27,7 @@ const ContactList = () => {
     fetchContacts();
   }, []);
 
-  const showMessage = location.pathname === "/";
+  const showMessage = location.pathname === "/"; 
 
   return (
     <div>
@@ -39,7 +38,7 @@ const ContactList = () => {
             key={index}
             username={contact.username}
             message={contact.message}
-            showMessage={showMessage}
+            showMessage={showMessage} 
           />
         ))
       ) : (
@@ -51,6 +50,7 @@ const ContactList = () => {
 
 export default ContactList;
 
+
 const ContactItem = ({ username, message, showMessage }) => {
   return (
     <Item>
@@ -59,7 +59,7 @@ const ContactItem = ({ username, message, showMessage }) => {
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        {showMessage && <MessageText>{message || "No message available"}</MessageText>}
+        {showMessage && <MessageText>{message || "Hello. How are you doing.."}</MessageText>}
       </TextContainer>
     </Item>
   );

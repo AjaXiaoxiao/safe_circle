@@ -1,32 +1,10 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 
-const PopUpAddNewContact = ({ isVisible, onClose, onAddContact }) => {
-  const [formData, setFormData] = useState({
-    username: "",
-    about: "",
-    email: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = () => {
-    if (formData.username.trim()) {
-      onAddContact(formData); // Pass form data to parent handler
-      setFormData({ username: "", about: "", email: "" }); // Reset form
-      onClose(); // Close the popup
-    } else {
-      alert("Username is required!");
-    }
-  };
-
+const PopUpAddNewContact = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
 
   return (
@@ -39,28 +17,13 @@ const PopUpAddNewContact = ({ isVisible, onClose, onAddContact }) => {
       </ProfilePicContainer>
       <FormContainer>
         <Label>Name</Label>
-        <SmallTextField
-          name="username"
-          placeholder="Enter username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+        <SmallTextField placeholder="Type something" />
         <Label>About</Label>
-        <SmallTextField
-          name="about"
-          placeholder="Enter about info"
-          value={formData.about}
-          onChange={handleChange}
-        />
+        <SmallTextField placeholder="Type something" />
         <Label>Email</Label>
-        <SmallTextField
-          name="email"
-          placeholder="Enter email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <SmallTextField placeholder="Type something" />
         <ButtonContainer>
-          <Button title="Add new contact" onClick={handleSubmit}></Button>
+          <Button title = "Add new contact"></Button>
         </ButtonContainer>
       </FormContainer>
     </PopUpContainer>
@@ -69,7 +32,6 @@ const PopUpAddNewContact = ({ isVisible, onClose, onAddContact }) => {
 
 export default PopUpAddNewContact;
 
-// Styled components
 const PopUpContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -77,6 +39,7 @@ const PopUpContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 340px;
   height: 450px;
+  margin-left: 20%;
   background-color: white;
   color: black;
   border-radius: 8px;
@@ -85,10 +48,9 @@ const PopUpContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2;
   border: 1px solid #ccc;
 `;
-
 const CloseButton = styled.div`
   position: absolute;
   top: 10px;
@@ -104,15 +66,16 @@ const FormContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   align-items: center;
   margin-top: 30px;
 `;
 
 const Label = styled.label`
-  font-size: 12px;
+  font-size: 10px;
   color: #888;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
+  align-items: left;
 `;
 
 const ButtonContainer = styled.div`
