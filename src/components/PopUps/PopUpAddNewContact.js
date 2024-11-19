@@ -23,7 +23,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         <Label>Email</Label>
         <SmallTextField placeholder="Type something" />
         <ButtonContainer>
-          <Button title = "Send request"></Button>
+          <Button title = "Add new contact"></Button>
         </ButtonContainer>
       </FormContainer>
     </PopUpContainer>
@@ -39,17 +39,18 @@ const PopUpContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 340px;
   height: 450px;
-  background-color: white;
-  color: black;
+  margin-left: 20%;
+  background-color: #ffffff;
+  color: #000000;
   border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 2; 
+  z-index: 2;
+  border: 1px solid #ccc;
 `;
-
 const CloseButton = styled.div`
   position: absolute;
   top: 10px;
