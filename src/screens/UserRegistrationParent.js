@@ -53,7 +53,7 @@ const UserRegistrationParent = () => {
 
       await userProfile.save();
 
-      // signUp method returns a Promise??, call it using await
+      // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
