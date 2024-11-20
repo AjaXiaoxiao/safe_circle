@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
-import SideOverviewContacts from "../components/SideOverviewContacts";
+import SideOverview from "../components/SideOverview";
 import SelectContact from "../components/PopUps/SelectContact";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
@@ -17,7 +17,7 @@ export default function PopUpContactPage() {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverviewContacts title= "Contacts" />
+        <SideOverview title= "Contacts" />
                 <SelectContact isVisible={isPopupVisible} onClose={togglePopup}/>
                 <BlurredComponent isBlurred={isPopupVisible}> <ChatComponent/>
                 </BlurredComponent>
