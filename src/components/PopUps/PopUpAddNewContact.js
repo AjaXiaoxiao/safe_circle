@@ -8,7 +8,7 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 
 const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
-  const [setError] = useState(null);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({ username: "", about: "", email: "" });
 
   const handleFormSubmit = async (event) => {
