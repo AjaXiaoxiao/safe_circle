@@ -24,7 +24,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
-        <Route path="/contacts" element={<PopUpContactPage />} />
+        <Route path="/contactsPopUp" element={<PopUpContactPage />} />
         <Route path="/childoverview" element={<ChildOverviewPage />} />
         <Route path="/contactspopup" element={<PopUpContactPage />} />
         <Route path="/contacts" element={<Contacts />} />
