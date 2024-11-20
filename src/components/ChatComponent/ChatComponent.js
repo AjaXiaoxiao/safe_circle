@@ -1,15 +1,29 @@
 import styled from "styled-components";
 import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
-import ChatBubble from "./MessageBubble";
+import MessageBubble from "./MessageBubble";
 
 const ChatComponent = () => {
+  const messages = [
+    { id: 1, text: "Hello! How are you?", isSender: false },
+    { id: 2, text: "I'm fine, thank you!", isSender: true },
+    { id: 3, text: "See you next week for soccer!", isSender: true },
+  ];
+
   return (
     <div>
       <ChatContainer>
         <NamebarTop />
         <StyledMessageBubble>
-          <ChatBubble />
+        <MessageList>
+          {messages.map((msg) => (
+            <MessageBubble
+              key={msg.id}
+              message={msg.text}
+              isSender={msg.isSender}
+            />
+          ))}
+        </MessageList>
         </StyledMessageBubble>
         <Chatbar />
       </ChatContainer>
@@ -33,8 +47,13 @@ const ChatContainer = styled.div`
 
 const StyledMessageBubble = styled.div`
   height: 71vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
+  width: auto;
+  align-items: flex;
   margin-top: 10vh;
+`;
+
+const MessageList = styled.div`
+  display: flex;
+  flex-direction: column; /* Ensures messages stack vertically */
+  gap: 15px; /* Adds spacing between messages */
 `;
