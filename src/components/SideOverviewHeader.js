@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
 
-export default function SideOverview({ title }) {
+export default function SideOverviewHeader({ title, onAddClick }) {
   return (
     <HeaderContainer>
       <Header>{title}</Header>
-      <StyledPlusIcon src={plusIcon} />
+      <StyledPlusIcon onClick={onAddClick} src={plusIcon}/>
     </HeaderContainer>
   );
 }
