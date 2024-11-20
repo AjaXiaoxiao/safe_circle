@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
+import PendingIcon from "./Notifications/PendingIcon";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -28,6 +29,7 @@ const ContactList = () => {
   }, []);
 
   const showMessage = location.pathname === "/"; 
+  const isRequest = location.pathname === "/ChildOverview";
 
   return (
     <div>
@@ -40,6 +42,8 @@ const ContactList = () => {
           username={contact.username}
           message={contact.message}
           showMessage={showMessage}
+          isRequest={isRequest}
+         
         />
       ))}
     </div>
@@ -49,7 +53,7 @@ const ContactList = () => {
 export default ContactList;
 
 
-const ContactItem = ({ username, message, showMessage }) => {
+const ContactItem = ({ username, message, showMessage, isRequest }) => {
   return (
     <Item>
       <ProfileContainer>
@@ -58,6 +62,7 @@ const ContactItem = ({ username, message, showMessage }) => {
       <TextContainer>
         <Name>{username}</Name>
         {showMessage && <MessageText>{message || "Hello. How are you doing.."}</MessageText>}
+        {isRequest &&  <PendingIcon/>}
       </TextContainer>
     </Item>
   );
