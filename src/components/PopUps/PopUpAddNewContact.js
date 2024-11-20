@@ -1,29 +1,84 @@
+import React, { useState} from "react";
+import Parse from "parse/dist/parse.min.js";
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
+
 import SmallTextField from "../TextFields/SmallTextField";
 
-const PopUpAddNewContact = ({ isVisible, onClose }) => {
-  if (!isVisible) return null;
+const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
+  const [setError] = useState(null);
+  const [formData, setFormData] = useState({ username: "", about: "", email: "" });
 
+  const handleFormSubmit = async (event) => {
+    console.log("Form submitted with data:", formData);
+    event.preventDefault();
+    try {
+      const ContactList = Parse.Object.extend("ContactList");
+      const newContact = new ContactList();
+
+      newContact.set("username", formData.username);
+      newContact.set("email", formData.email);
+      newContact.set("about", formData.about);
+
+      await newContact.save();
+      console.log("Contact saved successfully!");
+  
+      setFormData({ username: "", about: "", email: "" });
+      fetchContacts();
+    } catch (error) {
+      console.error("Error saving contact:", error);
+      setError("Failed to save contact.");
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  if (!isVisible) return null;
   return (
-    <PopUpContainer>
+    <PopUpContainer fetchContact={fetchContacts}>
       <CloseButton onClick={onClose}>
         <XButton />
       </CloseButton>
       <ProfilePicContainer>
         <ProfilePictureBig />
       </ProfilePicContainer>
-      <FormContainer>
+      <FormContainer onSubmit={handleFormSubmit}>
         <Label>Name</Label>
-        <SmallTextField placeholder="Type something" />
+        <SmallTextField
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+          placeholder="Enter your name here"
+        />
+
         <Label>About</Label>
-        <SmallTextField placeholder="Type something" />
+        <SmallTextField
+          name="about"
+          value={formData.about}
+          onChange={handleInputChange}
+          placeholder="Say something about you"
+        />
+
         <Label>Email</Label>
-        <SmallTextField placeholder="Type something" />
+        <SmallTextField
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          placeholder="Your email here"
+        />
+
         <ButtonContainer>
-          <Button title = "Add new contact"></Button>
+          <Button
+            width="fullWidth"
+            title="Add new contact"
+            type="submit"
+            onClick={handleFormSubmit}
+          ></Button>
         </ButtonContainer>
       </FormContainer>
     </PopUpContainer>
@@ -40,6 +95,7 @@ const PopUpContainer = styled.div`
   width: 340px;
   height: 450px;
   margin-left: 20%;
+  margin-right: 20%;
   background-color: #ffffff;
   color: #000000;
   border-radius: 8px;
@@ -80,4 +136,7 @@ const Label = styled.label`
 
 const ButtonContainer = styled.div`
   margin-top: 20px;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
 `;
