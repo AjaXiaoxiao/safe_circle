@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import LoginInput from "../components/LoginInput";
-import LoginPassword from "../components/LoginPassword";
 import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
@@ -15,8 +14,8 @@ export default function ChatOverview() {
       <SubTitle>Log in to your account</SubTitle>
 
       <FormContainer>
-        <LoginInput icon={ProfileIcon}/>
-        <LoginPassword icon={Lock} placeholder="Password"/>
+        <LoginInput icon={ProfileIcon} placeholder="Username"/>
+        <LoginInput icon={Lock} placeholder="Password"/>
         <Button color="purple" width="fullWidth" title= "Log in" />
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
