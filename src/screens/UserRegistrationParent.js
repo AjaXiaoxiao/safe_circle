@@ -50,12 +50,13 @@ const UserRegistrationParent = () => {
       userProfile.set("username", username);
       userProfile.set("email", email);
       //userProfile.set("userPointer", Parse.User.current());
-      userProfile.set("userPointer", user);
 
       await userProfile.save();
 
       // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
+      userProfile.set("userPointer", createdUser);
+
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
       );
