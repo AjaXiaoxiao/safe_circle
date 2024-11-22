@@ -18,7 +18,7 @@ const ChatComponent = () => {
     const getChat = async () => {
       try {
         const chatQuery = new Parse.Query("Chat");
-        const currentUser = Parse.User.current();
+        const currentUser = Parse.User.current().id;
         //const currentUser = new Parse.Object("UserProfile");
         //currentUser.id = "0IbpR1MVWv";
 
@@ -28,8 +28,8 @@ const ChatComponent = () => {
         }
         const receiver = new Parse.Object("UserProfile");
         receiver.id = "Fjp85SDapY"; //hardcoded for now
-        chatQuery.equalTo("Participants", currentUser);
         chatQuery.equalTo("Participants", receiver);
+        chatQuery.equalTo("Participants", currentUser);
         //chatQuery.containsAll("Participants", [currentUser, receiver]);
 
         const chat = await chatQuery.first();

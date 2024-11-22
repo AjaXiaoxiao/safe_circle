@@ -49,7 +49,8 @@ const UserRegistrationParent = () => {
       const userProfile = new Parse.Object("UserProfile");
       userProfile.set("username", username);
       userProfile.set("email", email);
-      userProfile.set("userPointer", Parse.User.current());
+      //userProfile.set("userPointer", Parse.User.current());
+      userProfile.set("userPointer", user);
 
       await userProfile.save();
 
