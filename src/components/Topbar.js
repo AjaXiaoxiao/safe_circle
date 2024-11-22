@@ -1,7 +1,7 @@
 import logo from "../assets/Logo.png";
 import React from "react";
 import styled from "styled-components";
-
+import colors from '../assets/colors'; 
 
 const Topbar = () => {
   return (
@@ -18,7 +18,7 @@ export default Topbar;
 const StyledTopbar = styled.div`
   width: 100vw;
   height: 12vh;
-  background-color: #fee180;
+  background-color: ${colors.yellow};
   display: flex;
   align-items: center;
   padding: 0 20px;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
 import MessageBubble from "./MessageBubble";
+import colors from '../../assets/colors'; 
 
 const ChatComponent = () => {
   const messages = [
@@ -42,7 +43,7 @@ const ChatContainer = styled.div`
   justify-content: flex-end;
   position: absolute;
   margin-left: 0;
-  background-color: #ebf9fb;
+  background-color: ${colors.backgroundBlue};
 `;
 
 const StyledMessageBubble = styled.div`
@@ -54,6 +55,6 @@ const StyledMessageBubble = styled.div`
 
 const MessageList = styled.div`
   display: flex;
-  flex-direction: column; /* Ensures messages stack vertically */
-  gap: 15px; /* Adds spacing between messages */
+  flex-direction: column; 
+  gap: 15px; 
 `;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import Contact from "../../assets/Contact.png";
 import Button from "../Buttons/Button";
+import colors from '../../assets/colors'; 
 
 const SelectContact = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
@@ -33,8 +34,8 @@ const PopUpContainer = styled.div`
   right: 150px; 
   width: 500px;
   height: 500px;
-  background-color: white;
-  color: black;
+  background-color: ${colors.white};
+  color:${colors.black};
   border-radius: 8px;
   padding: 20px;
   display: flex;
@@ -42,7 +43,7 @@ const PopUpContainer = styled.div`
   align-items: center;
   justify-content: flex-start; 
   z-index: 2; 
-  border: 1px solid #ccc;
+  border: 1px solid ${colors.grey};
 `;
 
 const CloseButton = styled.div`
@@ -60,12 +61,12 @@ const ContactIcon = styled.img`
 
 const ContactName = styled.h2`
   font-weight: bold;
-  color: black;
+  color: ${colors.black};
   margin: 5px 0; 
 `;
 
 const FieldTitle = styled.p`
-  color: grey;
+  color: ${colors.grey};
   margin: 5px 0; 
 `;
 
@@ -74,6 +75,6 @@ const Spacer = styled.div`
 `;
 
 const FieldValue = styled.p`
-  color: black;
+  color: ${colors.black};
   margin: 5px 0; 
 `;

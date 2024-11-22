@@ -4,6 +4,7 @@ import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
+import colors from '../../assets/colors'; 
 
 import SmallTextField from "../TextFields/SmallTextField";
 
@@ -96,8 +97,8 @@ const PopUpContainer = styled.div`
   height: 450px;
   margin-left: 20%;
   margin-right: 20%;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: ${colors.white};
+  color: ${colors.black};
   border-radius: 8px;
   padding: 20px;
   display: flex;
@@ -105,7 +106,7 @@ const PopUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 2;
-  border: 1px solid #ccc;
+  border: 1px solid ${colors.grey};
 `;
 const CloseButton = styled.div`
   position: absolute;
@@ -129,7 +130,7 @@ const FormContainer = styled.div`
 
 const Label = styled.label`
   font-size: 10px;
-  color: #888;
+  color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const MessageBubble = ({ message, isSender }) => {
   return (
@@ -17,9 +18,9 @@ const StyledMessageBubble = styled.div`
   align-items: center;
   margin: 10px;
   margin-bottom: 30px;
-  background-color: #ffffff;
-  color: #000; 
-  border: 2px solid ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")}; /* Purple border for sender, yellow border for receiver */
+  background-color: ${colors.white};
+  color:${colors.black}; 
+  border: 2px solid ${(props) => (props.isSender ? colors.purple : colors.yellow)}; /* Purple border for sender, yellow border for receiver */
   border-radius: 5px;
   position: relative;
   align-self: ${(props) =>
@@ -41,7 +42,7 @@ const StyledMessageBubble = styled.div`
     border-right: ${(props) =>
       props.isSender ? "none" : "10px solid transparent"};
     border-top: 15px solid
-      ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")};
+      ${(props) => (props.isSender ? colors.purple : colors.yellow)};
   }
 `;
 

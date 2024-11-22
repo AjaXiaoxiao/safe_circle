@@ -3,7 +3,6 @@ import Parse from 'parse/dist/parse.min.js';
 import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import LoginInput from "../components/LoginInput";
-import LoginPassword from "../components/LoginPassword";
 import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
@@ -60,7 +59,7 @@ const doUserLogIn = async function () {
         value={username}
 	      onChange={(event) => setUsername(event.target.value)}
         />
-        <LoginPassword 
+        <LoginInput
         icon={Lock} 
         placeholder="Password"
         value={password}

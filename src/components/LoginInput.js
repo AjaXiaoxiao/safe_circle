@@ -39,6 +39,6 @@ const StyledInput = styled.input`
   border-radius: 20px;
   border: 2px solid ${colors.yellow};
   width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color:${colors.white};
+  box-shadow: 0px 4px 8px ${colors.black};
 `;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
+import colors from '../../assets/colors'; 
 
 const XButton = () => {
   return (
@@ -15,8 +16,8 @@ const StyledButton = styled.button`
   padding: 6px;
   border: none;
   border-radius: 5px;
-  background-color: #ffffff;
-  color: black;
+  background-color: ${colors.white};
+  color: ${colors.black};
   cursor: pointer;
   font-weight: bold;
   display: flex;
@@ -24,7 +25,7 @@ const StyledButton = styled.button`
   justify-content: center;
 
   &:hover {
-    color: white;
-    background-color: #ff6565;
+    color: ${colors.white};
+    background-color: ${colors.hoverRed};
   }
 `;
