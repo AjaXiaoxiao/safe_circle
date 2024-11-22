@@ -18,9 +18,9 @@ const ChatComponent = () => {
     const getChat = async () => {
       try {
         const chatQuery = new Parse.Query("Chat");
-        //const currentUser = Parse.User.current();
-        const currentUser = new Parse.Object("UserProfile");
-        currentUser.id = "0IbpR1MVWv";
+        const currentUser = Parse.User.current();
+        //const currentUser = new Parse.Object("UserProfile");
+        //currentUser.id = "0IbpR1MVWv";
 
         if (currentUser === undefined || currentUser === null) {
           alert("No user is currently logged in.");
@@ -28,7 +28,9 @@ const ChatComponent = () => {
         }
         const receiver = new Parse.Object("UserProfile");
         receiver.id = "Fjp85SDapY"; //hardcoded for now
-        chatQuery.containsAll("Participants", [currentUser, receiver]);
+        chatQuery.equalTo("Participants", currentUser);
+        chatQuery.equalTo("Participants", receiver);
+        //chatQuery.containsAll("Participants", [currentUser, receiver]);
 
         const chat = await chatQuery.first();
 
