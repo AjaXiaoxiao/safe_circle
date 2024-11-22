@@ -43,4 +43,6 @@ const OverviewContainer = styled.div`
   border-top-left-radius: 20px;
   margin-top: 12vh;
   z-index: 2;
+  overflow-y: auto;
 `;
+
