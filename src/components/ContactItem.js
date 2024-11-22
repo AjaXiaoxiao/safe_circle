@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import PendingIcon from "./Notifications/PendingIcon";
+import colors from '../assets/colors'; 
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -71,9 +72,9 @@ const ContactItem = ({ username, message, showMessage, isRequest }) => {
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: #ffffff;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  background-color: ${colors.white};
+  border-top: 1px solid ${colors.grey};
+  border-bottom: 1px solid ${colors.grey};
   display: flex;
   align-items: center;
 `;

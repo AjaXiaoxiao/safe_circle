@@ -4,6 +4,7 @@ import Button from "../Buttons/Button";
 import EmojiPickerButton from "../Buttons/EmojiPickerButton";
 import { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
+import colors from '../../assets/colors'; 
 
 const Chatbar = () => {
   const [message, setMessage] = useState("");
@@ -91,9 +92,9 @@ const StyledChatbar = styled.div`
   height: 10vh;
   display: flex;
   flex-direction: row;
-  border: solid #ccc 1px;
-  fill: #ffffff;
+  border: solid ${colors.grey} 1px;
+  fill: ${colors.white};
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;

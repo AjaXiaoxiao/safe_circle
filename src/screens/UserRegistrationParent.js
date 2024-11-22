@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
 import styled from "styled-components";
 import LoginInput from "../components/LoginInput";
-import LoginPassword from "../components/LoginPassword";
-import LoginEmail from "../components/LoginEmail";
 import Button from "../components/Buttons/Button";
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
@@ -11,6 +9,7 @@ import Email from "../assets/Email.png";
 import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from "react-router-dom";
+import colors from '../assets/colors'; 
 
 const UserRegistrationParent = () => {
   const [username, setUsername] = useState("");
@@ -84,19 +83,19 @@ const UserRegistrationParent = () => {
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
-        <LoginEmail
+        <LoginInput
           icon={Email}
           placeholder="Email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <LoginPassword
+        <LoginInput
           icon={Lock}
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <LoginPassword
+        <LoginInput
           icon={Lock}
           placeholder="Confirm password"
           value={confirmPassword}
@@ -122,7 +121,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;
 
 const BackArrowContainer = styled.img`
@@ -137,13 +136,13 @@ const BackArrowContainer = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: #000;
+  color: ${colors.black};
   margin: 10px 0;
 `;
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: #000000;
+  color:${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
 `;

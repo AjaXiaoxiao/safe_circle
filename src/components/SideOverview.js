@@ -4,6 +4,7 @@ import ContactItem from "./ContactItem";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import colors from '../assets/colors'; 
 
 const SideOverview = ({ title }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -36,13 +37,13 @@ const SideOverview = ({ title }) => {
 export default SideOverview;
 
 const OverviewContainer = styled.div`
-  background-color: #ffffff;
-  border: solid #ccc 1px;
+  background-color: ${colors.white};
+  border: solid ${colors.grey} 1px;
   width: 30vw;
   height: 88vh;
   border-top-left-radius: 20px;
   margin-top: 12vh;
-  z-index: 2;
+  z-index: 10;
   overflow-y: auto;
 `;
 

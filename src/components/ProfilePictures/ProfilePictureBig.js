@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const ProfilePictureBig = () => {
   return (
@@ -23,6 +24,6 @@ const ProfilePic = styled.img`
   border-radius: ${(props) => (props.rounded ? "50%" : "0")};
 
 
-  box-shadow: 0 0 0 9px #fff, 0 0 0 13px #a9e7eb;
-  background-color: #ffffff;
+  box-shadow: 0 0 0 9px  ${colors.white}, 0 0 0 13px ${colors.blue};
+  background-color: ${colors.white};
 `;

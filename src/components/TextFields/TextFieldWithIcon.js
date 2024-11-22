@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const TextFieldWithIcon = ({ icon, placeholder }) => {
   return (
@@ -23,11 +24,11 @@ const StyledIcon = styled.img`
 `;
 
 const StyledTextFieldSmall = styled.input`
-  background-color: #ffffff;
+  background-color: ${colors.white};
   width: 23%;
-  color: #000000;
+  color:  ${colors.black};
   border-radius: 16px;
-  border: solid #fed449;
+  border: solid  ${colors.yellow};
   font-size: 1em;
   padding: 1em 1em 1em 4em;
   margin: 0.6em;

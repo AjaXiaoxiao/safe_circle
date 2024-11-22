@@ -1,5 +1,6 @@
 import contact from "../../assets/Contact.png";
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const NamebarTop = () => {
   return (
@@ -25,13 +26,13 @@ const StyledNamebarTop = styled.div`
   gap: 2em;
   padding-left: 40px;
   justify-self: right;
-  border: solid #ccc 1px;
-  fill: #FFFFFF;
+  border: solid ${colors.grey} 1px;
+  fill: ${colors.white};
   align-items: center;
   justify-content: left;
   font-size: large;
   font-weight: 700;
-  background-color: #FFFFFF;
+  background-color: ${colors.white};
   font-family: Arial, Helvetica, sans-serif;
 `;
 

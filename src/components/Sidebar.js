@@ -4,6 +4,7 @@ import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
+import colors from '../assets/colors'; 
 
 
 const Sidebar = () => {
@@ -49,7 +50,7 @@ export default Sidebar;
 const StyledSidebar = styled.div`
   width: 12vw;
   height: 88vh;
-  background-color: #fee180;
+  background-color: ${colors.yellow};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -57,7 +58,7 @@ const StyledSidebar = styled.div`
   margin-top: 12vh;
   padding: 60px 0;
   padding-right: 30px;
-  z-index: 1;
+  z-index: 0;
   margin-right: -2vw;
 
   ul {
@@ -77,7 +78,7 @@ const StyledSidebar = styled.div`
       top: 10px;
       height: 22px;
       width: 4px;
-      background-color: #bb65ff;
+      background-color: ${colors.purple};
       border-radius: 4px;
     }
   }
