@@ -8,6 +8,7 @@ import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import { useNavigate } from 'react-router-dom';
+import PopUpRegistration from '../components/PopUps/PopUpRegistration';
 
 export const UserLogin = () => {
     
@@ -15,6 +16,11 @@ export const UserLogin = () => {
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate(); 
+    const [isPopupVisible, setPopupVisible] = useState(false); 
+
+    const togglePopup = () => {
+      setPopupVisible(!isPopupVisible);
+    };
     	
     const getCurrentUser = async function () { 
     	const currentUser = await Parse.User.current();
@@ -69,8 +75,9 @@ const doUserLogIn = async function () {
          <Button color="purple" fullWidth title= "Log in" onClick={ () => doUserLogIn() }/>
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <Button color="blue" fullWidth title= "Sign up" onClick={() => navigate('/userregistrationparent')}/>
+        <Button color="blue" fullWidth title= "Sign up" textColor="black" onClick={togglePopup}/>
       </FormContainer>
+      <PopUpRegistration isVisible={isPopupVisible} onClose={togglePopup}/>
     </LogInContainer>
     );
 };

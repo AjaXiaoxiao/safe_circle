@@ -106,6 +106,7 @@ const UserRegistrationParent = () => {
           color="blue"
           fullWidth
           title="Get started"
+          textColor="black"
           onClick={() => doUserRegistration()}
         />
       </FormContainer>
