@@ -10,14 +10,18 @@ import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const UserRegistrationParent = () => {
+const UserRegistration = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const registrationType = location.state?.registrationType || "parent";
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [guardianEmail, setGuardianEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();
 
   const doUserRegistration = async function () {
     if (!username) {
@@ -52,6 +56,20 @@ const UserRegistrationParent = () => {
 
       await userProfile.save();
 
+      if (registrationType === "child") {
+        user.set("isChild", true);
+        user.set("isVerified", false);
+        user.set("guardianEmail", guardianEmail);
+        userProfile.set("isChild", true);
+        userProfile.set("isVerified", false);
+        userProfile.set("guardianEmail", guardianEmail);
+      } else {
+        user.set("isChild", false);
+        user.set("isVerified", true);
+        userProfile.set("isChild,false");
+        userProfile.set("isVerified", true);
+      }
+
       // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
@@ -74,8 +92,12 @@ const UserRegistrationParent = () => {
         alt="Back Arrow"
         onClick={() => navigate("/userlogin")}
       />
-      <Title>Create parent account</Title>
-      <SubTitle>Sign up as a parent</SubTitle>
+      <Title>
+        {registrationType === "parent" ? "Create parent account" : "Create child account"}
+      </Title>
+      <SubTitle>
+        {registrationType === "parent" ? "Sign up as a parent" : "Sign up as a child"}
+      </SubTitle>
 
       <FormContainer>
         <LoginInput
@@ -90,6 +112,14 @@ const UserRegistrationParent = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
+        {registrationType === "child" && (
+          <LoginEmail
+            icon={Email}
+            placeholder="Guardian email"
+            value={guardianEmail}
+            onChange={(event) => setGuardianEmail(event.target.value)}
+          />
+        )}
         <LoginPassword
           icon={Lock}
           placeholder="Password"
@@ -113,7 +143,7 @@ const UserRegistrationParent = () => {
     </LogInContainer>
   );
 };
-export default UserRegistrationParent;
+export default UserRegistration;
 
 const LogInContainer = styled.div`
   display: flex;
