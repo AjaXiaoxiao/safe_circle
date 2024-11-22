@@ -11,11 +11,12 @@ export default MessageBubble;
 
 const StyledMessageBubble = styled.div`
   width: 400px;
-  height: 90px;
+  height: auto;
   padding: 15px 20px;
   display: flex;
   align-items: center;
   margin: 10px;
+  margin-bottom: 30px;
   background-color: #ffffff;
   color: #000; 
   border: 2px solid ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")}; /* Purple border for sender, yellow border for receiver */
@@ -43,3 +44,5 @@ const StyledMessageBubble = styled.div`
       ${(props) => (props.isSender ? "#BB65FF" : "#FEE180")};
   }
 `;
+
+
