@@ -51,13 +51,13 @@ const getWidth = (width) => {
     case "regular":
       return "30%";
     default:
-      return "40%";
+      return "50%";
   }
 };
 
-const Button = ({ title, color, icon, width, onClick }) => {
+const Button = ({ title, color, icon, width, textColor, onClick }) => {
   return (
-    <StyledButton type="button" color={color} width={width} iconOnly={!!icon} onClick={onClick}>
+    <StyledButton type="button" color={color} width={width} iconOnly={!!icon} textColor={textColor} onClick={onClick}>
       {icon ? <img src={getIcon(icon)} alt={`${icon} icon`} /> : title}
     </StyledButton>
   );
