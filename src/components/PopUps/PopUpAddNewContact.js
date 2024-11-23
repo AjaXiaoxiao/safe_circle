@@ -21,20 +21,38 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
         throw new Error("No user is logged in.");
       }
 
-      // Step 2: Create a new contact
+      // Step 2: Create or fetch the UserProfile object for the contact (assuming the username and email come from this form)
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("username", formData.username); // You could match by email as well
+      const existingUserProfile = await userProfileQuery.first();
+
+      let contactUserProfile;
+      if (existingUserProfile) {
+        contactUserProfile = existingUserProfile;
+      } else {
+        // Create a new UserProfile if one doesn't exist
+        const UserProfile = Parse.Object.extend("UserProfile");
+        contactUserProfile = new UserProfile();
+        contactUserProfile.set("username", formData.username);
+        contactUserProfile.set("email", formData.email);
+        contactUserProfile.set("UserPointer", currentUser); // Link it to the current user
+        await contactUserProfile.save();
+      }
+
+      // Step 3: Create a new contact
       const Contact = Parse.Object.extend("Contact");
       const newContact = new Contact();
 
-      // Set the contact's attributes
-      newContact.set("username", formData.username);
-      newContact.set("email", formData.email);
+      // Set the contact's attributes, including linking to the created/retrieved UserProfile
+      newContact.set("ContactUserProfile", contactUserProfile);
       newContact.set("about", formData.about);
+      newContact.set("owner", currentUser); // The contact's owner (currentUser)
 
       // Save the new contact
       await newContact.save();
       console.log("Contact saved successfully!");
 
-      // Step 3: Add the new contact to the user's contact list
+      // Step 4: Add the new contact to the user's contact list
       const ContactList = Parse.Object.extend("ContactList");
       const contactListQuery = new Parse.Query(ContactList);
       contactListQuery.equalTo("UserPointer", currentUser); // Match the logged-in user
