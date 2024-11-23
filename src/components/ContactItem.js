@@ -19,36 +19,48 @@ const ContactList = () => {
           throw new Error("No user is logged in.");
         }
 
-        // get the current users contactslist
+        // Get the current user's contact list
         const contactListQuery = new Parse.Query("ContactList");
-        contactListQuery.equalTo("UserPointer", currentUser); 
+        contactListQuery.equalTo("UserPointer", currentUser); //filter by UserPointer to match the current user
         const contactList = await contactListQuery.first();
 
         if (!contactList) {
           throw new Error("No ContactList found for the current user.");
         }
 
-        // Get the array of pointers to Contact objects from the ContactsList table
-        const contactPointers = contactList.get("contacts") || [];
+        // Get the array of Contacts from the ContactList table 
+        const contactPointers = contactList.get("Contacts") || [];
 
-        // Resolve pointers to get Contact details
+        if (contactPointers.length === 0) {
+          setContacts([]);
+          return;
+        }
+
+      
         const resolvedContacts = await Promise.all(
           contactPointers.map(async (pointer) => {
-            const contactQuery = new Parse.Query("Contacts");
-            return await contactQuery.get(pointer.id); // Fetch the Contact object by its ID
+            const contactQuery = new Parse.Query("Contact");
+            const contact = await contactQuery.get(pointer.id); // Fetch the Contact object by ID
+
+            // resolve the ContactUserProfile pointer to get the username and email
+            const contactUserProfile = contact.get("ContactUserProfile");
+            let username = "No username";
+            let email = "No email";
+
+            if (contactUserProfile) {
+              username = contactUserProfile.get("username");
+              email = contactUserProfile.get("email");
+            }
+
+            return {
+              username,
+              email,
+              about: contact.get("about") || "", 
+            };
           })
         );
 
-        const contactsData = resolvedContacts.map((contact) => {
-          const userProfile = contact.get("ContactUserProfile"); // Pointer to the contacts user profile
-          return {
-            username: userProfile.get("username"),
-            email: userProfile.get("email"),
-            about: contact.get("about"), // This should be displayed in the selectContacts popup only
-          };
-        });
-
-        setContacts(contactsData);
+        setContacts(resolvedContacts);
       } catch (err) {
         console.error("Error fetching contacts:", err);
         setError(err.message || "Failed to fetch contacts.");
@@ -56,15 +68,15 @@ const ContactList = () => {
     };
 
     fetchContacts();
-  }, []);
+  }, []); // This effect runs once on component mount
 
-  const showMessage = location.pathname === "/"; 
+  const showMessage = location.pathname === "/";
   const isRequest = location.pathname === "/ChildOverview";
 
   return (
     <Container>
       {error && <ErrorText>{error}</ErrorText>}
-      {!error && contacts.length === 0 && <LoadingText>Loading contacts...</LoadingText>}
+      {!error && contacts.length === 0 && <LoadingText>No contacts available.</LoadingText>}
       {!error &&
         contacts.map((contact, index) => (
           <ContactItem
