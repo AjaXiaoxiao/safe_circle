@@ -2,14 +2,15 @@ import styled from "styled-components";
 import SideOverviewHeader from "./SideOverviewHeader";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import colors from '../assets/colors'; 
+import { useLocation } from "react-router-dom"; 
 import ContactList from "./ContactList";
 
-const SideOverview = ({ title }) => {
+const SideOverview = ({ title, onContactClick}) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const location = useLocation();
 
+  const location = useLocation();
+  
   const handleOpenPopup = () => {
     if (location.pathname === "/Contacts") {
       setIsPopupVisible(true);
@@ -19,11 +20,10 @@ const SideOverview = ({ title }) => {
   const handleClosePopup = () => {
     setIsPopupVisible(false);
   };
-
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={handleOpenPopup} title={title} />
-      <ContactList />
+      <ContactList onContactClick={onContactClick} /> 
       <PopUpAddNewContact
       onClick={handleOpenPopup}
         isVisible={isPopupVisible}

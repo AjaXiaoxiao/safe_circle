@@ -4,7 +4,7 @@ import Contact from "../../assets/Contact.png";
 import Button from "../Buttons/Button";
 import colors from '../../assets/colors'; 
 
-const SelectContact = ({ isVisible, onClose }) => {
+const SelectContact = ({ isVisible, onClose, contact }) => {
   if (!isVisible) return null;
   
 
@@ -14,14 +14,13 @@ const SelectContact = ({ isVisible, onClose }) => {
         <XButton />
       </CloseButton>
       <ContactIcon src={Contact} alt="Contact Icon" />
-      <ContactName>Mom</ContactName>
+      <ContactName>{contact.username}</ContactName> {/* Dynamically show username */}
       <Button title="Chat" />
       <FieldTitle>About</FieldTitle>
-      <FieldValue>Guardian*</FieldValue>
-      <FieldValue>MY MOMMMM xD</FieldValue>
+      <FieldValue>{contact.about || "No description available"}</FieldValue> {/* Dynamically show 'about' */}
       <Spacer />
       <FieldTitle>Email</FieldTitle>
-      <FieldValue>mom@gmail.com</FieldValue>
+      <FieldValue>{contact.email}</FieldValue> {/* Dynamically show email */}
     </PopUpContainer>
   );
 };

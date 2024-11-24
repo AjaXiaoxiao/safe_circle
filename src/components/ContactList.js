@@ -7,7 +7,7 @@ import PendingIcon from "./Notifications/PendingIcon";
 import colors from '../assets/colors'; 
 
 
-const ContactList = () => {
+const ContactList = ({onContactClick}) => {
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -86,6 +86,7 @@ const ContactList = () => {
             message={contact.about}
             showMessage={showMessage}
             isRequest={isRequest}
+            onClick={() => onContactClick(contact)}
           />
         ))}
     </div>
@@ -94,9 +95,10 @@ const ContactList = () => {
 
 export default ContactList;
 
-const ContactItem = ({ username, message, showMessage, isRequest }) => {
+const ContactItem = ({ username, message, showMessage, isRequest, onClick }) => {
+
   return (
-    <Item>
+    <Item onClick={onClick}>
       <ProfileContainer>
         <ProfilePictureSmall />
       </ProfileContainer>

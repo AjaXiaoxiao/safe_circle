@@ -6,8 +6,8 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from '../../assets/colors'; 
 
-const PopUpChildOverview= ({ isVisible, onClose }) => {
-    if (!isVisible) return null;
+const PopUpChildOverview= ({ isVisible, onClose, contact }) => {
+  if (!isVisible || !contact) return null; 
 
   return (
     <div>

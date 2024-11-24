@@ -7,10 +7,16 @@ import PopUpChildOverview from '../components/PopUps/PopUpChildOverview';
 import ChatComponent from '../components/ChatComponent/ChatComponent';
 
 export default function ChildOverviewPage() {
-  const [isPopupVisible, setPopupVisible] = useState(true); 
+  const [isPopupVisible, setPopupVisible] = useState(false); 
+  const [selectedContact, setSelectedContact] = useState(null);
 
   const togglePopup = () => {
     setPopupVisible(!isPopupVisible);
+  };
+
+  const handleContactClick = (contact) => {
+    setSelectedContact(contact);
+    setPopupVisible(true); 
   };
 
   return (
@@ -18,9 +24,14 @@ export default function ChildOverviewPage() {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview title= "Child Overview" />
-                <PopUpChildOverview isVisible={isPopupVisible} onClose={togglePopup}/>
-        <BlurredComponent isBlurred={isPopupVisible}><ChatComponent/>
+        <SideOverview title= "Child Overview" onContactClick={handleContactClick} />
+        <PopUpChildOverview 
+          isVisible={isPopupVisible} 
+          onClose={togglePopup} 
+          contact={selectedContact} // Properly pass the contact prop here
+        />
+        <BlurredComponent isBlurred={isPopupVisible}>
+          <ChatComponent/>
         </BlurredComponent>
       </ColumnContainer>
     </div>
