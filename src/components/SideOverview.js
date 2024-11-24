@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import SideOverviewHeader from "./SideOverviewHeader";
-import ContactItem from "./ContactItem";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import ContactList from "./ContactList";
 
 const SideOverview = ({ title }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -22,9 +22,7 @@ const SideOverview = ({ title }) => {
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={handleOpenPopup} title={title} />
-
-      <ContactItem />
-
+      <ContactList />
       <PopUpAddNewContact
       onClick={handleOpenPopup}
         isVisible={isPopupVisible}

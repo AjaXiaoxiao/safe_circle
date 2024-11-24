@@ -13,87 +13,86 @@ const ContactList = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        // Get the currently logged-in user
-        const currentUser = Parse.User.current();
+        const currentUser = Parse.User.current(); //get the current logged in user
         if (!currentUser) {
-          throw new Error("No user is logged in.");
+          throw new Error("No user is currently logged in.");
         }
-
-        // Get the current user's contact list
+    
+        //query the logged-in user (owner of the contactlist)
+        const ownerUsername = currentUser.get("username");
+        const ownerQuery = new Parse.Query("UserProfile");
+        const owner = await ownerQuery.equalTo("username", ownerUsername).first();
+    
+        if (!owner) {
+          throw new Error("no logged-in user.");
+        }
+    
+        //get the ContactList of the logged-in user
         const contactListQuery = new Parse.Query("ContactList");
-        contactListQuery.equalTo("UserPointer", currentUser); //filter by UserPointer to match the current user
+        contactListQuery.equalTo("owner", owner); // filter by current user/owner 
         const contactList = await contactListQuery.first();
-
-        if (!contactList) {
-          throw new Error("No ContactList found for the current user.");
+    
+        if (contactList) {
+          const contactPointers = contactList.get("Contacts") || [];
+    
+          // fetch the Contact objects from the current users contactList
+          const fetchedContacts = await Promise.all(
+            contactPointers.map(async (contactPointer) => { //map through each contact and fetch the information
+              try {
+                const contact = await contactPointer.fetch(); 
+                const contactUserProfile = await contact.get("ContactUserProfile").fetch(); 
+    
+                return { //return the information about each contact
+                  username: contactUserProfile.get("username"),
+                  email: contactUserProfile.get("email"),
+                  about: contact.get("about"),
+                };
+              } catch (error) {
+                console.error("Error fetching contact:", error);
+                return null; 
+              }
+            })
+          );
+    
+          // filter out null values in case of errors fetching contacts
+          setContacts(fetchedContacts.filter(Boolean));
+        } else {
+          setContacts([]); // no contacts found set an empty array
         }
-
-        // Get the array of Contacts from the ContactList table 
-        const contactPointers = contactList.get("Contacts") || [];
-
-        if (contactPointers.length === 0) {
-          setContacts([]);
-          return;
-        }
-
-      
-        const resolvedContacts = await Promise.all(
-          contactPointers.map(async (pointer) => {
-            const contactQuery = new Parse.Query("Contact");
-            const contact = await contactQuery.get(pointer.id); // Fetch the Contact object by ID
-
-            // resolve the ContactUserProfile pointer to get the username and email
-            const contactUserProfile = contact.get("ContactUserProfile");
-            let username = "No username";
-            let email = "No email";
-
-            if (contactUserProfile) {
-              username = contactUserProfile.get("username");
-              email = contactUserProfile.get("email");
-            }
-
-            return {
-              username,
-              email,
-              about: contact.get("about") || "", 
-            };
-          })
-        );
-
-        setContacts(resolvedContacts);
-      } catch (err) {
-        console.error("Error fetching contacts:", err);
-        setError(err.message || "Failed to fetch contacts.");
+      } catch (error) {
+        console.error("Error fetching contacts:", error);
+        setError("Failed to fetch contacts.");
       }
     };
-
+    
     fetchContacts();
-  }, []); // This effect runs once on component mount
+  }, []);
 
   const showMessage = location.pathname === "/";
   const isRequest = location.pathname === "/ChildOverview";
 
   return (
-    <Container>
-      {error && <ErrorText>{error}</ErrorText>}
-      {!error && contacts.length === 0 && <LoadingText>No contacts available.</LoadingText>}
+    <div>
+      {error && <p>{error}</p>}
+      {!error && contacts.length === 0 && <p>No contacts found.</p>}
       {!error &&
+        contacts.length > 0 &&
         contacts.map((contact, index) => (
           <ContactItem
             key={index}
             username={contact.username}
-            email={contact.email}
+            message={contact.about}
             showMessage={showMessage}
             isRequest={isRequest}
           />
         ))}
-    </Container>
+    </div>
   );
 };
 
 export default ContactList;
 
-const ContactItem = ({ username, email, showMessage, isRequest }) => {
+const ContactItem = ({ username, message, showMessage, isRequest }) => {
   return (
     <Item>
       <ProfileContainer>
@@ -101,58 +100,46 @@ const ContactItem = ({ username, email, showMessage, isRequest }) => {
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        <Email>{email}</Email>
-        {showMessage && <MessageText>{"Hello. How are you doing.."}</MessageText>}
+        {showMessage && <MessageText>{message || "Hello. How are you doing.."}</MessageText>}
         {isRequest && <PendingIcon />}
       </TextContainer>
     </Item>
   );
 };
 
-const Container = styled.div`
-  padding: 20px;
-`;
-
 const Item = styled.div`
+  height: 110px;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
 `;
 
 const ProfileContainer = styled.div`
-  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
 `;
 
 const TextContainer = styled.div`
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  margin-left: 25px;
+  margin-top: 10px;
 `;
 
 const Name = styled.div`
-  font-weight: bold;
   font-size: 1.2em;
-`;
-
-const Email = styled.div`
-  font-size: 0.9em;
-  color: #666;
+  font-weight: bold;
 `;
 
 const MessageText = styled.p`
   font-size: 0.9em;
-  color: #333;
 `;
-
-const ErrorText = styled.div`
-  color: red;
-  font-size: 1.2em;
-`;
-
-const LoadingText = styled.div`
-  font-size: 1.2em;
-  color: #999;
-`;
-
 
 
 
