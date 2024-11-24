@@ -1,22 +1,21 @@
 import styled from "styled-components";
 
 
-const Input = ({icon, type = "text", placeholder, value, onChange }) => {
+const Input = ({icon, placeholder, value, onChange}) => {
   return (
     <InputWrapper>
       <Icon src={icon} />
       <StyledInput 
-      type={type} 
+      type="text" 
       placeholder={placeholder} 
-      value={value} 
-      onChange={onChange}
+      value={value}
+      onChange={onChange}    
       />
     </InputWrapper>
   );
 };
 
 export default Input;
-
 
 const InputWrapper = styled.div`
   position: relative;
@@ -27,8 +26,8 @@ const Icon = styled.img`
   position: absolute;
   margin-top: 21px;
   margin-left: 10px;
-  width: 1.5em; 
-  height: auto;
+  width: 1.4em; 
+  height: auto; 
 `;
 
 const StyledInput = styled.input`
