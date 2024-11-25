@@ -17,7 +17,7 @@ const StyledTextField = styled.input`
   background-color: ${colors.lightGrey};
   width: 80%;
   height: 10%;
-  color: ${colors.grey};
+  color: ${colors.black};
   border-radius: 7px;
   border: none;
   font-size: 0.8em;
