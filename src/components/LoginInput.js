@@ -40,5 +40,5 @@ const StyledInput = styled.input`
   border: 2px solid ${colors.yellow};
   width: 100%;
   background-color:${colors.white};
-  box-shadow: 0px 4px 8px ${colors.black};
+  box-shadow: 0px 4px 10px ${colors.grey};
 `;
