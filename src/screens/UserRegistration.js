@@ -76,7 +76,14 @@ const UserRegistration = () => {
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
       );
-      navigate("/");
+      
+      navigate("/", {
+        state: {
+          username: createdUser.getUsername(),
+          isChild: createdUser.get("isChild"),
+          isVerified: createdUser.get("isVerified"),
+        },
+      });
       return true;
     } catch (error) {
       alert(`Error! ${error}`);
