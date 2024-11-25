@@ -16,6 +16,7 @@ const PopUpSignedIn = ({ isVisible, onClose, username, isChild, isVerified }) =>
         <XButton />
       </CloseButton>
       <h2>Welcome {username}!</h2>
+      <p></p>
       <p>{message}</p>
     </PopUpContainer>
   );
@@ -24,23 +25,23 @@ const PopUpSignedIn = ({ isVisible, onClose, username, isChild, isVerified }) =>
 export default PopUpSignedIn;
 
 const PopUpContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  height: 450px;
-  margin-left: 20%;
-  background-color: #ffffff;
-  color: #000000;
+  width: 600px;
+  height: 400px;
+  background-color: white;
+  color: black;
   border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: center;
-  z-index: 1000;
-  border: 1px solid #ccc;
+  z-index: 2; 
+  border: 3px solid #BB65FF;
 `;
 const CloseButton = styled.div`
   position: absolute;

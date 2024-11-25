@@ -7,6 +7,7 @@ import Parse from "parse/dist/parse.min.js";
 import Contacts from "./screens/Contacts";
 import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
+import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -27,6 +28,8 @@ function App() {
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/userregistration" element={<UserRegistration />} />
         <Route path="/userlogin" element={<UserLogin />} />
+        <Route path="/childregistrationawait" element={<ChildRegistrationAwait />} />
+
       </Routes>
     </Router>
   );
