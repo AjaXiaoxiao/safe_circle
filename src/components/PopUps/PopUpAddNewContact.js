@@ -102,7 +102,7 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
           name="username"
           value={formData.username}
           onChange={handleInputChange}
-          placeholder="Enter your name here"
+          placeholder="Username"
         />
 
         <Label>About</Label>
@@ -110,7 +110,7 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
           name="about"
           value={formData.about}
           onChange={handleInputChange}
-          placeholder="Say something about you"
+          placeholder="Say something about"
         />
 
         <Label>Email</Label>
@@ -118,7 +118,7 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          placeholder="Your email here"
+          placeholder="Email"
         />
 
         <ButtonContainer>
