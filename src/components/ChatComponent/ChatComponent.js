@@ -3,36 +3,47 @@ import { useEffect, useState } from "react";
 import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
 import MessageBubble from "./MessageBubble";
-import colors from '../../assets/colors'; 
+import colors from "../../assets/colors";
 import Parse from "parse/dist/parse.min.js";
 
-
 const ChatComponent = () => {
-  //const messages = [
-  //{ id: 1, text: "Hello! How are you?", isSender: false },
-  //{ id: 2, text: "I'm fine, thank you!", isSender: true },
-  //{ id: 3, text: "See you next week for soccer!", isSender: true },
-  //];
-
   const [messages, setMessage] = useState([]);
 
   useEffect(() => {
     const getChat = async () => {
       try {
-        const chatQuery = new Parse.Query("Chat");
-        //const currentUser = Parse.User.current().id;
-        const currentUser = new Parse.Object("UserProfile");
-        currentUser.id = "13F0BuRKVZ";
-
-        if (currentUser === undefined || currentUser === null) {
+        const loggedInUser = Parse.User.current();
+        if (loggedInUser === undefined || loggedInUser === null) {
           alert("No user is currently logged in.");
           return;
         }
-        const receiver = new Parse.Object("UserProfile");
-        receiver.id = "RK9SvQIhxd"; //hardcoded for now
-        chatQuery.equalTo("Participants", receiver);
-        chatQuery.equalTo("Participants", currentUser);
-        //chatQuery.containsAll("Participants", [currentUser, receiver]);
+
+        const currentUserQuery = new Parse.Query("UserProfile");
+        currentUserQuery.equalTo("userPointer", loggedInUser);
+        const currentUser = await currentUserQuery.first();
+
+        if (currentUser === undefined || currentUser === null) {
+          alert("No profile found for the logged-in user.");
+          return;
+        }
+
+        const receiverQuery = new Parse.Query("UserProfile");
+        receiverQuery.equalTo("objectId", "XlP96B3nm1");
+        const receiver = await receiverQuery.first();
+
+        if (receiver === undefined || receiver === null) {
+          alert("Receiver profile not found.");
+          return;
+        }
+
+        const chatQuery = new Parse.Query("Chat");
+        chatQuery.containsAll("Participants", [currentUser, receiver]);
+
+        //currentUser.id = "VhLZw2iLDh"; //hard coded for now - Legolas
+        //currentUser.userPointer = loggedInUser;
+        //receiver.id = "XlP96B3nm1"; //hardcoded for now - ARWEN
+        //chatQuery.equalTo("Participants", currentUser);
+        //chatQuery.equalTo("Participants", receiver);
 
         const chat = await chatQuery.first();
 
@@ -113,6 +124,6 @@ const StyledMessageBubble = styled.div`
 
 const MessageList = styled.div`
   display: flex;
-  flex-direction: column; 
-  gap: 15px; 
+  flex-direction: column;
+  gap: 15px;
 `;

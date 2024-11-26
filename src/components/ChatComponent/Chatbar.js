@@ -4,7 +4,7 @@ import Button from "../Buttons/Button";
 import EmojiPickerButton from "../Buttons/EmojiPickerButton";
 import { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
-import colors from '../../assets/colors'; 
+import colors from "../../assets/colors";
 
 const Chatbar = () => {
   const [message, setMessage] = useState("");
@@ -23,24 +23,25 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
-      const currentUser = Parse.User.current();
-      if (currentUser === null || currentUser === undefined) {
+      const loggedInUser = Parse.User.current();
+
+      if (loggedInUser === null || loggedInUser === undefined) {
         alert("No user is currently logged in. So there is no sender");
         return;
       }
+      const currentUser = new Parse.Query("UserProfile");
+      //const currentUser = Parse.User.current();
 
-      const senderUsername = currentUser.get("username");
-      const senderQuery = new Parse.Query("UserProfile");
-      const sender = await senderQuery
-        .equalTo("username", senderUsername)
+      const sender = await currentUser
+        .equalTo("userPointer", loggedInUser)
         .first();
 
-      if (sender === null || senderQuery === undefined) {
+      if (sender === null || sender === undefined) {
         alert("The sender profile does not exist");
         return;
       }
       const receiverQuery = new Parse.Query("UserProfile");
-      const receiver = await receiverQuery.equalTo("username", "Ron").first();
+      const receiver = await receiverQuery.equalTo("username", "Arwen").first(); //hard coded for now
 
       if (receiver === null || receiver === undefined) {
         alert("The receiver profile does not exist");
