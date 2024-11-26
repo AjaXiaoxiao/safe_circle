@@ -8,7 +8,6 @@ import colors from "../assets/colors";
 
 const ContactList = ({ onContactClick }) => {
   const [contacts, setContacts] = useState([]);
-  const [existingChats, setExistingChats] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
 
@@ -73,63 +72,19 @@ const ContactList = ({ onContactClick }) => {
       }
     };
 
-    const fetchExistingChats = async () => {
-      try {
-        const loggedInUser = Parse.User.current();
-        if (!loggedInUser) {
-          alert("No user is logged in");
-          return;
-        }
-
-        const currentUserQuery = new Parse.Query("UserProfile");
-        currentUserQuery.equalTo("userPointer", loggedInUser);
-        const currentUser = await currentUserQuery.first();
-
-        if (currentUser === undefined || currentUser === null) {
-          alert("No profile found for the logged-in user.");
-          return;
-        }
-
-        const query = new Parse.Query("Chat");
-        query.containsAll("Participants", [currentUser]);
-        const chats = await query.find();
-        console.log(chats);
-
-        setExistingChats(chats);
-      } catch (error) {
-        console.error("Error fetching existing chats", error);
-      }
-    };
-
     fetchContacts();
-    fetchExistingChats();
   }, []);
 
   const showMessage = location.pathname === "/";
   const isRequest = location.pathname === "/ChildOverview";
-
-  let chatOverviewDisplay;
-
-  if (showMessage) {
-    chatOverviewDisplay = contacts.filter((contact) => {
-      return existingChats.some((chat) => {
-        const participants = chat.get("Participants");
-        return participants.some(
-          (participants) => participants.get("username") === contact.username
-        );
-      });
-    });
-  } else {
-    chatOverviewDisplay = contacts;
-  }
 
   return (
     <div>
       {error && <p>{error}</p>}
       {!error && contacts.length === 0 && <p>No contacts found.</p>}
       {!error &&
-        chatOverviewDisplay.length > 0 &&
-        chatOverviewDisplay.map((contact, index) => (
+        contacts.length > 0 &&
+        contacts.map((contact, index) => (
           <ContactItem
             key={index}
             username={contact.username}
