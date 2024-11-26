@@ -2,7 +2,7 @@ import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import Button from "../Buttons/Button";
 import { useNavigate } from 'react-router-dom';
-import colors from "../assets/colors";
+import colors from '../../assets/colors'; 
 
 
 const PopUp = ({ isVisible, onClose }) => {
