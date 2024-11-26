@@ -9,7 +9,7 @@ import Email from "../assets/Email.png";
 import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate } from "react-router-dom";
-import colors from '../assets/colors'; 
+import colors from "../assets/colors";
 
 const UserRegistrationParent = () => {
   const [username, setUsername] = useState("");
@@ -49,11 +49,10 @@ const UserRegistrationParent = () => {
       userProfile.set("username", username);
       userProfile.set("email", email);
 
-      await userProfile.save();
-
       // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
+      await userProfile.save();
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
       );
@@ -142,7 +141,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color:${colors.black};
+  color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
 `;
