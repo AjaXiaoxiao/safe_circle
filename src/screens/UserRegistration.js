@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
 import styled from "styled-components";
 import LoginInput from "../components/LoginInput";
-import LoginPassword from "../components/LoginPassword";
-import LoginEmail from "../components/LoginEmail";
 import Button from "../components/Buttons/Button";
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
@@ -119,27 +117,27 @@ const UserRegistration = () => {
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
-        <LoginEmail
+        <LoginInput
           icon={Email}
           placeholder="Email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
         {registrationType === "child" && (
-          <LoginEmail
+          <LoginInput
             icon={Email}
             placeholder="Guardian email"
             value={guardianEmail}
             onChange={(event) => setGuardianEmail(event.target.value)}
           />
         )}
-        <LoginPassword
+        <LoginInput
           icon={Lock}
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <LoginPassword
+        <LoginInput
           icon={Lock}
           placeholder="Confirm password"
           value={confirmPassword}
