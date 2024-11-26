@@ -9,6 +9,7 @@ import Email from "../assets/Email.png";
 import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import colors from "../assets/colors";
 
 const UserRegistration = () => {
   const location = useLocation();
@@ -52,8 +53,6 @@ const UserRegistration = () => {
       userProfile.set("username", username);
       userProfile.set("email", email);
 
-      await userProfile.save();
-
       if (registrationType === "child") {
         user.set("isChild", true);
         user.set("isVerified", false);
@@ -71,6 +70,7 @@ const UserRegistration = () => {
       // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
+      await userProfile.save();
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
       );
@@ -163,7 +163,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;
 
 const BackArrowContainer = styled.img`
@@ -178,13 +178,13 @@ const BackArrowContainer = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: #000;
+  color: ${colors.black};
   margin: 10px 0;
 `;
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: #000000;
+  color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
 `;
