@@ -25,7 +25,11 @@ function App() {
         <Route path="/childoverview" element={<ChildOverviewPage />} />
         <Route path="/contactspopup" element={<PopUpContactPage />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route path="/userregistrationparent" element={<UserRegistrationParent />} />
+        <Route path="/chatoverview" element={<ChatOverviewPage />} />
+        <Route
+          path="/userregistrationparent"
+          element={<UserRegistrationParent />}
+        />
         <Route path="/userlogin" element={<UserLogin />} />
       </Routes>
     </Router>
