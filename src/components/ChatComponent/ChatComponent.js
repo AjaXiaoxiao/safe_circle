@@ -38,13 +38,6 @@ const ChatComponent = () => {
 
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser, receiver]);
-
-        //currentUser.id = "VhLZw2iLDh"; //hard coded for now - Legolas
-        //currentUser.userPointer = loggedInUser;
-        //receiver.id = "XlP96B3nm1"; //hardcoded for now - ARWEN
-        //chatQuery.equalTo("Participants", currentUser);
-        //chatQuery.equalTo("Participants", receiver);
-
         const chat = await chatQuery.first();
 
         if (chat === undefined || chat === null) {
@@ -120,6 +113,7 @@ const StyledMessageBubble = styled.div`
   width: auto;
   align-items: flex;
   margin-top: 10vh;
+  overflow-y: auto;
 `;
 
 const MessageList = styled.div`
