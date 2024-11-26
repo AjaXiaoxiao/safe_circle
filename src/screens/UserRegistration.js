@@ -2,21 +2,26 @@ import React, { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
 import styled from "styled-components";
 import LoginInput from "../components/LoginInput";
+import LoginPassword from "../components/LoginPassword";
+import LoginEmail from "../components/LoginEmail";
 import Button from "../components/Buttons/Button";
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import Email from "../assets/Email.png";
 import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
-import { useNavigate } from "react-router-dom";
-import colors from "../assets/colors";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const UserRegistrationParent = () => {
+const UserRegistration = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const registrationType = location.state?.registrationType || "parent";
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [guardianEmail, setGuardianEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();
 
   const doUserRegistration = async function () {
     if (!username) {
@@ -49,14 +54,42 @@ const UserRegistrationParent = () => {
       userProfile.set("username", username);
       userProfile.set("email", email);
 
+      await userProfile.save();
+
+      if (registrationType === "child") {
+        user.set("isChild", true);
+        user.set("isVerified", false);
+        user.set("guardianEmail", guardianEmail);
+        userProfile.set("isChild", true);
+        userProfile.set("isVerified", false);
+        userProfile.set("guardianEmail", guardianEmail);
+      } else {
+        user.set("isChild", false);
+        user.set("isVerified", true);
+        userProfile.set("isChild,false");
+        userProfile.set("isVerified", true);
+      }
+
       // signUp method returns a Promise.. await
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
-      await userProfile.save();
       alert(
         `Success! User ${createdUser.getUsername()} was successfully created!`
       );
-      navigate("/");
+      
+      if (registrationType === "child") {
+        navigate("/childregistrationawait", {
+          state: {
+            username: createdUser.getUsername(),
+          },
+        });
+      } else {
+        navigate("/", {
+          state: {
+            username: createdUser.getUsername(),
+          },
+        });
+      }
       return true;
     } catch (error) {
       alert(`Error! ${error}`);
@@ -72,8 +105,12 @@ const UserRegistrationParent = () => {
         alt="Back Arrow"
         onClick={() => navigate("/userlogin")}
       />
-      <Title>Create parent account</Title>
-      <SubTitle>Sign up as a parent</SubTitle>
+      <Title>
+        {registrationType === "parent" ? "Create parent account" : "Create child account"}
+      </Title>
+      <SubTitle>
+        {registrationType === "parent" ? "Sign up as a parent" : "Sign up as a child"}
+      </SubTitle>
 
       <FormContainer>
         <LoginInput
@@ -82,19 +119,27 @@ const UserRegistrationParent = () => {
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
-        <LoginInput
+        <LoginEmail
           icon={Email}
           placeholder="Email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <LoginInput
+        {registrationType === "child" && (
+          <LoginEmail
+            icon={Email}
+            placeholder="Guardian email"
+            value={guardianEmail}
+            onChange={(event) => setGuardianEmail(event.target.value)}
+          />
+        )}
+        <LoginPassword
           icon={Lock}
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <LoginInput
+        <LoginPassword
           icon={Lock}
           placeholder="Confirm password"
           value={confirmPassword}
@@ -111,7 +156,7 @@ const UserRegistrationParent = () => {
     </LogInContainer>
   );
 };
-export default UserRegistrationParent;
+export default UserRegistration;
 
 const LogInContainer = styled.div`
   display: flex;
@@ -120,7 +165,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${colors.white};
+  background-color: #ffffff;
 `;
 
 const BackArrowContainer = styled.img`
@@ -135,13 +180,13 @@ const BackArrowContainer = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: ${colors.black};
+  color: #000;
   margin: 10px 0;
 `;
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: ${colors.black};
+  color: #000000;
   margin-top: 5px;
   margin-bottom: 5px;
 `;

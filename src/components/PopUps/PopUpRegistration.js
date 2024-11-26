@@ -8,7 +8,6 @@ const PopUp = ({ isVisible, onClose }) => {
     const navigate = useNavigate();
 
     if (!isVisible) return null;
-  
 
   return (
     <PopUpContainer>
@@ -22,14 +21,14 @@ const PopUp = ({ isVisible, onClose }) => {
           color="yellow"
           width="default"
           textColor="black"
-          onClick={() => navigate("/userregistrationparent")}
+          onClick={() => navigate("/userregistration", { state: { registrationType: "parent" } })}
         />
         <Button
           title="Child account"
           color="yellow"
           width="default"
           textColor="black"
-
+          onClick={() => navigate("/userregistration", { state: { registrationType: "child" } })}
         />
       </ButtonContainer>
     </PopUpContainer>

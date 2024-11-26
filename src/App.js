@@ -5,8 +5,9 @@ import PopUpContactPage from "./screens/PopUpContactPage";
 import ChildOverviewPage from "./screens/ChildOverviewPage";
 import Parse from "parse/dist/parse.min.js";
 import Contacts from "./screens/Contacts";
-import UserRegistrationParent from "./screens/UserRegistrationParent";
+import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
+import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -25,11 +26,10 @@ function App() {
         <Route path="/childoverview" element={<ChildOverviewPage />} />
         <Route path="/contactspopup" element={<PopUpContactPage />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route
-          path="/userregistrationparent"
-          element={<UserRegistrationParent />}
-        />
+        <Route path="/userregistration" element={<UserRegistration />} />
         <Route path="/userlogin" element={<UserLogin />} />
+        <Route path="/childregistrationawait" element={<ChildRegistrationAwait />} />
+
       </Routes>
     </Router>
   );
