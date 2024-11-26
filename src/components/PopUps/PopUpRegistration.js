@@ -2,6 +2,7 @@ import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import Button from "../Buttons/Button";
 import { useNavigate } from 'react-router-dom';
+import colors from "../assets/colors";
 
 
 const PopUp = ({ isVisible, onClose }) => {
@@ -45,7 +46,7 @@ const PopUpContainer = styled.div`
   width: 400px;
   height: 250px;
   background-color: #ffffff;
-  color: #000000;
+  color: ${colors.black};
   border-radius: 8px;
   padding: 20px;
   display: flex;
@@ -67,7 +68,7 @@ const CloseButton = styled.div`
 const Title = styled.h2`
   font-size: 16px;
   font-weight: bold;
-  color: #000000;
+  color: ${colors.black};
   text-align: center;
 `;
 

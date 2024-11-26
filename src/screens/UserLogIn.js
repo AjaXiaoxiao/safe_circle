@@ -8,6 +8,7 @@ import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import { useNavigate } from 'react-router-dom';
 import PopUpRegistration from '../components/PopUps/PopUpRegistration';
+import colors from "../assets/colors";
 
 export const UserLogin = () => {
     
@@ -89,7 +90,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;
 
 const Logo = styled.img`
@@ -102,13 +103,13 @@ const Logo = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: #000000;
+  color: ${colors.black};
   margin: 10px 0;
 `;
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: #000000;
+  color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
 `;
@@ -122,7 +123,7 @@ const FormContainer = styled.div`
 
 const ForgotPassword = styled.a`
   font-size: 0.8rem;
-  color: #000000;
+  color: ${colors.black};
   margin: 10px 0;
   cursor: pointer;
   text-decoration: underline;
@@ -139,7 +140,7 @@ const Separator = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background: #000000;
+    background: ${colors.black};
   }
 
   &::before {
@@ -151,7 +152,7 @@ const Separator = styled.div`
   }
 
   span {
-    color: #000000;
+    color: ${colors.black};
     font-size: 1rem;
     font-weight: bold;
   }
