@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
 import colors from '../assets/colors'; 
+import LogOut from "../assets/LogOut.png";
+import Parse from "parse/dist/parse.min.js";
 
 
 const Sidebar = () => {
   const location = useLocation(); 
+  const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname); 
 
   useEffect(() => {
     setActive(location.pathname);
   }, [location]);
+
+  const doUserLogOut = async () => {
+    try {
+      await Parse.User.logOut(); 
+      const currentUser = await Parse.User.currentAsync(); 
+      if (!currentUser) {
+        alert("Success! You are now logged out.");
+        navigate("/userlogin"); 
+      }
+    } catch (error) {
+      alert(`Error during logout: ${error.message}`);
+    }
+  };
 
   return (
     <StyledSidebar>
@@ -40,6 +56,9 @@ const Sidebar = () => {
           </Link>
         </li>
       </ul>
+      <LogOutContainer onClick={doUserLogOut}>
+        <img src={LogOut} alt="Log Out" className="logout-icon" />
+      </LogOutContainer>
     </StyledSidebar>
   );
 };
@@ -90,3 +109,14 @@ const StyledSidebar = styled.div`
   }
 `;
 
+const LogOutContainer = styled.div`
+  margin-top: 35vh; 
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  .logout-icon {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
+`;
