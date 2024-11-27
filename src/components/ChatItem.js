@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 
-const ChatItem = ({ username, message, showMessage, isRequest, onClick }) => {
+const ChatItem = ({ username, message, showMessage, onClick }) => {
   return (
     <Item onClick={onClick}>
       <ProfileContainer>
