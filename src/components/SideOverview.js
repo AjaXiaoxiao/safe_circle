@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import ContactList from "./ContactList";
 import ChatList from "./ChatList";
 
-const SideOverview = ({ title, onContactClick, onChatClick }) => {
+const SideOverview = ({ title, onContactClick }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
@@ -21,6 +21,7 @@ const SideOverview = ({ title, onContactClick, onChatClick }) => {
     setIsPopupVisible(false);
   };
 
+  //i let the childoverview page keep the contacts logic until someone starts to work on it.
   const isContactList =
     location.pathname === "/Contacts" || location.pathname === "/ChildOverview";
 
@@ -29,7 +30,7 @@ const SideOverview = ({ title, onContactClick, onChatClick }) => {
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={handleOpenPopup} title={title} />
-      {isChatList && <ChatList onChatClick={onChatClick} />}
+      {isChatList && <ChatList />}
       {isContactList && <ContactList onContactClick={onContactClick} />}
       {/*If sohuldShowContactList is true then what is on the right side will run */}
       <PopUpAddNewContact

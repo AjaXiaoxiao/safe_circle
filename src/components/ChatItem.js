@@ -2,17 +2,16 @@ import styled from "styled-components";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 
-const ChatItem = ({ username, message, showMessage, onClick }) => {
+const ChatItem = ({ username, message, onChatClick }) => {
+  console.log("Message in ChatItem:", message);
   return (
-    <Item onClick={onClick}>
+    <Item onClick={onChatClick}>
       <ProfileContainer>
         <ProfilePictureSmall />
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        {showMessage && (
-          <MessageText>{message || "Hello. How are you doing.."}</MessageText>
-        )}
+        <MessageText>{message}</MessageText>
       </TextContainer>
     </Item>
   );

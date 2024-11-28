@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
@@ -10,6 +11,7 @@ const ChatList = ({ onChatClick }) => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
+        //the logged in user object
         const loggedInUser = Parse.User.current();
         if (!loggedInUser) {
           alert("No user is logged in");
@@ -18,6 +20,7 @@ const ChatList = ({ onChatClick }) => {
 
         //find logged in user in the UserProfile table
         const currentUserQuery = new Parse.Query("UserProfile");
+        //the userPointer column should contain the logged in user object
         currentUserQuery.equalTo("userPointer", loggedInUser);
         const currentUser = await currentUserQuery.first();
 
@@ -45,10 +48,23 @@ const ChatList = ({ onChatClick }) => {
 
             //gets the latest message
             const messages = chat.get("Messages");
-            const latestMessage = messages
-              .slice()
-              .sort((a, b) => b.get("Timestamp") - a.get("Timestamp")[0]);
 
+            let latestMessage = null;
+
+            if (messages.length === 1) {
+              latestMessage = messages[0];
+            } else {
+              for (const message of messages) {
+                if (
+                  !latestMessage ||
+                  message.get("Timestamp") > latestMessage.get("Timestamp")
+                ) {
+                  latestMessage = message;
+                }
+              }
+            }
+
+            console.log(latestMessage);
             return {
               id: chat.id,
               username,
@@ -70,7 +86,6 @@ const ChatList = ({ onChatClick }) => {
       {chats.length > 0 ? (
         chats.map((chat) => (
           <ChatItem
-            key={chat.id}
             username={chat.username}
             message={chat.message}
             onClick={() => onChatClick(chat)}
