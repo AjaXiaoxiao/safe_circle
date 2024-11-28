@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
@@ -47,14 +46,17 @@ const ChatList = ({ onChatClick }) => {
             const username = otherParticipantProfile.get("username");
 
             //gets the latest message
-            const messages = chat.get("Messages");
+            let messages = chat.get("Messages");
+            console.log("The lenght is:" + messages.length);
 
             let latestMessage = null;
 
-            if (messages.length === 1) {
-              latestMessage = messages[0];
-            } else {
-              for (const message of messages) {
+            for (const message of messages) {
+              if (messages.length === 1) {
+                console.log("First message:", messages[0].get("Text"));
+
+                latestMessage = message;
+              } else {
                 if (
                   !latestMessage ||
                   message.get("Timestamp") > latestMessage.get("Timestamp")
