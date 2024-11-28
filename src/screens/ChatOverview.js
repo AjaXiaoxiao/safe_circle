@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 
 import PopUpSignedIn from "../components/PopUps/PopUpSignedIn";
 
-const ChatOverview = ({ title}) => {
+const ChatOverview = ({ title }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [userData, setUserData] = useState({
     username: "",
@@ -21,7 +21,7 @@ const ChatOverview = ({ title}) => {
   useEffect(() => {
     if (location.state) {
       setIsPopupVisible(true);
-      setUserData(location.state); 
+      setUserData(location.state);
     }
   }, [location.state]);
 
@@ -38,11 +38,13 @@ const ChatOverview = ({ title}) => {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview title={title} 
-        isPopupVisible={isPopupVisible} 
-        handleOpenPopup={handleOpenPopup}
-        handleClosePopup={handleClosePopup}/>
-        <ChatComponent isPopupVisible={isPopupVisible}/>
+        <SideOverview
+          title={title}
+          isPopupVisible={isPopupVisible}
+          handleOpenPopup={handleOpenPopup}
+          handleClosePopup={handleClosePopup}
+        />
+        <ChatComponent isPopupVisible={isPopupVisible} />
       </ColumnContainer>
       {isPopupVisible && (
         <PopUpSignedIn

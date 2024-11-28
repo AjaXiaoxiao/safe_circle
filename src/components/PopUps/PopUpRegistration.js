@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import Button from "../Buttons/Button";
-import { useNavigate } from 'react-router-dom';
-import colors from '../../assets/colors'; 
-
+import { useNavigate } from "react-router-dom";
+import colors from "../../assets/colors";
 
 const PopUp = ({ isVisible, onClose }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    if (!isVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <PopUpContainer>
@@ -22,14 +21,22 @@ const PopUp = ({ isVisible, onClose }) => {
           color="yellow"
           width="default"
           textColor="black"
-          onClick={() => navigate("/userregistration", { state: { registrationType: "parent" } })}
+          onClick={() =>
+            navigate("/userregistration", {
+              state: { registrationType: "parent" },
+            })
+          }
         />
         <Button
           title="Child account"
           color="yellow"
           width="default"
           textColor="black"
-          onClick={() => navigate("/userregistration", { state: { registrationType: "child" } })}
+          onClick={() =>
+            navigate("/userregistration", {
+              state: { registrationType: "child" },
+            })
+          }
         />
       </ButtonContainer>
     </PopUpContainer>
@@ -54,7 +61,7 @@ const PopUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid #ccc;
-  z-index: 2; 
+  z-index: 2;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -78,7 +85,3 @@ const ButtonContainer = styled.div`
   width: 100%;
   align-items: center;
 `;
-
-
-
-

@@ -4,10 +4,9 @@ import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import PendingIcon from "./Notifications/PendingIcon";
-import colors from '../assets/colors'; 
+import colors from "../assets/colors";
 
-
-const ContactList = ({onContactClick}) => {
+const ContactList = ({ onContactClick }) => {
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -19,43 +18,49 @@ const ContactList = ({onContactClick}) => {
         if (!currentUser) {
           throw new Error("No user is currently logged in.");
         }
-    
+
         //query the logged-in user (owner of the contactlist)
         const ownerUsername = currentUser.get("username");
         const ownerQuery = new Parse.Query("UserProfile");
-        const owner = await ownerQuery.equalTo("username", ownerUsername).first();
-    
+        const owner = await ownerQuery
+          .equalTo("username", ownerUsername)
+          .first();
+
         if (!owner) {
           throw new Error("no logged-in user.");
         }
-    
+
         //get the ContactList of the logged-in user
         const contactListQuery = new Parse.Query("ContactList");
-        contactListQuery.equalTo("owner", owner); // filter by current user/owner 
+        contactListQuery.equalTo("owner", owner); // filter by current user/owner
         const contactList = await contactListQuery.first();
-    
+
         if (contactList) {
           const contactPointers = contactList.get("Contacts") || [];
-    
+
           // fetch the Contact objects from the current users contactList
           const fetchedContacts = await Promise.all(
-            contactPointers.map(async (contactPointer) => { //map through each contact and fetch the information
+            contactPointers.map(async (contactPointer) => {
+              //map through each contact and fetch the information
               try {
-                const contact = await contactPointer.fetch(); 
-                const contactUserProfile = await contact.get("ContactUserProfile").fetch(); 
-    
-                return { //return the information about each contact
+                const contact = await contactPointer.fetch();
+                const contactUserProfile = await contact
+                  .get("ContactUserProfile")
+                  .fetch();
+
+                return {
+                  //return the information about each contact
                   username: contactUserProfile.get("username"),
                   email: contactUserProfile.get("email"),
                   about: contact.get("about"),
                 };
               } catch (error) {
                 console.error("Error fetching contact:", error);
-                return null; 
+                return null;
               }
             })
           );
-    
+
           // filter out null values in case of errors fetching contacts
           setContacts(fetchedContacts.filter(Boolean));
         } else {
@@ -66,7 +71,7 @@ const ContactList = ({onContactClick}) => {
         setError("Failed to fetch contacts.");
       }
     };
-    
+
     fetchContacts();
   }, []);
 
@@ -95,8 +100,13 @@ const ContactList = ({onContactClick}) => {
 
 export default ContactList;
 
-const ContactItem = ({ username, message, showMessage, isRequest, onClick }) => {
-
+const ContactItem = ({
+  username,
+  message,
+  showMessage,
+  isRequest,
+  onClick,
+}) => {
   return (
     <Item onClick={onClick}>
       <ProfileContainer>
@@ -104,7 +114,9 @@ const ContactItem = ({ username, message, showMessage, isRequest, onClick }) => 
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        {showMessage && <MessageText>{message || "Hello. How are you doing.."}</MessageText>}
+        {showMessage && (
+          <MessageText>{message || "Hello. How are you doing.."}</MessageText>
+        )}
         {isRequest && <PendingIcon />}
       </TextContainer>
     </Item>
@@ -145,8 +157,6 @@ const MessageText = styled.p`
   font-size: 0.9em;
 `;
 
-
-
 // import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
 // import { useLocation } from "react-router-dom";
@@ -162,12 +172,12 @@ const MessageText = styled.p`
 //   useEffect(() => {
 //     const fetchContacts = async () => {
 //       try {
-//         const query = new Parse.Query("ContactList"); 
+//         const query = new Parse.Query("ContactList");
 //         const results = await query.find();
 //         const fetchedContacts = results.map((contact) => ({
 //           username: contact.get("username"),
 //         }));
-//         setContacts(fetchedContacts); 
+//         setContacts(fetchedContacts);
 //       } catch (error) {
 //         console.error("Error fetching contacts:", error);
 //         setError("Failed to fetch contact.");
@@ -177,7 +187,7 @@ const MessageText = styled.p`
 //     fetchContacts();
 //   }, []);
 
-//   const showMessage = location.pathname === "/"; 
+//   const showMessage = location.pathname === "/";
 //   const isRequest = location.pathname === "/ChildOverview";
 
 //   return (
@@ -192,7 +202,7 @@ const MessageText = styled.p`
 //           message={contact.message}
 //           showMessage={showMessage}
 //           isRequest={isRequest}
-         
+
 //         />
 //       ))}
 //     </div>
@@ -200,7 +210,6 @@ const MessageText = styled.p`
 // };
 
 // export default ContactList;
-
 
 // const ContactItem = ({ username, message, showMessage, isRequest }) => {
 //   return (
