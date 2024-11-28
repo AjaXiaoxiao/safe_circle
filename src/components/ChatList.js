@@ -47,16 +47,20 @@ const ChatList = ({ onChatClick }) => {
 
             //gets the latest message
             let messages = chat.get("Messages");
-            console.log("The lenght is:" + messages.length);
+
+            const resolvedMessages = await Promise.all(
+              messages.map(async (messagePointer) => {
+                const message = await messagePointer.fetch();
+                return message;
+              })
+            );
 
             let latestMessage = null;
 
-            for (const message of messages) {
-              if (messages.length === 1) {
-                console.log("First message:", messages[0].get("Text"));
-
-                latestMessage = message;
-              } else {
+            if (resolvedMessages.length === 1) {
+              latestMessage = resolvedMessages[0];
+            } else {
+              for (const message of resolvedMessages) {
                 if (
                   !latestMessage ||
                   message.get("Timestamp") > latestMessage.get("Timestamp")
@@ -66,11 +70,12 @@ const ChatList = ({ onChatClick }) => {
               }
             }
 
-            console.log(latestMessage);
+            const messageText = latestMessage.get("Text");
+
             return {
               id: chat.id,
               username,
-              message: latestMessage.get("Text"),
+              message: messageText,
             };
           })
         );
