@@ -37,7 +37,6 @@ export default function Contacts() {
   return (
     <div>
       <Topbar />
-      <BlurredComponent isBlurred={isAnyPopupVisible}>
         <ColumnContainer>
           <Sidebar />
           <SideOverview 
@@ -45,9 +44,10 @@ export default function Contacts() {
             onAddClick={handleOpenAddContactPopup}
             onContactClick={handleContactClick}
           />
+          <BlurredComponent isBlurred={isAnyPopupVisible}>
           <ChatComponent />
+          </BlurredComponent>
         </ColumnContainer>
-      </BlurredComponent>
      
       {isAddContactPopupVisible && (
         <PopUpAddNewContact
