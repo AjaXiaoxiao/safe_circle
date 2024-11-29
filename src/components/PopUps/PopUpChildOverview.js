@@ -9,6 +9,21 @@ import colors from '../../assets/colors';
 const PopUpChildOverview= ({ isVisible, onClose, contact }) => {
   if (!isVisible || !contact) return null; 
 
+  const handleApprove = async () => {
+    contact.set("Status", "Approved");
+    const child = contact.get("Child");
+    child.set("isVerified", true);
+    await child.save();
+    await contact.save();
+    onClose();
+  };
+  
+  const handleDecline = async () => {
+    contact.set("Status", "Declined");
+    await contact.save();
+    onClose();
+  };
+
   return (
     <div>
       <PopUpContainer>
@@ -20,12 +35,12 @@ const PopUpChildOverview= ({ isVisible, onClose, contact }) => {
       </ProfilePicContainer>
       <FormContainer>
         <Label>Name</Label>
-        <SmallTextField placeholder="Name of contact" />
+        <SmallTextField value={contact.get("Child").get("username")} disabled />
         <Label>Email</Label>
-        <SmallTextField placeholder="This is their email" />
+        <SmallTextField value={contact.get("Child").get("email")} disabled />
         <ButtonContainer>
-          <Button title="Approve"/>
-          <Button title="Decline" color="red"/>
+          <Button title="Approve" onClick={handleApprove} />
+          <Button title="Decline" color="red" onClick={handleDecline} />
         </ButtonContainer>
       </FormContainer>
       </PopUpContainer>
