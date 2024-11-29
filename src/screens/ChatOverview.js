@@ -5,10 +5,9 @@ import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
 import PopUpSignedIn from "../components/PopUps/PopUpSignedIn";
 
-const ChatOverview = ({ title }) => {
+const ChatOverview = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [userData, setUserData] = useState({
     username: "",
@@ -39,7 +38,7 @@ const ChatOverview = ({ title }) => {
       <ColumnContainer>
         <Sidebar />
         <SideOverview
-          title={title}
+          title={"Chats"}
           isPopupVisible={isPopupVisible}
           handleOpenPopup={handleOpenPopup}
           handleClosePopup={handleClosePopup}

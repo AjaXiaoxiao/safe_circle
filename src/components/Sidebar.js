@@ -42,9 +42,9 @@ const Sidebar = () => {
           </Link>
         </li>
         <li
-          className={active === "/Contacts" ? "active" : ""}
+          className={active === "/ContactsOverview" ? "active" : ""}
         >
-          <Link to="/Contacts" onClick={() => setActive("/Contacts")}>
+          <Link to="/ContactsOverview" onClick={() => setActive("/ContactsOverview")}>
             <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
           </Link>
         </li>

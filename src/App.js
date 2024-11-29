@@ -1,10 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
-import PopUpContactPage from "./screens/PopUpContactPage";
-import ChildOverviewPage from "./screens/ChildOverviewPage";
+import ChildOverview from "./screens/ChildOverview";
 import Parse from "parse/dist/parse.min.js";
-import Contacts from "./screens/Contacts";
+import ContactsOverview from "./screens/ContactsOverview";
 import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
 import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
@@ -17,19 +16,15 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
-  const ChatOverviewHeader = "Chats";
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
-        <Route path="/contactsPopUp" element={<PopUpContactPage />} />
-        <Route path="/childoverview" element={<ChildOverviewPage />} />
-        <Route path="/contactspopup" element={<PopUpContactPage />} />
-        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/" element={<ChatOverview/>} />
+        <Route path="/childoverview" element={<ChildOverview />} />
+        <Route path="/contactsoverview" element={<ContactsOverview />} />
         <Route path="/userregistration" element={<UserRegistration />} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/childregistrationawait" element={<ChildRegistrationAwait />} />
-
       </Routes>
     </Router>
   );

@@ -15,12 +15,12 @@ const SelectContact = ({ isVisible, onClose, contact }) => {
         <XButton />
       </CloseButton>
       <ProfilePicContainer><ProfilePictureBig /></ProfilePicContainer>
-      <ContactName>{contact.username}</ContactName> {/* Dynamically show username */}
+      <ContactName>{contact.username}</ContactName> 
       <Button title="Chat" />
       <FieldTitle>About</FieldTitle>
-      <FieldValue>{contact.about || "No description available"}</FieldValue> {/* Dynamically show 'about' */}
+      <FieldValue>{contact.about || "No description available"}</FieldValue> 
       <FieldTitle>Email</FieldTitle>
-      <FieldValue>{contact.email}</FieldValue> {/* Dynamically show email */}
+      <FieldValue>{contact.email}</FieldValue> 
     </PopUpContainer>
   );
 };
