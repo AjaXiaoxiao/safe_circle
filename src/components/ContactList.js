@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
-import PendingIcon from "./Notifications/PendingIcon";
+import StatusIcon from "./Notifications/StatusIcon";
 import colors from "../assets/colors";
 
 const ContactList = ({ onContactClick, isRequest}) => {
@@ -120,7 +120,7 @@ const ContactItem = ({
           {showMessage && (
             <MessageText>{message || "Hello. How are you doing.."}</MessageText>
           )}
-          {isRequest && <PendingIcon />}
+          {isRequest && <StatusIcon title={"Pending"} />}
         </TextContainer>
       </Item>
     </>

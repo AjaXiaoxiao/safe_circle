@@ -6,7 +6,7 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from '../../assets/colors'; 
 
-const PopUpChildOverview= ({ isVisible, onClose, contact }) => {
+const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
   if (!isVisible || !contact) return null; 
 
   return (
@@ -20,9 +20,9 @@ const PopUpChildOverview= ({ isVisible, onClose, contact }) => {
       </ProfilePicContainer>
       <FormContainer>
         <Label>Name</Label>
-        <SmallTextField placeholder="Name of contact" />
+        <SmallTextField placeholder="Name of contact" text={name}/>
         <Label>Email</Label>
-        <SmallTextField placeholder="This is their email" />
+        <SmallTextField placeholder="This is their email" text={email} />
         <ButtonContainer>
           <Button title="Approve"/>
           <Button title="Decline" color="red"/>

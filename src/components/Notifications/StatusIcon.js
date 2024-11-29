@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import colors from '../../assets/colors'; 
 
-const StyledPendingIcon = styled.div`
+const StyledStatusIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,8 +14,8 @@ const StyledPendingIcon = styled.div`
   font-weight: bold;
 `;
 
-const PendingIcon = () => {
-  return <StyledPendingIcon>Pending</StyledPendingIcon>;
+const StatusIcon = (title) => {
+  return <StyledStatusIcon>{title}</StyledStatusIcon>;
 };
 
-export default PendingIcon;
+export default StatusIcon;
