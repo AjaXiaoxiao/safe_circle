@@ -6,58 +6,26 @@ import MessageBubble from "./MessageBubble";
 import colors from "../../assets/colors";
 import Parse from "parse/dist/parse.min.js";
 
-const ChatComponent = () => {
+const ChatComponent = ({ selectedChat }) => {
   const [messages, setMessage] = useState([]);
 
   useEffect(() => {
     const getChat = async () => {
+      const selectedMessages = selectedChat.chat.get("Messages");
+
       try {
-        const loggedInUser = Parse.User.current();
-        if (loggedInUser === undefined || loggedInUser === null) {
-          alert("No user is currently logged in.");
-          return;
-        }
-
-        const currentUserQuery = new Parse.Query("UserProfile");
-        currentUserQuery.equalTo("userPointer", loggedInUser);
-        const currentUser = await currentUserQuery.first();
-
-        if (currentUser === undefined || currentUser === null) {
-          alert("No profile found for the logged-in user.");
-          return;
-        }
-
-        const receiverQuery = new Parse.Query("UserProfile");
-        receiverQuery.equalTo("objectId", "XlP96B3nm1");
-        const receiver = await receiverQuery.first();
-
-        if (receiver === undefined || receiver === null) {
-          alert("Receiver profile not found.");
-          return;
-        }
-
-        const chatQuery = new Parse.Query("Chat");
-        chatQuery.containsAll("Participants", [currentUser, receiver]);
-        const chat = await chatQuery.first();
-
-        if (chat === undefined || chat === null) {
-          alert("No chat found");
-          return;
-        }
-
-        const messagesPointers = chat.get("Messages");
         if (
-          messagesPointers === null ||
-          messagesPointers === undefined ||
-          messagesPointers.length === 0
+          selectedMessages === null ||
+          selectedMessages === undefined ||
+          selectedMessages === 0
         ) {
           alert("No messages in chat");
           return;
         }
 
         const resolvedMessages = await Promise.all(
-          messagesPointers.map(async (messagePointer) => {
-            const message = await messagePointer.fetch();
+          selectedMessages.map(async (selectedMessage) => {
+            const message = await selectedMessage.fetch();
             return {
               id: message.id, //this is how you get the defualt objectId with Parse
               text: message.get("Text"),
@@ -71,7 +39,7 @@ const ChatComponent = () => {
       }
     };
     getChat();
-  }, []);
+  }, [selectedChat]);
 
   return (
     <div>

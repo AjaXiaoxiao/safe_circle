@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import ContactList from "./ContactList";
 import ChatList from "./ChatList";
 
-const SideOverview = ({ title, onContactClick }) => {
+const SideOverview = ({ title, onContactClick, onChatClick }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
@@ -30,9 +30,8 @@ const SideOverview = ({ title, onContactClick }) => {
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={handleOpenPopup} title={title} />
-      {isChatList && <ChatList />}
+      {isChatList && <ChatList onChatClick={onChatClick} />}
       {isContactList && <ContactList onContactClick={onContactClick} />}
-      {/*If sohuldShowContactList is true then what is on the right side will run */}
       <PopUpAddNewContact
         onClick={handleOpenPopup}
         isVisible={isPopupVisible}

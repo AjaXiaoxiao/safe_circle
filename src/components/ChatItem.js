@@ -3,7 +3,6 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 
 const ChatItem = ({ username, message, onChatClick }) => {
-  console.log("Message in ChatItem:", message);
   return (
     <Item onClick={onChatClick}>
       <ProfileContainer>
