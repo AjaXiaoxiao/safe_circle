@@ -56,7 +56,7 @@ const ChatComponent = ({ selectedChat }) => {
   return (
     <div>
       <ChatContainer>
-        <NamebarTop username={selectedChat.username} />
+        <NamebarTop />
         <StyledMessageBubble>
           <MessageList>
             {messages.map((msg) => (
