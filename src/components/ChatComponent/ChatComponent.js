@@ -26,13 +26,22 @@ const ChatComponent = ({ selectedChat }) => {
           return;
         }
 
+        const loggedInUser = Parse.User.current();
+
+        const userProfileQuery = new Parse.Query("UserProfile");
+        userProfileQuery.equalTo("userPointer", loggedInUser);
+        const loggedInUserProfile = await userProfileQuery.first();
+
         const resolvedMessages = await Promise.all(
           selectedMessages.map(async (selectedMessage) => {
             const message = await selectedMessage.fetch();
+
+            const sender = await message.get("Sender").fetch();
+            const isItTheSender = sender === loggedInUserProfile;
             return {
               id: message.id, //this is how you get the defualt objectId with Parse
               text: message.get("Text"),
-              isSender: message.get("Sender").id === Parse.User.current().id,
+              isSender: isItTheSender,
             };
           })
         );
@@ -47,7 +56,7 @@ const ChatComponent = ({ selectedChat }) => {
   return (
     <div>
       <ChatContainer>
-        <NamebarTop />
+        <NamebarTop username={selectedChat.username} />
         <StyledMessageBubble>
           <MessageList>
             {messages.map((msg) => (
