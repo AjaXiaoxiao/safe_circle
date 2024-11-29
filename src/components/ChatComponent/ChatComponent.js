@@ -10,6 +10,9 @@ const ChatComponent = ({ selectedChat }) => {
   const [messages, setMessage] = useState([]);
 
   useEffect(() => {
+    if (!selectedChat || !selectedChat.chat) {
+      return;
+    }
     const getChat = async () => {
       const selectedMessages = selectedChat.chat.get("Messages");
 
