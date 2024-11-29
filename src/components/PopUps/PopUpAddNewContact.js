@@ -22,6 +22,8 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
+
+      const isChild = currentUser.get("isChild");
   
       // Fetch the current user's UserProfile
       const ownerUsername = currentUser.get("username");
@@ -48,10 +50,16 @@ const PopUpAddNewContact = ({ isVisible, onClose, fetchContacts }) => {
       newContact.set("about", formData.about);
       newContact.set("owner", owner); // Set pointer to owner (current user's UserProfile)
   
+      if (isChild) {
+        newContact.set("isRequest", true);
+      }
+      
       // Save the Contact object
       const savedContact = await newContact.save();
       console.log("Contact saved successfully!");
   
+
+
       // Fetch or create a ContactList
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner); 
