@@ -46,7 +46,7 @@ const ChatList = ({ onChatClick }) => {
             const username = otherParticipantProfile.get("username");
 
             //gets the latest message
-            let messages = chat.get("Messages");
+            let messages = await chat.get("Messages");
 
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
@@ -76,6 +76,8 @@ const ChatList = ({ onChatClick }) => {
               id: chat.id,
               username,
               message: messageText,
+              messages: resolvedMessages,
+              chat,
             };
           })
         );
@@ -93,9 +95,11 @@ const ChatList = ({ onChatClick }) => {
       {chats.length > 0 ? (
         chats.map((chat) => (
           <ChatItem
+            key={chat.id}
             username={chat.username}
             message={chat.message}
-            onClick={() => onChatClick(chat)}
+            messages={chat.messages}
+            onChatClick={() => onChatClick(chat)}
           />
         ))
       ) : (

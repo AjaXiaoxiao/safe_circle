@@ -7,13 +7,14 @@ import ChatList from "./ChatList";
 import React, { useState, useEffect } from "react";
 import Parse from "parse/dist/parse.min.js";
 
-const SideOverview = ({ title, onAddClick, onContactClick }) => {
+const SideOverview = ({ title, onContactClick, onChatClick, onAddClick }) => {
   const location = useLocation();
   const [requests, setRequests] = useState([]);
 
-  
   //i let the childoverview page keep the contacts logic until someone starts to work on it.
-  const isContactList = location.pathname === "/ContactsOverview" || location.pathname === "/ChildOverview";
+  const isContactList =
+    location.pathname === "/ContactsOverview" ||
+    location.pathname === "/ChildOverview";
   const isChatList = location.pathname === "/";
 
   useEffect(() => {
@@ -33,8 +34,9 @@ const SideOverview = ({ title, onAddClick, onContactClick }) => {
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={onAddClick} title={title} />
-      {isChatList && <ChatList />}
+      {isChatList && <ChatList onChatClick={onChatClick} />}
       {isContactList && <ContactList onContactClick={onContactClick} />}
+
       <ul>
         {requests.map((req) => (
           <li key={req.id} onClick={() => onContactClick(req)}>

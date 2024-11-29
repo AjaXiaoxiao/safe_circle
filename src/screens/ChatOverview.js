@@ -1,35 +1,17 @@
-import Topbar from "../components/Topbar";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import PopUpSignedIn from "../components/PopUps/PopUpSignedIn";
 
-const ChatOverview = () => {
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [userData, setUserData] = useState({
-    username: "",
-    isChild: false,
-    isVerified: false,
-  });
+const ChatOverview = ({ title }) => {
+  //keeps track of the selected chat
+  const [selectedChat, setSelectedChat] = useState(null);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.state) {
-      setIsPopupVisible(true);
-      setUserData(location.state);
-    }
-  }, [location.state]);
-
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+  //handles the chat that is being clicked
+  const handleChatClick = (chat) => {
+    setSelectedChat(chat);
   };
 
   return (
@@ -37,23 +19,9 @@ const ChatOverview = () => {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview
-          title={"Chats"}
-          isPopupVisible={isPopupVisible}
-          handleOpenPopup={handleOpenPopup}
-          handleClosePopup={handleClosePopup}
-        />
-        <ChatComponent isPopupVisible={isPopupVisible} />
+        <SideOverview title={title} onChatClick={handleChatClick} />
+        <ChatComponent selectedChat={selectedChat} />
       </ColumnContainer>
-      {isPopupVisible && (
-        <PopUpSignedIn
-          isVisible={isPopupVisible}
-          onClose={handleClosePopup}
-          username={userData.username}
-          isChild={userData.isChild}
-          isVerified={userData.isVerified}
-        />
-      )}
     </div>
   );
 };

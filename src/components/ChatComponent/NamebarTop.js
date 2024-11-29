@@ -1,8 +1,8 @@
 import contact from "../../assets/Contact.png";
 import styled from "styled-components";
-import colors from '../../assets/colors'; 
+import colors from "../../assets/colors";
 
-const NamebarTop = () => {
+const NamebarTop = ({ username }) => {
   return (
     <StyledNamebarTop>
       <StyledImage
@@ -10,7 +10,7 @@ const NamebarTop = () => {
         alt="contact"
         className="namebar-top-contact"
       ></StyledImage>
-      <text className="namebar-top-text"> Mom </text>
+      <text className="namebar-top-text"> {username || "Unknown User"} </text>
     </StyledNamebarTop>
   );
 };
@@ -19,9 +19,9 @@ export default NamebarTop;
 
 const StyledNamebarTop = styled.div`
   width: 100%;
-  height: 23vh; 
+  height: 23vh;
   display: flex;
-  flex-direction: row ;
+  flex-direction: row;
   flex-grow: 0 1 0;
   gap: 2em;
   padding-left: 40px;
@@ -37,8 +37,8 @@ const StyledNamebarTop = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-height: 80%; 
+  max-height: 80%;
   height: auto;
-  width: auto; 
-  object-fit: contain; 
+  width: auto;
+  object-fit: contain;
 `;
