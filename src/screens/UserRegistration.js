@@ -43,7 +43,25 @@ const UserRegistration = () => {
       return;
     }
 
+    if (registrationType === "child" && !guardianEmail) {
+      alert("Guardian email is required.");
+      return;
+    }
+
     try {
+      let guardian = null;
+      
+      if (registrationType === "child") {
+        const parentQuery = new Parse.Query("UserProfile");
+        parentQuery.equalTo("email", guardianEmail);
+        guardian = await parentQuery.first();
+          
+        if (!guardian) {
+          alert("Guardian email not found! Cannot proceed with registration.");
+          return;
+        }
+      }
+
       const user = new Parse.User();
       user.set("username", username);
       user.set("password", password);
@@ -63,7 +81,7 @@ const UserRegistration = () => {
       } else {
         user.set("isChild", false);
         user.set("isVerified", true);
-        userProfile.set("isChild,false");
+        userProfile.set("isChild", false);
         userProfile.set("isVerified", true);
       }
 
@@ -76,6 +94,15 @@ const UserRegistration = () => {
       );
       
       if (registrationType === "child") {
+        const request = new Parse.Object("Requests");
+        request.set("Type", "ChildApproval");
+        request.set("Status", "Pending");
+        request.set("Child", user);
+        request.set("Parent", guardian);
+        await request.save();
+          alert("Approval request sent to guardian!");
+
+
         navigate("/childregistrationawait", {
           state: {
             username: createdUser.getUsername(),

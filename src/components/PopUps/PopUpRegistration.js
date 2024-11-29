@@ -61,7 +61,7 @@ const PopUpContainer = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid #ccc;
-  z-index: 2;
+  z-index: 3;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
