@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
-import PendingIcon from "./Notifications/PendingIcon";
+import StatusIcon from "./Notifications/StatusIcon";
 import colors from "../assets/colors";
 
-const ContactList = ({ onContactClick }) => {
+const ContactList = ({ onContactClick, isRequest}) => {
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -53,6 +53,7 @@ const ContactList = ({ onContactClick }) => {
                   username: contactUserProfile.get("username"),
                   email: contactUserProfile.get("email"),
                   about: contact.get("about"),
+                  isRequest: contact.get("isRequest"),
                 };
               } catch (error) {
                 console.error("Error fetching contact:", error);
@@ -76,8 +77,8 @@ const ContactList = ({ onContactClick }) => {
     fetchContacts();
       }, []);
 
+
   const showMessage = location.pathname === "/";
-  const isRequest = location.pathname === "/ChildOverview";
 
   return (
     <div>
@@ -91,7 +92,7 @@ const ContactList = ({ onContactClick }) => {
             username={contact.username}
             message={contact.about}
             showMessage={showMessage}
-            isRequest={isRequest}
+            isRequest={contact.isRequest} 
             onClick={() => onContactClick(contact)}
           />
         ))}
@@ -108,19 +109,22 @@ const ContactItem = ({
   isRequest,
   onClick,
 }) => {
+
   return (
-    <Item onClick={onClick}>
-      <ProfileContainer>
-        <ProfilePictureSmall />
-      </ProfileContainer>
-      <TextContainer>
-        <Name>{username}</Name>
-        {showMessage && (
-          <MessageText>{message || "Hello. How are you doing.."}</MessageText>
-        )}
-        {isRequest && <PendingIcon />}
-      </TextContainer>
-    </Item>
+    <>
+      <Item onClick={onClick}>
+        <ProfileContainer>
+          <ProfilePictureSmall />
+        </ProfileContainer>
+        <TextContainer>
+          <Name>{username}</Name>
+          {showMessage && (
+            <MessageText>{message || "Hello. How are you doing.."}</MessageText>
+          )}
+          {isRequest && <StatusIcon title={"Pending"} />}
+        </TextContainer>
+      </Item>
+    </>
   );
 };
 
