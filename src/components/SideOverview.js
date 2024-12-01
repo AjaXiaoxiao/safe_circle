@@ -9,13 +9,23 @@ import Parse from "parse/dist/parse.min.js";
 import ChildrenList from "./ChildrenList";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 
-const SideOverview = ({ title, onContactClick, onChatClick, onAddClick, onChildClick, handleOpenPopup, handleClosePopup }) => {
+const SideOverview = ({
+  title,
+  onContactClick,
+  onChatClick,
+  onAddClick,
+  onChildClick,
+  handleOpenPopup,
+  handleClosePopup,
+  setSelectedChat,
+  selectedChat,
+}) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
   const [requests, setRequests] = useState([]);
 
   //i let the childoverview page keep the contacts logic until someone starts to work on it.
-  const isContactList = location.pathname === "/ContactsOverview" 
+  const isContactList = location.pathname === "/ContactsOverview";
   const isChildOverview = location.pathname === "/ChildOverview";
 
   const isChatList = location.pathname === "/";
@@ -37,10 +47,15 @@ const SideOverview = ({ title, onContactClick, onChatClick, onAddClick, onChildC
   return (
     <OverviewContainer>
       <SideOverviewHeader onAddClick={onAddClick} title={title} />
-      {isChatList && <ChatList onChatClick={onChatClick} />}
+      {isChatList && (
+        <ChatList
+          onChatClick={onChatClick}
+          selectedChat={selectedChat}
+          setSelectedChat={setSelectedChat}
+        />
+      )}
       {isContactList && <ContactList onContactClick={onContactClick} />}
-       {/*If sohuldShowContactList is true then what is on the right side will run */}
-       {isChildOverview && <ChildrenList  onChildClick={onChildClick}/>}
+      {isChildOverview && <ChildrenList onChildClick={onChildClick} />}
       <ul>
         {requests.map((req) => (
           <li key={req.id} onClick={() => onContactClick(req)}>
