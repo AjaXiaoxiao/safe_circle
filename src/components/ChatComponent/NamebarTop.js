@@ -10,7 +10,7 @@ const NamebarTop = ({ username }) => {
         alt="contact"
         className="namebar-top-contact"
       ></StyledImage>
-      <text className="namebar-top-text"> {username || "Unknown User"} </text>
+      <text className="namebar-top-text"> {username} </text>
     </StyledNamebarTop>
   );
 };

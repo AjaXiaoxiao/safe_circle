@@ -8,6 +8,7 @@ import Parse from "parse/dist/parse.min.js";
 
 const ChatComponent = ({ selectedChat }) => {
   const [messages, setMessage] = useState([]);
+  const [chatUsername, setChatUsername] = useState("Unkown user");
 
   useEffect(() => {
     if (!selectedChat || !selectedChat.chat) {
@@ -53,10 +54,18 @@ const ChatComponent = ({ selectedChat }) => {
     getChat();
   }, [selectedChat]);
 
+  useEffect(() => {
+    if (selectedChat && selectedChat.username) {
+      setChatUsername(selectedChat.username);
+    } else {
+      setChatUsername("Unkown User");
+    }
+  }, [selectedChat]);
+
   return (
     <div>
       <ChatContainer>
-        <NamebarTop />
+        <NamebarTop username={chatUsername} />
         <StyledMessageBubble>
           <MessageList>
             {messages.map((msg) => (

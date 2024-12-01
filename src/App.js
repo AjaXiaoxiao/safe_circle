@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
 import ChildOverview from "./screens/ChildOverview";
@@ -16,15 +16,43 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
+  const [selectedChat, setSelectedChat] = useState(null);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ChatOverview/>} />
-        <Route path="/childoverview" element={<ChildOverview />} />
-        <Route path="/contactsoverview" element={<ContactsOverview />} />
+        <Route
+          path="/"
+          element={
+            <ChatOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          }
+        />
+        <Route
+          path="/childoverview"
+          element={
+            <ChildOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          }
+        />
+        <Route
+          path="/contactsoverview"
+          element={
+            <ContactsOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          }
+        />
         <Route path="/userregistration" element={<UserRegistration />} />
         <Route path="/userlogin" element={<UserLogin />} />
-        <Route path="/childregistrationawait" element={<ChildRegistrationAwait />} />
+        <Route
+          path="/childregistrationawait"
+          element={<ChildRegistrationAwait />}
+        />
       </Routes>
     </Router>
   );

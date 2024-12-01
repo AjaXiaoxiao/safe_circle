@@ -4,7 +4,7 @@ import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
 
-const ChatList = ({ onChatClick }) => {
+const ChatList = ({ onChatClick, selectedChat, setSelectedChat }) => {
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -83,12 +83,15 @@ const ChatList = ({ onChatClick }) => {
         );
 
         setChats(chatDetails);
+        if (fetchedChats.length > 0 && !selectedChat) {
+          setSelectedChat(chatDetails[0]);
+        }
       } catch (error) {
         console.error("Error fetching existing chats", error);
       }
     };
     fetchChats();
-  }, []);
+  }, [setSelectedChat]);
 
   return (
     <ChatListContainer>
