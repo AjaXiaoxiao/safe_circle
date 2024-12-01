@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-const ChatOverview = ({ title }) => {
+const ChatOverview = () => {
   //keeps track of the selected chat
   const [selectedChat, setSelectedChat] = useState(null);
 
@@ -19,7 +19,12 @@ const ChatOverview = ({ title }) => {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview title={title} onChatClick={handleChatClick} />
+        <SideOverview
+          title="Chats"
+          onChatClick={handleChatClick}
+          setSelectedChat={setSelectedChat}
+          selectedChat={selectedChat}
+        />
         <ChatComponent selectedChat={selectedChat} />
       </ColumnContainer>
     </div>
