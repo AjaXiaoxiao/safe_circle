@@ -1,13 +1,13 @@
-import React, { useState } from 'react'; 
+import React, { useState } from "react";
 import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
-import PopUpChildOverview from '../components/PopUps/PopUpChildOverview';
-import ChatComponent from '../components/ChatComponent/ChatComponent';
+import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
+import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-export default function ChildOverviewPage() {
-  const [isPopupVisible, setPopupVisible] = useState(false); 
+export default function ChildOverviewPage({ selectedChat, setSelectedChat }) {
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const togglePopup = () => {
@@ -16,7 +16,7 @@ export default function ChildOverviewPage() {
 
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
-    setPopupVisible(true); 
+    setPopupVisible(true);
   };
 
   return (
@@ -24,14 +24,20 @@ export default function ChildOverviewPage() {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview title= "Child Overview" onContactClick={handleContactClick} />
-        <PopUpChildOverview 
-          isVisible={isPopupVisible} 
-          onClose={togglePopup} 
+        <SideOverview
+          title="Child Overview"
+          onContactClick={handleContactClick}
+        />
+        <PopUpChildOverview
+          isVisible={isPopupVisible}
+          onClose={togglePopup}
           contact={selectedContact} // Properly pass the contact prop here
         />
         <BlurredComponent isBlurred={isPopupVisible}>
-          <ChatComponent/>
+          <ChatComponent
+            selectedChat={selectedChat}
+            setSelectedChat={setSelectedChat}
+          />
         </BlurredComponent>
       </ColumnContainer>
     </div>
@@ -44,5 +50,5 @@ const ColumnContainer = styled.div`
 `;
 
 const BlurredComponent = styled.div`
-  filter: ${({ isBlurred }) => (isBlurred ? 'blur(2px)' : 'none')}; 
+  filter: ${({ isBlurred }) => (isBlurred ? "blur(2px)" : "none")};
 `;
