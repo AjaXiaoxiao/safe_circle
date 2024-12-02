@@ -20,6 +20,7 @@ const SideOverview = ({
   setSelectedChat,
   selectedChat,
 }) => {
+  const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
   const [requests, setRequests] = useState([]);
@@ -43,6 +44,14 @@ const SideOverview = ({
 
     fetchRequests();
   }, [location.pathname]);
+
+  const handleAddChatClick = () => {
+    setIsAddingChat(true);
+  };
+
+  const handleBackClick = () => {
+    setIsAddingChat(false);
+  };
 
   return (
     <OverviewContainer>
