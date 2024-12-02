@@ -5,10 +5,12 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-const ChatOverview = ({ selectedChat, setSelectedChat }) => {
-  //keeps track of the selected chat
-  //const [selectedChat, setSelectedChat] = useState(null);
-
+const ChatOverview = ({
+  selectedChat,
+  setSelectedChat,
+  currentReceiverId,
+  setCurrentReceiverId,
+}) => {
   //handles the chat that is being clicked
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
@@ -24,10 +26,12 @@ const ChatOverview = ({ selectedChat, setSelectedChat }) => {
           onChatClick={handleChatClick}
           setSelectedChat={setSelectedChat}
           selectedChat={selectedChat}
+          setCurrentReceiverId={setCurrentReceiverId}
         />
         <ChatComponent
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
+          currentReceiverId={currentReceiverId}
         />
       </ColumnContainer>
     </div>

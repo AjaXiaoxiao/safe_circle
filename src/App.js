@@ -17,6 +17,8 @@ Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
   const [selectedChat, setSelectedChat] = useState(null);
+  const [currentReceiverId, setCurrentReceiverId] = useState(null);
+
   return (
     <Router>
       <Routes>
@@ -26,6 +28,8 @@ function App() {
             <ChatOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
             />
           }
         />
@@ -35,6 +39,8 @@ function App() {
             <ChildOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
             />
           }
         />
@@ -44,6 +50,8 @@ function App() {
             <ContactsOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
             />
           }
         />

@@ -19,6 +19,7 @@ const SideOverview = ({
   handleClosePopup,
   setSelectedChat,
   selectedChat,
+  setCurrentReceiverId,
 }) => {
   const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -48,7 +49,7 @@ const SideOverview = ({
     if (isChatList) {
       setIsAddingChat(true);
     } else if (isContactList && onAddClick) {
-      onAddClick(); 
+      onAddClick();
     }
   };
 
@@ -68,12 +69,13 @@ const SideOverview = ({
           onChatClick={onChatClick}
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
+          setCurrentReceiverId={setCurrentReceiverId}
         />
       )}
       {isAddingChat && (
         <ContactList
           onContactClick={(contact) => {
-            onContactClick(contact); 
+            onContactClick(contact);
             setIsAddingChat(false);
           }}
         />
@@ -96,7 +98,6 @@ const SideOverview = ({
   );
 };
 export default SideOverview;
-
 
 const OverviewContainer = styled.div`
   background-color: ${colors.white};

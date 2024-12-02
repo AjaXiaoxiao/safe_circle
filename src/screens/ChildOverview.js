@@ -6,7 +6,11 @@ import SideOverview from "../components/SideOverview";
 import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-export default function ChildOverviewPage({ selectedChat, setSelectedChat }) {
+export default function ChildOverviewPage({
+  selectedChat,
+  setSelectedChat,
+  currentReceiverId,
+}) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -37,6 +41,7 @@ export default function ChildOverviewPage({ selectedChat, setSelectedChat }) {
           <ChatComponent
             selectedChat={selectedChat}
             setSelectedChat={setSelectedChat}
+            currentReceiverId={currentReceiverId}
           />
         </BlurredComponent>
       </ColumnContainer>

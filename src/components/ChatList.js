@@ -4,7 +4,12 @@ import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
 
-const ChatList = ({ onChatClick, selectedChat, setSelectedChat }) => {
+const ChatList = ({
+  onChatClick,
+  selectedChat,
+  setSelectedChat,
+  setCurrentReceiverId,
+}) => {
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -44,6 +49,8 @@ const ChatList = ({ onChatClick, selectedChat, setSelectedChat }) => {
             //finds the username of the other participant
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
+            const usernameId = otherParticipantProfile.id;
+            setCurrentReceiverId(usernameId);
 
             //gets the latest message
             let messages = await chat.get("Messages");
