@@ -119,7 +119,7 @@ const ContactItem = ({
         <TextContainer>
           <Name>{username}</Name>
           {showMessage && (
-            <MessageText>{message || "Hello. How are you doing.."}</MessageText>
+            <MessageText>{message}</MessageText>
           )}
           {isRequest && <StatusIcon title={"Pending"} />}
         </TextContainer>
