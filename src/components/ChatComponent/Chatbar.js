@@ -6,7 +6,7 @@ import { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../../assets/colors";
 
-const Chatbar = () => {
+const Chatbar = ({ currentReceiverId }) => {
   const [message, setMessage] = useState("");
 
   const handleEmojiSelect = (emoji) => {
@@ -41,7 +41,9 @@ const Chatbar = () => {
         return;
       }
       const receiverQuery = new Parse.Query("UserProfile");
-      const receiver = await receiverQuery.equalTo("username", "Tommy").first(); //hard coded for now
+      receiverQuery.equalTo("objectId", currentReceiverId); // Use equalTo for matching
+      const receiver = await receiverQuery.first();
+      //const receiver = await receiverQuery.equalTo("username", "Tommy").first(); //hard coded for now
 
       if (receiver === null || receiver === undefined) {
         alert("The receiver profile does not exist");
