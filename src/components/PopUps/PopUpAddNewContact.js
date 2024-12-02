@@ -19,75 +19,72 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log("Form submitted with data:", formData);
-
+  
     try {
-      // Get the currently logged-in user
       const currentUser = Parse.User.current();
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-
+  
       const isChild = currentUser.get("isChild");
-
-      // Fetch the current user's UserProfile
-      const ownerUsername = currentUser.get("username");
-      const ownerQuery = new Parse.Query("UserProfile");
-      const owner = await ownerQuery.equalTo("username", ownerUsername).first();
-
+  
+      // Fetch the current user's Profile
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", currentUser);
+      const owner = await userProfileQuery.first();
+  
       if (!owner) {
         throw new Error("Owner profile not found for the logged-in user.");
       }
   
-      // Check if the UserProfile for the contact exists
-      const contactQuery = new Parse.Query("UserProfile");
-      const contactsUserProfile = await contactQuery.equalTo("username", formData.username).equalTo("email", formData.email).first();
-
-      if (!contactsUserProfile) {
+       // Check if the UserProfile for the contact exists
+       const contactQuery = new Parse.Query("UserProfile");
+       const contactUserProfile = await contactQuery.equalTo("username", formData.username).equalTo("email", formData.email).first();
+  
+      if (!contactUserProfile) {
         throw new Error("The contact must be a registered user.");
-      } 
-
-      // Create a new UserProfile for the contact
-      const UserContactProfile = Parse.Object.extend("UserProfile");
-      const contactUserProfile = new UserContactProfile();
-      contactUserProfile.set("username", formData.username);
-      contactUserProfile.set("email", formData.email);
-
-      // Save the UserProfile first
-      const savedContactUserProfile = await contactsUserProfile.save();
-
-      // Create a new Contact object
+      }
+  
+      // Check if contact is already in ContactList
+      const contactListQuery = new Parse.Query("ContactList");
+      contactListQuery.equalTo("owner", owner);
+      const contactList = await contactListQuery.first();
+  
+      if (contactList) {
+        const existingContacts = contactList.get("Contacts") || [];
+        const isDuplicate = existingContacts.some(
+          (contactPointer) => contactPointer.id === contactUserProfile.id
+        );
+  
+        if (isDuplicate) {
+          throw new Error("This contact is already in your contact list.");
+        }
+      }
+  
       const Contact = Parse.Object.extend("Contact");
       const newContact = new Contact();
-      newContact.set("ContactUserProfile", contactUserProfile); // Set pointer to existing UserProfile
+      newContact.set("ContactUserProfile", contactUserProfile); 
       newContact.set("about", formData.about);
-      newContact.set("owner", owner); // Set pointer to owner (current user's UserProfile)
-
+      newContact.set("owner", owner); 
+  
       if (isChild) {
         newContact.set("isRequest", true);
       }
-
-      // Save the Contact object
+  
       const savedContact = await newContact.save();
       console.log("Contact saved successfully!");
-
-      // Fetch or create a ContactList
-      const contactListQuery = new Parse.Query("ContactList");
-      contactListQuery.equalTo("owner", owner);
-      let contactList = await contactListQuery.first();
-
+  
       if (!contactList) {
-        // Create a new ContactList if it doesn't exist
-        contactList = new Parse.Object("ContactList");
-        contactList.set("Contacts", [savedContact]);
-        contactList.set("owner", owner);
+        const newContactList = new Parse.Object("ContactList");
+        newContactList.set("Contacts", [savedContact]);
+        newContactList.set("owner", owner);
+        await newContactList.save();
       } else {
-        // Append the new contact to the existing ContactList
-        const contacts = contactList.get("Contacts") || [];
-        contacts.push(savedContact);
-        contactList.set("Contacts", contacts);
+        // Append new contact to the existing ContactList
+        contactList.addUnique("Contacts", savedContact);
+        await contactList.save();
       }
-      await contactList.save();
-
+  
       if (isChild) {
         const guardianEmail = currentUser.get("guardianEmail");
         if (!guardianEmail) {
@@ -95,30 +92,28 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
           setError("Guardian email not found.");
           return;
         }
-
-        // Fetch the guardian user profile using the guardian's email
+  
         const guardianQuery = new Parse.Query("UserProfile");
-        const guardian = await guardianQuery
-          .equalTo("email", guardianEmail)
-          .first();
-
+        const guardian = await guardianQuery.equalTo("email", guardianEmail).first();
+  
         if (!guardian) {
           console.error("Guardian not found.");
           setError("Guardian not found. Ask your parent to sign up!");
           return;
         }
-
+  
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
-        newRequest.set("Parent", guardian); // Set parent (the owner)
+        newRequest.set("Parent", guardian); 
         newRequest.set("Status", "Pending"); // Set status to "pending"
-        newRequest.set("Type", "ContactApproval"); // Set type to "ContactApproval"
-        newRequest.set("Child", currentUser); // Set the child (the current logged-in user)
-
+        newRequest.set("Type", "ContactApproval"); // Set type 
+        newRequest.set("Child", currentUser); // Set the child 
+  
         // Save the request
         await newRequest.save();
         console.log("Contact and request saved successfully!");
       }
+  
       // Reset form data and fetch updated contacts
       setFormData({ username: "", about: "", email: "" });
     } catch (error) {
@@ -126,7 +121,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       setError(error.message || "Failed to save contact.");
     }
   };
-
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (error) {
