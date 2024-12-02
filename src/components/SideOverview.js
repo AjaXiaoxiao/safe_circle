@@ -20,15 +20,15 @@ const SideOverview = ({
   setSelectedChat,
   selectedChat,
 }) => {
+  const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
   const [requests, setRequests] = useState([]);
 
   //i let the childoverview page keep the contacts logic until someone starts to work on it.
+  const isChatList = location.pathname === "/";
   const isContactList = location.pathname === "/ContactsOverview";
   const isChildOverview = location.pathname === "/ChildOverview";
-
-  const isChatList = location.pathname === "/";
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -44,14 +44,38 @@ const SideOverview = ({
     fetchRequests();
   }, [location.pathname]);
 
+  const handleAddChatClick = () => {
+    if (isChatList) {
+      setIsAddingChat(true);
+    } else if (isContactList && onAddClick) {
+      onAddClick(); 
+    }
+  };
+
+  const handleBackClick = () => {
+    setIsAddingChat(false);
+  };
+
   return (
     <OverviewContainer>
-      <SideOverviewHeader onAddClick={onAddClick} title={title} />
-      {isChatList && (
+      <SideOverviewHeader
+        title={isAddingChat ? "New Chat" : title}
+        onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
+        isAddingChat={isAddingChat}
+      />
+      {!isAddingChat && isChatList && (
         <ChatList
           onChatClick={onChatClick}
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
+        />
+      )}
+      {isAddingChat && (
+        <ContactList
+          onContactClick={(contact) => {
+            onContactClick(contact); 
+            setIsAddingChat(false);
+          }}
         />
       )}
       {isContactList && <ContactList onContactClick={onContactClick} />}
@@ -72,6 +96,7 @@ const SideOverview = ({
   );
 };
 export default SideOverview;
+
 
 const OverviewContainer = styled.div`
   background-color: ${colors.white};
