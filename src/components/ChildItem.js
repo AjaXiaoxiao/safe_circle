@@ -3,16 +3,18 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
 
-const ChildItem = ({ username, guardianEmail, requests, onChildClick, child, childRequests}) => {
-    
+const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected}) => {
+  console.log("ChildItem props:", { username, guardianEmail, requests, onChildClick });
+
     return (
-      <Item onClick={onChildClick}>
+      <Item onClick = {onChildClick} isSelected={isSelected}>
         <ProfileContainer>
           <ProfilePictureSmall />
         </ProfileContainer>
         <TextContainer>
           <Text>{username}</Text>
           <Text>{guardianEmail}</Text>
+          
           {requests.length > 0 && (
             <StatusIcon
               title="New Contact Request"
@@ -28,7 +30,7 @@ const ChildItem = ({ username, guardianEmail, requests, onChildClick, child, chi
   const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: ${colors.white};
+  background-color: ${({ isSelected }) => (isSelected ? colors.yellow : colors.white)};
   border-top: 1px solid ${colors.grey};
   border-bottom: 1px solid ${colors.grey};
   display: flex;

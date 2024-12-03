@@ -9,7 +9,11 @@ import colors from '../../assets/colors';
 const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
   if (!isVisible || !contact) return null; 
 
+  const { child, requests } = contact; // Destructure child and requests
+
+
   const handleApprove = async () => {
+    const request = requests[0];
     contact.set("Status", "Approved");
     const child = contact.get("Child");
     child.set("isVerified", true);
@@ -19,6 +23,7 @@ const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
   };
   
   const handleDecline = async () => {
+    const request = requests[0];
     contact.set("Status", "Declined");
     await contact.save();
     onClose();
@@ -27,26 +32,27 @@ const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
   return (
     <div>
       <PopUpContainer>
-      <CloseButton onClick={onClose}>
-        <XButton />
-      </CloseButton>
-      <ProfilePicContainer>
-        <ProfilePictureBig />
-      </ProfilePicContainer>
-      <FormContainer>
-        <Label>Name</Label>
-        <SmallTextField value={contact.get("Child").get("username")} disabled />
-        <Label>Email</Label>
-        <SmallTextField value={contact.get("Child").get("email")} disabled />
-        <ButtonContainer>
-          <Button title="Approve" onClick={handleApprove} />
-          <Button title="Decline" color="red" onClick={handleDecline} />
-        </ButtonContainer>
-      </FormContainer>
+        <CloseButton onClick={onClose}>
+          <XButton />
+        </CloseButton>
+        <ProfilePicContainer>
+          <ProfilePictureBig />
+        </ProfilePicContainer>
+        <FormContainer>
+          <Label>Name</Label>
+          <SmallTextField value={child.get("username")} disabled />
+          <Label>Email</Label>
+          <SmallTextField value={child.get("email")} disabled />
+          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
+          <ButtonContainer>
+            <Button title="Approve" onClick={handleApprove} />
+            <Button title="Decline" color="red" onClick={handleDecline} />
+          </ButtonContainer>
+        </FormContainer>
       </PopUpContainer>
     </div>
   );
-}
+};
 
 export default PopUpChildOverview;
 

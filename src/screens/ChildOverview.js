@@ -10,12 +10,19 @@ export default function ChildOverviewPage({
   selectedChat,
   setSelectedChat,
   currentReceiverId,
+
 }) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  const handleChildClick = (child, requests) => {
+    setSelectedContact({ child, requests }); 
+    setPopupVisible(true);
+  };
+
   const togglePopup = () => {
     setPopupVisible(!isPopupVisible);
+    setSelectedContact(null);
   };
 
   const handleContactClick = (contact) => {
@@ -31,11 +38,14 @@ export default function ChildOverviewPage({
         <SideOverview
           title="Child Overview"
           onContactClick={handleContactClick}
+          onChildClick={handleChildClick}
+          selectedContact={selectedContact}
+
         />
         <PopUpChildOverview
           isVisible={isPopupVisible}
           onClose={togglePopup}
-          contact={selectedContact} // Properly pass the contact prop here
+          contact={selectedContact}           
         />
         <BlurredComponent isBlurred={isPopupVisible}>
           <ChatComponent

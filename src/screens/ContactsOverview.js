@@ -13,10 +13,8 @@ export default function Contacts({
   setSelectedChat,
   currentReceiverId,
 }) {
-  const [isAddContactPopupVisible, setAddContactPopUpToVisible] =
-    useState(false);
-  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
-    useState(false);
+  const [isAddContactPopupVisible, setAddContactPopUpToVisible] = useState(false);
+  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const location = useLocation();
@@ -50,6 +48,7 @@ export default function Contacts({
           title="Contacts"
           onAddClick={handleOpenAddContactPopup}
           onContactClick={handleContactClick}
+          selectedContact={selectedContact}
         />
         <BlurredComponent isBlurred={isAnyPopupVisible}>
           <ChatComponent

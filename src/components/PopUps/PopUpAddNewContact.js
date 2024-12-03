@@ -116,6 +116,9 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
   
       // Reset form data and fetch updated contacts
       setFormData({ username: "", about: "", email: "" });
+
+      onClose();
+      
     } catch (error) {
       console.error("Error saving contact:", error);
       setError(error.message || "Failed to save contact.");

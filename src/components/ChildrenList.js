@@ -4,10 +4,12 @@ import Parse from "parse/dist/parse.min.js";
 import ChildItem from "./ChildItem";
 import colors from "../assets/colors";
 
-const ChildrenList = ({ onChildClick }) => {
+const ChildrenList = ({ onChildClick, selectedContact }) => {
   const [children, setChildren] = useState([]);
   const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
+
+ 
 
   useEffect(() => {
     const fetchChildrenAndRequests = async () => {
@@ -53,21 +55,22 @@ const ChildrenList = ({ onChildClick }) => {
   }, []);
 
   const handleChildClick = (child) => {
-    const childRequests = requests.filter(request => request.get("child").id === child.id);
-    onChildClick(child, childRequests); 
+    const childRequests = requests.filter(request => request.get("Child").id === child.id);
+    onChildClick(child, childRequests);
   };
+ 
 
   return (
     <ChildrenListContainer>
       {children.length > 0 ? (
-        children.map((child, index) => (
+        children.map((child) => (
           <ChildItem
-            key={child.id}
-            username={child.get("username")}
-            guardianEmail={child.get("guardianEmail")} // Assuming parent is a pointer to UserProfile
-            requests={requests.filter(request => request.get("child").id === child.id)} // Filter requests for this child
+            key = {child.id}
             onChildClick={() => handleChildClick(child)} 
-  
+            username={child.get("username")}
+            guardianEmail={child.get("guardianEmail")}
+            isSelected={selectedContact && selectedContact.child && selectedContact.child.id === child.id}
+            requests={requests.filter(request => request.get("Child").id === child.id)}
           />
         ))
       ) : (
@@ -80,7 +83,7 @@ const ChildrenList = ({ onChildClick }) => {
 export default ChildrenList;
 
 const ChildrenListContainer = styled.div`
-padding: 10px;
+padding: 0px;
 overflow-y: auto;
 height: 100%;
 `;
