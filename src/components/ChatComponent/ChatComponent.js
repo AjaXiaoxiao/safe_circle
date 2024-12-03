@@ -13,7 +13,7 @@ const ChatComponent = ({ selectedChat }) => {
   useEffect(() => {
     if (!selectedChat || !selectedChat.chat) {
       return;
-    }
+    } 
     const getChat = async () => {
       const selectedMessages = selectedChat.chat.get("Messages");
 
@@ -65,7 +65,7 @@ const ChatComponent = ({ selectedChat }) => {
   return (
     <div>
       <ChatContainer>
-        <NamebarTop username={chatUsername} />
+        <NamebarTop username={selectedChat?.username} />
         <StyledMessageBubble>
           <MessageList>
             {messages.map((msg) => (

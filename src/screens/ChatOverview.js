@@ -14,6 +14,14 @@ const ChatOverview = ({ selectedChat, setSelectedChat }) => {
     setSelectedChat(chat);
   };
 
+  const handleContactClick = (contact) => {
+    const newChat = {
+      chat: null,
+      username: contact.username,
+    };
+    setSelectedChat(newChat);
+  };
+
   return (
     <div>
       <Topbar />
@@ -21,6 +29,7 @@ const ChatOverview = ({ selectedChat, setSelectedChat }) => {
         <Sidebar />
         <SideOverview
           title="Chats"
+          onContactClick={handleContactClick} 
           onChatClick={handleChatClick}
           setSelectedChat={setSelectedChat}
           selectedChat={selectedChat}

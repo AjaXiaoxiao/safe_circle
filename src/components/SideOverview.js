@@ -73,7 +73,11 @@ const SideOverview = ({
       {isAddingChat && (
         <ContactList
           onContactClick={(contact) => {
+            if (onContactClick) {
             onContactClick(contact); 
+            } else {
+              console.error("onContactClick is not a function");
+            }
             setIsAddingChat(false);
           }}
         />
