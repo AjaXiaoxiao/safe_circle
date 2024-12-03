@@ -7,6 +7,7 @@ import ContactsOverview from "./screens/ContactsOverview";
 import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
 import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
+import RequireLogin from "./components/RequireLogin";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -25,34 +26,40 @@ function App() {
         <Route
           path="/"
           element={
+            <RequireLogin>
             <ChatOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
               currentReceiverId={currentReceiverId}
               setCurrentReceiverId={setCurrentReceiverId}
             />
+            </RequireLogin>
           }
         />
         <Route
           path="/childoverview"
           element={
+            <RequireLogin>
             <ChildOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
               currentReceiverId={currentReceiverId}
               setCurrentReceiverId={setCurrentReceiverId}
             />
+            </RequireLogin>
           }
         />
         <Route
           path="/contactsoverview"
           element={
+            <RequireLogin>
             <ContactsOverview
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
               currentReceiverId={currentReceiverId}
               setCurrentReceiverId={setCurrentReceiverId}
             />
+            </RequireLogin>
           }
         />
         <Route path="/userregistration" element={<UserRegistration />} />
