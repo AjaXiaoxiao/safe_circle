@@ -16,7 +16,7 @@ export default TextField;
 const StyledTextField = styled.input`
   background-color: ${colors.lightGrey};
   width: 70%;
-  color: ${colors.grey};
+  color: ${colors.black};
   border-radius: 7px;
   border: none;
   font-size: 1em;
