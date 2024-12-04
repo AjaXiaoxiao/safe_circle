@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const ProfilePictureSmall = () => {
   return (
@@ -23,7 +24,7 @@ const ProfilePic = styled.img`
   object-fit: cover;
   border-radius: ${(props) => (props.rounded ? "50%" : "0")};
 
-  /* Create an offset border */
-  box-shadow: 0 0 0 6px #fff, 0 0 0 8px #a9e7eb;
-  background-color: #ffffff;
+
+  box-shadow: 0 0 0 6px ${colors.white}, 0 0 0 8px ${colors.blue};
+  background-color:${colors.white};
 `;

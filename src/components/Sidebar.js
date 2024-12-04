@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
+import colors from '../assets/colors'; 
+import LogOut from "../assets/LogOut.png";
+import Parse from "parse/dist/parse.min.js";
 
 
 const Sidebar = () => {
   const location = useLocation(); 
+  const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname); 
 
   useEffect(() => {
     setActive(location.pathname);
   }, [location]);
+
+  const doUserLogOut = async () => {
+    try {
+      await Parse.User.logOut(); 
+      const currentUser = await Parse.User.currentAsync(); 
+      if (!currentUser) {
+        alert("Success! You are now logged out.");
+        navigate("/userlogin"); 
+      }
+    } catch (error) {
+      alert(`Error during logout: ${error.message}`);
+    }
+  };
 
   return (
     <StyledSidebar>
@@ -25,9 +42,9 @@ const Sidebar = () => {
           </Link>
         </li>
         <li
-          className={active === "/Contacts" ? "active" : ""}
+          className={active === "/ContactsOverview" ? "active" : ""}
         >
-          <Link to="/Contacts" onClick={() => setActive("/Contacts")}>
+          <Link to="/ContactsOverview" onClick={() => setActive("/ContactsOverview")}>
             <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
           </Link>
         </li>
@@ -39,6 +56,9 @@ const Sidebar = () => {
           </Link>
         </li>
       </ul>
+      <LogOutContainer onClick={doUserLogOut}>
+        <img src={LogOut} alt="Log Out" className="logout-icon" />
+      </LogOutContainer>
     </StyledSidebar>
   );
 };
@@ -49,7 +69,7 @@ export default Sidebar;
 const StyledSidebar = styled.div`
   width: 12vw;
   height: 88vh;
-  background-color: #fee180;
+  background-color: ${colors.yellow};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -57,7 +77,7 @@ const StyledSidebar = styled.div`
   margin-top: 12vh;
   padding: 60px 0;
   padding-right: 30px;
-  z-index: 1;
+  z-index: 0;
   margin-right: -2vw;
 
   ul {
@@ -77,7 +97,7 @@ const StyledSidebar = styled.div`
       top: 10px;
       height: 22px;
       width: 4px;
-      background-color: #bb65ff;
+      background-color: ${colors.purple};
       border-radius: 4px;
     }
   }
@@ -89,3 +109,14 @@ const StyledSidebar = styled.div`
   }
 `;
 
+const LogOutContainer = styled.div`
+  margin-top: 35vh; 
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  .logout-icon {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
+`;

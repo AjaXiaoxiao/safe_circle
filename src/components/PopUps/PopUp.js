@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
+import colors from '../../assets/colors'; 
 
-const PopUp = ({ isVisible, onClose }) => {
+const PopUp = ({ isVisible, onClose, title, description }) => {
   if (!isVisible) return null;
 
   return (
@@ -9,8 +10,8 @@ const PopUp = ({ isVisible, onClose }) => {
       <CloseButton onClick={onClose}>
         <XButton />
       </CloseButton>
-      <h2>Popup Content</h2>
-      <p>This is a pop-up window.</p>
+      <h2>{title}</h2>
+      <p>{description}</p>
     </PopUpContainer>
   );
 };
@@ -24,8 +25,8 @@ const PopUpContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 300px;
   height: 400px;
-  background-color: white;
-  color: black;
+  background-color: ${colors.white};
+  color:${colors.black};
   border-radius: 8px;
   padding: 20px;
   display: flex;

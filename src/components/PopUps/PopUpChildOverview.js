@@ -4,33 +4,55 @@ import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
+import colors from '../../assets/colors'; 
 
-const PopUpChildOverview= ({ isVisible, onClose }) => {
-    if (!isVisible) return null;
+const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
+  if (!isVisible || !contact) return null; 
+
+  const { child, requests } = contact; // Destructure child and requests
+
+
+  const handleApprove = async () => {
+    const request = requests[0];
+    contact.set("Status", "Approved");
+    const child = contact.get("Child");
+    child.set("isVerified", true);
+    await child.save();
+    await contact.save();
+    onClose();
+  };
+  
+  const handleDecline = async () => {
+    const request = requests[0];
+    contact.set("Status", "Declined");
+    await contact.save();
+    onClose();
+  };
 
   return (
     <div>
       <PopUpContainer>
-      <CloseButton onClick={onClose}>
-        <XButton />
-      </CloseButton>
-      <ProfilePicContainer>
-        <ProfilePictureBig />
-      </ProfilePicContainer>
-      <FormContainer>
-        <Label>Name</Label>
-        <SmallTextField placeholder="Name of contact" />
-        <Label>Email</Label>
-        <SmallTextField placeholder="This is their email" />
-        <ButtonContainer>
-          <Button title="Approve"/>
-          <Button title="Decline" color="red"/>
-        </ButtonContainer>
-      </FormContainer>
+        <CloseButton onClick={onClose}>
+          <XButton />
+        </CloseButton>
+        <ProfilePicContainer>
+          <ProfilePictureBig />
+        </ProfilePicContainer>
+        <FormContainer>
+          <Label>Name</Label>
+          <SmallTextField value={child.get("username")} disabled />
+          <Label>Email</Label>
+          <SmallTextField value={child.get("email")} disabled />
+          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
+          <ButtonContainer>
+            <Button title="Approve" onClick={handleApprove} />
+            <Button title="Decline" color="red" onClick={handleDecline} />
+          </ButtonContainer>
+        </FormContainer>
       </PopUpContainer>
     </div>
   );
-}
+};
 
 export default PopUpChildOverview;
 
@@ -42,15 +64,15 @@ const PopUpContainer = styled.div`
   width: 340px;
   height: 450px;
   margin-left: 20%;
-  background-color: white;
-  color: black;
+  background-color: ${colors.white};
+  color: ${colors.black};
   border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2;
   border: 1px solid #ccc;
 `;
 
@@ -76,7 +98,7 @@ const FormContainer = styled.div`
 
 const Label = styled.label`
   font-size: 10px;
-  color: #888;
+  color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;
 `;

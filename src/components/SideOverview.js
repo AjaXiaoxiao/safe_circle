@@ -1,30 +1,81 @@
 import styled from "styled-components";
 import SideOverviewHeader from "./SideOverviewHeader";
-import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
-import React, { useState } from "react";
+import colors from "../assets/colors";
 import { useLocation } from "react-router-dom";
 import ContactList from "./ContactList";
+import ChatList from "./ChatList";
+import React, { useState} from "react";
+import ChildrenList from "./ChildrenList";
+import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 
-const SideOverview = ({ title }) => {
+const SideOverview = ({
+  title,
+  onContactClick,
+  onChatClick,
+  onAddClick,
+  onChildClick,
+  handleOpenPopup,
+  handleClosePopup,
+  setSelectedChat,
+  selectedChat,
+  setCurrentReceiverId,
+  selectedContact,
+}) => {
+  const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
-  const handleOpenPopup = () => {
-    if (location.pathname === "/Contacts") {
-      setIsPopupVisible(true);
+  //i let the childoverview page keep the contacts logic until someone starts to work on it.
+  const isChatList = location.pathname === "/";
+  const isContactList = location.pathname === "/ContactsOverview";
+  const isChildOverview = location.pathname === "/ChildOverview";
+
+
+  const handleAddChatClick = () => {
+    if (isChatList) {
+      setIsAddingChat(true);
+    } else if (isContactList && onAddClick) {
+      onAddClick();
     }
   };
 
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+  const handleBackClick = () => {
+    setIsAddingChat(false);
   };
 
   return (
     <OverviewContainer>
-      <SideOverviewHeader onAddClick={handleOpenPopup} title={title} />
-      <ContactList />
+      <SideOverviewHeader
+        title={isAddingChat ? "New Chat" : title}
+        onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
+        isAddingChat={isAddingChat}
+      />
+      {!isAddingChat && isChatList && (
+        <ChatList
+          onChatClick={onChatClick}
+          selectedChat={selectedChat}
+          setSelectedChat={setSelectedChat}
+          setCurrentReceiverId={setCurrentReceiverId}
+        />
+      )}
+      {isAddingChat && (
+        <ContactList
+          onContactClick={(contact) => {
+            onContactClick(contact);
+            setIsAddingChat(false);
+            selectedContact={selectedContact};
+          }}
+        />
+      )}
+      {isContactList && <ContactList 
+                        onContactClick={onContactClick} 
+                        selectedContact={selectedContact}/>}
+      {isChildOverview && <ChildrenList 
+                           onChildClick={onChildClick} 
+                           selectedContact={selectedContact}/>}
+     
       <PopUpAddNewContact
-      onClick={handleOpenPopup}
+        onClick={handleOpenPopup}
         isVisible={isPopupVisible}
         onClose={handleClosePopup}
       />
@@ -34,11 +85,12 @@ const SideOverview = ({ title }) => {
 export default SideOverview;
 
 const OverviewContainer = styled.div`
-  background-color: #ffffff;
-  border: solid #ccc 1px;
+  background-color: ${colors.white};
+  border: solid ${colors.grey} 1px;
   width: 30vw;
   height: 88vh;
   border-top-left-radius: 20px;
   margin-top: 12vh;
-  z-index: 2;
+  z-index: 10;
+  overflow-y: auto;
 `;
