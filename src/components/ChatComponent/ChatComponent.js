@@ -87,7 +87,7 @@ export default ChatComponent;
 
 const ChatContainer = styled.div`
   width: 60vw;
-  height: 96vh;
+  height: 88vh;
   margin-top: 12vh;
   display: flex;
   flex-direction: column;
