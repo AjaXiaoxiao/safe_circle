@@ -28,6 +28,8 @@ const getColor = (color) => {
       return { base: colors.blue, hover: colors.hoverBlue };
     case "yellow":
       return { base: colors.yellow, hover: colors.hoverYellow };
+    case "white":
+        return {base: colors.white, hover: colors.white};
     default:
       return { base: colors.purple, hover: colors.hoverPurple };
   }
@@ -67,7 +69,7 @@ export default Button;
 
 Button.propTypes = {
   title: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["purple", "red", "blue", "yellow"]),
+  color: PropTypes.oneOf(["purple", "red", "blue", "yellow", "white"]),
   icon: PropTypes.oneOf(["send", "x", "plus"]),
   width: PropTypes.oneOf(["fullWidth", "regular"]),
   textColor: PropTypes.oneOf(["white", "black"]),

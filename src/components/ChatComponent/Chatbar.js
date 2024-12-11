@@ -83,7 +83,7 @@ const Chatbar = ({ currentReceiverId }) => {
     <StyledChatbar>
       <EmojiPickerButton onSelectEmoji={handleEmojiSelect} />
       <TextField value={message} onChange={(e) => setMessage(e.target.value)} />
-      <Button icon="send" onClick={sendMessage} />
+      <Button icon="send" color="white" onClick={sendMessage} />
     </StyledChatbar>
   );
 };
