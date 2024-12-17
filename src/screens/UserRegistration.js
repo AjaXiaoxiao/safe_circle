@@ -97,7 +97,7 @@ const UserRegistration = () => {
         const request = new Parse.Object("Requests");
         request.set("Type", "ChildApproval");
         request.set("Status", "Pending");
-        request.set("Child", user);
+        request.set("Child", "UserProfile");
         request.set("Parent", guardian);
         await request.save();
           alert("Approval request sent to guardian!");
