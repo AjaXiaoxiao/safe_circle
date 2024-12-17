@@ -4,8 +4,9 @@ import Button from "../Buttons/Button";
 import EmojiPickerButton from "../Buttons/EmojiPickerButton";
 import { useState } from "react";
 import Parse from "parse/dist/parse.min.js";
+import colors from "../../assets/colors";
 
-const Chatbar = () => {
+const Chatbar = ({ currentReceiverId }) => {
   const [message, setMessage] = useState("");
 
   const handleEmojiSelect = (emoji) => {
@@ -22,24 +23,27 @@ const Chatbar = () => {
       Message.set("Timestamp", new Date());
 
       //Create another instance with a pointer to another object
-      const currentUser = Parse.User.current();
-      if (currentUser === null || currentUser === undefined) {
+      const loggedInUser = Parse.User.current();
+
+      if (loggedInUser === null || loggedInUser === undefined) {
         alert("No user is currently logged in. So there is no sender");
         return;
       }
+      const currentUser = new Parse.Query("UserProfile");
+      //const currentUser = Parse.User.current();
 
-      const senderUsername = currentUser.get("username");
-      const senderQuery = new Parse.Query("UserProfile");
-      const sender = await senderQuery
-        .equalTo("username", senderUsername)
+      const sender = await currentUser
+        .equalTo("userPointer", loggedInUser)
         .first();
 
-      if (sender === null || senderQuery === undefined) {
+      if (sender === null || sender === undefined) {
         alert("The sender profile does not exist");
         return;
       }
       const receiverQuery = new Parse.Query("UserProfile");
-      const receiver = await receiverQuery.equalTo("username", "Thore").first();
+      receiverQuery.equalTo("objectId", currentReceiverId); // Use equalTo for matching
+      const receiver = await receiverQuery.first();
+      //const receiver = await receiverQuery.equalTo("username", "Tommy").first(); //hard coded for now
 
       if (receiver === null || receiver === undefined) {
         alert("The receiver profile does not exist");
@@ -79,7 +83,7 @@ const Chatbar = () => {
     <StyledChatbar>
       <EmojiPickerButton onSelectEmoji={handleEmojiSelect} />
       <TextField value={message} onChange={(e) => setMessage(e.target.value)} />
-      <Button icon="send" onClick={sendMessage} />
+      <Button icon="send" color="white" onClick={sendMessage} />
     </StyledChatbar>
   );
 };
@@ -91,9 +95,9 @@ const StyledChatbar = styled.div`
   height: 10vh;
   display: flex;
   flex-direction: row;
-  border: solid #ccc 1px;
-  fill: #ffffff;
+  border: solid ${colors.grey} 1px;
+  fill: ${colors.white};
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;

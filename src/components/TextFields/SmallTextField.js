@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 export default function SmallTextField({ name, value, placeholder, onChange }) {
   return (
@@ -13,10 +14,10 @@ export default function SmallTextField({ name, value, placeholder, onChange }) {
 }
 
 const StyledTextField = styled.input`
-  background-color: #f0f2f5;
+  background-color: ${colors.lightGrey};
   width: 80%;
   height: 10%;
-  color: #6b7c85;
+  color: ${colors.black};
   border-radius: 7px;
   border: none;
   font-size: 0.8em;

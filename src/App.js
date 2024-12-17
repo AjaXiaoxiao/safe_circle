@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
-import PopUpContactPage from "./screens/PopUpContactPage";
-import ChildOverviewPage from "./screens/ChildOverviewPage";
+import ChildOverview from "./screens/ChildOverview";
 import Parse from "parse/dist/parse.min.js";
-import LogInUI from "./screens/LogInUI";
-import SignUpChild from "./screens/SignUpChild";
-import SignUpParent from "./screens/SignUpParent";
-import Contacts from "./screens/Contacts";
-import UserRegistrationParent from "./screens/UserRegistrationParent";
+import ContactsOverview from "./screens/ContactsOverview";
+import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
+import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
+import RequireLogin from "./components/RequireLogin";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -19,20 +17,57 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
-  const ChatOverviewHeader = "Chats";
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [currentReceiverId, setCurrentReceiverId] = useState(null);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ChatOverview title={ChatOverviewHeader} />} />
-        <Route path="/contactsPopUp" element={<PopUpContactPage />} />
-        <Route path="/childoverview" element={<ChildOverviewPage />} />
-        <Route path="/contactspopup" element={<PopUpContactPage />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/login" element={<LogInUI />} />
-        <Route path="/signupchild" element={<SignUpChild />} />
-        <Route path="/signupparent" element={<SignUpParent />} />
-        <Route path="/userregistrationparent" element={<UserRegistrationParent />} />
+        <Route
+          path="/"
+          element={
+            <RequireLogin>
+            <ChatOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
+            />
+            </RequireLogin>
+          }
+        />
+        <Route
+          path="/childoverview"
+          element={
+            <RequireLogin>
+            <ChildOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
+            />
+            </RequireLogin>
+          }
+        />
+        <Route
+          path="/contactsoverview"
+          element={
+            <RequireLogin>
+            <ContactsOverview
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+              currentReceiverId={currentReceiverId}
+              setCurrentReceiverId={setCurrentReceiverId}
+            />
+            </RequireLogin>
+          }
+        />
+        <Route path="/userregistration" element={<UserRegistration />} />
         <Route path="/userlogin" element={<UserLogin />} />
+        <Route
+          path="/childregistrationawait"
+          element={<ChildRegistrationAwait />}
+        />
       </Routes>
     </Router>
   );

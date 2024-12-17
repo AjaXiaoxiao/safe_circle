@@ -1,19 +1,19 @@
-import Topbar from "../components/Topbar";
+//import React, { useState } from "react";
 import styled from "styled-components";
+import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
-import React, { useState } from "react";
 
-const ChatOverview = ({ title}) => {
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+const ChatOverview = ({
+  selectedChat,
+  setSelectedChat,
+  currentReceiverId,
+  setCurrentReceiverId,
+}) => {
+  //handles the chat that is being clicked
+  const handleChatClick = (chat) => {
+    setSelectedChat(chat);
   };
 
   return (
@@ -21,11 +21,18 @@ const ChatOverview = ({ title}) => {
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview title={title} 
-        isPopupVisible={isPopupVisible} 
-        handleOpenPopup={handleOpenPopup}
-        handleClosePopup={handleClosePopup}/>
-        <ChatComponent isPopupVisible={isPopupVisible}/>
+        <SideOverview
+          title="Chats"
+          onChatClick={handleChatClick}
+          setSelectedChat={setSelectedChat}
+          selectedChat={selectedChat}
+          setCurrentReceiverId={setCurrentReceiverId}
+        />
+        <ChatComponent
+          selectedChat={selectedChat}
+          setSelectedChat={setSelectedChat}
+          currentReceiverId={currentReceiverId}
+        />
       </ColumnContainer>
     </div>
   );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import colors from '../assets/colors'; 
 
 const Input = ({icon, type = "text", placeholder, value, onChange }) => {
   return (
@@ -37,8 +37,8 @@ const StyledInput = styled.input`
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
-  border: 2px solid #fee180;
+  border: 2px solid ${colors.yellow};
   width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color:${colors.white};
+  box-shadow: 0px 4px 10px ${colors.grey};
 `;

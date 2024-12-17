@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from '../../assets/colors'; 
 
 const TextField = ({ value, onChange }) => {
   return (
@@ -13,9 +14,9 @@ const TextField = ({ value, onChange }) => {
 export default TextField;
 
 const StyledTextField = styled.input`
-  background-color: #f0f2f5;
+  background-color: ${colors.lightGrey};
   width: 70%;
-  color: #6b7c85;
+  color: ${colors.black};
   border-radius: 7px;
   border: none;
   font-size: 1em;

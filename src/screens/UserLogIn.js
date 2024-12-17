@@ -3,11 +3,12 @@ import Parse from 'parse/dist/parse.min.js';
 import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import LoginInput from "../components/LoginInput";
-import LoginPassword from "../components/LoginPassword";
 import Button from '../components/Buttons/Button';
 import ProfileIcon from "../assets/ProfileIcon.png";
 import Lock from "../assets/Lock.png";
 import { useNavigate } from 'react-router-dom';
+import PopUpRegistration from '../components/PopUps/PopUpRegistration';
+import colors from "../assets/colors";
 
 export const UserLogin = () => {
     
@@ -15,6 +16,11 @@ export const UserLogin = () => {
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate(); 
+    const [isPopupVisible, setPopupVisible] = useState(false); 
+
+    const togglePopup = () => {
+      setPopupVisible(!isPopupVisible);
+    };
     	
     const getCurrentUser = async function () { 
     	const currentUser = await Parse.User.current();
@@ -60,7 +66,7 @@ const doUserLogIn = async function () {
         value={username}
 	      onChange={(event) => setUsername(event.target.value)}
         />
-        <LoginPassword 
+        <LoginInput
         icon={Lock} 
         placeholder="Password"
         value={password}
@@ -69,8 +75,9 @@ const doUserLogIn = async function () {
          <Button color="purple" fullWidth title= "Log in" onClick={ () => doUserLogIn() }/>
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
-        <Button color="blue" fullWidth title= "Sign up" onClick={() => navigate('/userregistrationparent')}/>
+        <Button color="blue" fullWidth title= "Sign up" textColor="black" onClick={togglePopup}/>
       </FormContainer>
+      <PopUpRegistration isVisible={isPopupVisible} onClose={togglePopup}/>
     </LogInContainer>
     );
 };
@@ -83,7 +90,7 @@ const LogInContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: ${colors.white};
 `;
 
 const Logo = styled.img`
@@ -96,13 +103,13 @@ const Logo = styled.img`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  color: #000000;
+  color: ${colors.black};
   margin: 10px 0;
 `;
 
 const SubTitle = styled.p`
   font-size: 0.9rem;
-  color: #000000;
+  color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
 `;
@@ -116,7 +123,7 @@ const FormContainer = styled.div`
 
 const ForgotPassword = styled.a`
   font-size: 0.8rem;
-  color: #000000;
+  color: ${colors.black};
   margin: 10px 0;
   cursor: pointer;
   text-decoration: underline;
@@ -133,7 +140,7 @@ const Separator = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background: #000000;
+    background: ${colors.black};
   }
 
   &::before {
@@ -145,7 +152,7 @@ const Separator = styled.div`
   }
 
   span {
-    color: #000000;
+    color: ${colors.black};
     font-size: 1rem;
     font-weight: bold;
   }
