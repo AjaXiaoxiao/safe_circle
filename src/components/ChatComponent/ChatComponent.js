@@ -10,58 +10,52 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
   const [messages, setMessage] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
 
-  useEffect(() => {
-    if (!selectedChat || !selectedChat.chat) {
-      return;
-    }
-    const getChat = async () => {
+  const fetchMessages = async () => {
+    if (!selectedChat || !selectedChat.chat) return;
+
+    try {
       const selectedMessages = selectedChat.chat.get("Messages");
 
-      try {
-        if (
-          selectedMessages === null ||
-          selectedMessages === undefined ||
-          selectedMessages === 0
-        ) {
-          alert("No messages in chat");
-          return;
-        }
-
-        const loggedInUser = Parse.User.current();
-
-        const userProfileQuery = new Parse.Query("UserProfile");
-        userProfileQuery.equalTo("userPointer", loggedInUser);
-        const loggedInUserProfile = await userProfileQuery.first();
-
-        const resolvedMessages = await Promise.all(
-          selectedMessages.map(async (selectedMessage) => {
-            const message = await selectedMessage.fetch();
-
-            const sender = await message.get("Sender").fetch();
-            const isItTheSender =
-              JSON.stringify(sender) === JSON.stringify(loggedInUserProfile);
-            console.log(
-              "this is the sender:" +
-                sender.id +
-                "and this is the logged in user:" +
-                loggedInUserProfile.id +
-                "and isSender is:" +
-                isItTheSender
-            );
-            return {
-              id: message.id, //this is how you get the defualt objectId with Parse
-              text: message.get("Text"),
-              isSender: isItTheSender,
-            };
-          })
-        );
-        setMessage(resolvedMessages);
-      } catch (error) {
-        console.error("Error fetching chat or messages:", error);
+      if (!selectedMessages || selectedMessages.length === 0) {
+        setMessage([]);
+        return;
       }
-    };
-    getChat();
+
+      const loggedInUser = Parse.User.current();
+
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", loggedInUser);
+      const loggedInUserProfile = await userProfileQuery.first();
+
+      const resolvedMessages = await Promise.all(
+        selectedMessages.map(async (selectedMessage) => {
+          const message = await selectedMessage.fetch();
+          const sender = await message.get("Sender").fetch();
+
+          return {
+            id: message.id,
+            text: message.get("Text"),
+            isSender: sender.id === loggedInUserProfile.id, // Check if the message is from the logged-in user
+          };
+        })
+      );
+
+      setMessage(resolvedMessages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [selectedChat]);
+
 
   useEffect(() => {
     if (selectedChat && selectedChat.username) {
