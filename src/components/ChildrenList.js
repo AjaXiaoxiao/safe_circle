@@ -69,8 +69,8 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
           <ChildItem
           key={child.id}
           onChildClick={() => handleChildClick(child)}
-          username={String(child.get("username")?.title || child.get("username") || "N/A")}
-          guardianEmail={String(child.get("guardianEmail")?.title || child.get("guardianEmail") || "N/A")}
+          username={(child.get("username") || "N/A")}
+          guardianEmail={(child.get("guardianEmail") || "N/A")}
           isSelected={
             selectedContact &&
             selectedContact.child &&
@@ -78,7 +78,8 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
           }
           requests={requests.filter((request) => {
             const requestChild = request.get("child");
-            return requestChild?.id === child.id;
+            return String(requestChild.id) === String(child.id);
+
           })}
         />
         ))
