@@ -43,7 +43,6 @@ const Chatbar = ({ currentReceiverId }) => {
       const receiverQuery = new Parse.Query("UserProfile");
       receiverQuery.equalTo("objectId", currentReceiverId); // Use equalTo for matching
       const receiver = await receiverQuery.first();
-      //const receiver = await receiverQuery.equalTo("username", "Tommy").first(); //hard coded for now
 
       if (receiver === null || receiver === undefined) {
         alert("The receiver profile does not exist");
