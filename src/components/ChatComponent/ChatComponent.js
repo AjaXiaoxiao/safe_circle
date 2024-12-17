@@ -8,7 +8,7 @@ import Parse from "parse/dist/parse.min.js";
 
 const ChatComponent = ({ selectedChat, currentReceiverId }) => {
   const [messages, setMessage] = useState([]);
-  const [chatUsername, setChatUsername] = useState("Unkown user");
+  const [chatUsername, setChatUsername] = useState("No chat selected");
 
   useEffect(() => {
     if (!selectedChat || !selectedChat.chat) {
@@ -38,7 +38,16 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
             const message = await selectedMessage.fetch();
 
             const sender = await message.get("Sender").fetch();
-            const isItTheSender = sender === loggedInUserProfile;
+            const isItTheSender =
+              JSON.stringify(sender) === JSON.stringify(loggedInUserProfile);
+            console.log(
+              "this is the sender:" +
+                sender.id +
+                "and this is the logged in user:" +
+                loggedInUserProfile.id +
+                "and isSender is:" +
+                isItTheSender
+            );
             return {
               id: message.id, //this is how you get the defualt objectId with Parse
               text: message.get("Text"),
