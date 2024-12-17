@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import ContactList from "./ContactList";
 import ChatList from "./ChatList";
 import React, { useState} from "react";
+import Parse from "parse/dist/parse.min.js";
 import ChildrenList from "./ChildrenList";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 
@@ -43,6 +44,49 @@ const SideOverview = ({
     setIsAddingChat(false);
   };
 
+  const handleContactClick = async (contact) => {
+    try {
+      const currentUser = Parse.User.current();
+      if (!currentUser) throw new Error("User not logged in");
+  
+      const senderQuery = new Parse.Query("UserProfile");
+      senderQuery.equalTo("userPointer", currentUser);
+      const senderProfile = await senderQuery.first();
+  
+      if (!senderProfile) throw new Error("Sender profile not found");
+  
+      const receiverQuery = new Parse.Query("UserProfile");
+      receiverQuery.equalTo("username", contact.username); // Use username for lookup
+      const receiverProfile = await receiverQuery.first();
+  
+      if (!receiverProfile) throw new Error("Receiver profile not found");
+  
+      // Check for existing chat with both participants
+      const chatQuery = new Parse.Query("Chat");
+      chatQuery.containsAll("Participants", [senderProfile, receiverProfile]);
+      let chat = await chatQuery.first();
+  
+      if (!chat) {
+        chat = new Parse.Object("Chat");
+        chat.set("Participants", [senderProfile, receiverProfile]); // Proper Pointers
+        chat.set("Messages", []); // Initialize with empty Messages array
+        await chat.save();
+      }
+  
+      // Prepare the selectedChat object for state update
+      const newChat = {
+        id: chat.id,
+        chat,
+        username: contact.username,
+      };
+  
+      setSelectedChat(newChat);
+      setIsAddingChat(false);
+    } catch (error) {
+      console.error("Error creating or navigating to chat:", error);
+    }
+  };
+
   return (
     <OverviewContainer>
       <SideOverviewHeader
@@ -60,11 +104,7 @@ const SideOverview = ({
       )}
       {isAddingChat && (
         <ContactList
-          onContactClick={(contact) => {
-            onContactClick(contact);
-            setIsAddingChat(false);
-            selectedContact={selectedContact};
-          }}
+          onContactClick={(contact) => handleContactClick(contact)}
         />
       )}
       {isContactList && <ContactList 
