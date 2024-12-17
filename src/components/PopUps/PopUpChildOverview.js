@@ -1,33 +1,45 @@
-import React from 'react'; 
+import React from "react";
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
-import colors from '../../assets/colors'; 
+import colors from "../../assets/colors";
 
-const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
-  if (!isVisible || !contact) return null; 
+const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
+  if (!isVisible || !contact) return null;
 
-  const { child, requests } = contact; // Destructure child and requests
+  const { child, requests } = contact;
 
+  // Function to update request status to Parse Backend
+  const updateRequestStatus = async (status) => {
+    try {
+      const request = requests[0]; // Assuming requests[0] is the pending request
+      const childObj = child;
 
-  const handleApprove = async () => {
-    const request = requests[0];
-    contact.set("Status", "Approved");
-    const child = contact.get("Child");
-    child.set("isVerified", true);
-    await child.save();
-    await contact.save();
-    onClose();
+      // Update the "Status" field of the request object
+      request.set("Status", status);
+
+      // If approving, set the child's "isVerified" field to true
+      if (status === "Approved") {
+        childObj.set("isVerified", true);
+      }
+
+      // Save the request and child objects to Parse
+      await request.save();
+      await childObj.save();
+
+      console.log("Request and child updated successfully.");
+      alert(`Request has been ${status}.`);
+      onClose(); // Close the popup
+    } catch (error) {
+      console.error("Error updating the request:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
-  
-  const handleDecline = async () => {
-    const request = requests[0];
-    contact.set("Status", "Declined");
-    await contact.save();
-    onClose();
-  };
+
+  const handleApprove = () => updateRequestStatus("Approved");
+  const handleDecline = () => updateRequestStatus("Declined");
 
   return (
     <div>
@@ -40,10 +52,12 @@ const PopUpChildOverview= ({ isVisible, onClose, contact, name, email }) => {
         </ProfilePicContainer>
         <FormContainer>
           <Label>Name</Label>
-          <SmallTextField value={child.get("username")} disabled />
+          <SmallTextField value={child.get("username") || "No name"} disabled />
           <Label>Email</Label>
-          <SmallTextField value={child.get("email")} disabled />
-          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
+          <SmallTextField value={child.get("email") || "No email"} disabled />
+          {requests.length > 0 && (
+            <Label>Requests: {requests.length}</Label>
+          )}
           <ButtonContainer>
             <Button title="Approve" onClick={handleApprove} />
             <Button title="Decline" color="red" onClick={handleDecline} />
@@ -105,6 +119,6 @@ const Label = styled.label`
 
 const ButtonContainer = styled.div`
   margin-top: 20px;
-  display: flex; 
+  display: flex;
   flex-direction: row;
 `;

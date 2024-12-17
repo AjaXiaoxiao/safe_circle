@@ -9,7 +9,6 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
 
- 
 
   useEffect(() => {
     const fetchChildrenAndRequests = async () => {
@@ -55,7 +54,14 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   }, []);
 
   const handleChildClick = (child) => {
+<<<<<<< HEAD
     const childRequests = requests.filter(request => request.get("child").id === child.id);
+=======
+    const childRequests = requests.filter((request) => {
+      const requestChild = request.get("child");
+      return requestChild && requestChild.id === child.id; // Check if requestChild exists
+    });
+>>>>>>> sarapopups
     onChildClick(child, childRequests);
   };
  
@@ -65,13 +71,21 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
       {children.length > 0 ? (
         children.map((child) => (
           <ChildItem
-            key = {child.id}
-            onChildClick={() => handleChildClick(child)} 
-            username={child.get("username")}
-            guardianEmail={child.get("guardianEmail")}
-            isSelected={selectedContact && selectedContact.child && selectedContact.child.id === child.id}
-            requests={requests.filter(request => request.get("child").id === child.id)}
-          />
+          key={child.id}
+          onChildClick={() => handleChildClick(child)}
+          username={(child.get("username") || "N/A")}
+          guardianEmail={(child.get("guardianEmail") || "N/A")}
+          isSelected={
+            selectedContact &&
+            selectedContact.child &&
+            selectedContact.child.id === child.id
+          }
+          requests={requests.filter((request) => {
+            const requestChild = request.get("child");
+            return String(requestChild.id) === String(child.id);
+
+          })}
+        />
         ))
       ) : (
         <NoChildrenMessage>You don't have any children using SafeCircle.</NoChildrenMessage>
@@ -82,13 +96,14 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
 
 export default ChildrenList;
 
+
 const ChildrenListContainer = styled.div`
-padding: 0px;
-overflow-y: auto;
-height: 100%;
+  padding: 0px;
+  overflow-y: auto;
+  height: 100%;
 `;
 
 const NoChildrenMessage = styled.p`
-text-align: center;
-color: ${colors.grey};
+  text-align: center;
+  color: ${colors.grey};
 `;
