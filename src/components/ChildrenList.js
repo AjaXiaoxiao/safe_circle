@@ -55,7 +55,7 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   }, []);
 
   const handleChildClick = (child) => {
-    const childRequests = requests.filter(request => request.get("Child").id === child.id);
+    const childRequests = requests.filter(request => request.get("child").id === child.id);
     onChildClick(child, childRequests);
   };
  
@@ -70,7 +70,7 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
             username={child.get("username")}
             guardianEmail={child.get("guardianEmail")}
             isSelected={selectedContact && selectedContact.child && selectedContact.child.id === child.id}
-            requests={requests.filter(request => request.get("Child").id === child.id)}
+            requests={requests.filter(request => request.get("child").id === child.id)}
           />
         ))
       ) : (
