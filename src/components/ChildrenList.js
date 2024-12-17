@@ -54,14 +54,10 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   }, []);
 
   const handleChildClick = (child) => {
-<<<<<<< HEAD
-    const childRequests = requests.filter(request => request.get("child").id === child.id);
-=======
     const childRequests = requests.filter((request) => {
       const requestChild = request.get("child");
       return requestChild && requestChild.id === child.id; // Check if requestChild exists
     });
->>>>>>> sarapopups
     onChildClick(child, childRequests);
   };
  
