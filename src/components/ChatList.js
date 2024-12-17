@@ -78,6 +78,7 @@ const ChatList = ({
             }
 
             const messageText = latestMessage.get("Text");
+            console.log("This is the latest message" + messageText)
 
             return {
               id: chat.id,

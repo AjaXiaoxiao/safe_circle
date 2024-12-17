@@ -26,7 +26,6 @@ const SideOverview = ({
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
-  //i let the childoverview page keep the contacts logic until someone starts to work on it.
   const isChatList = location.pathname === "/";
   const isContactList = location.pathname === "/ContactsOverview";
   const isChildOverview = location.pathname === "/ChildOverview";
@@ -56,9 +55,9 @@ const SideOverview = ({
       if (!senderProfile) throw new Error("Sender profile not found");
   
       const receiverQuery = new Parse.Query("UserProfile");
-      receiverQuery.equalTo("username", contact.username); // Use username for lookup
+      receiverQuery.equalTo("username", contact.username); 
       const receiverProfile = await receiverQuery.first();
-  
+      console.log("this is the receiver" + receiverProfile.id)
       if (!receiverProfile) throw new Error("Receiver profile not found");
   
       // Check for existing chat with both participants
@@ -68,12 +67,11 @@ const SideOverview = ({
   
       if (!chat) {
         chat = new Parse.Object("Chat");
-        chat.set("Participants", [senderProfile, receiverProfile]); // Proper Pointers
+        chat.set("Participants", [senderProfile, receiverProfile]); 
         chat.set("Messages", []); // Initialize with empty Messages array
         await chat.save();
       }
   
-      // Prepare the selectedChat object for state update
       const newChat = {
         id: chat.id,
         chat,
