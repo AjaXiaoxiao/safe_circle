@@ -11,17 +11,17 @@ export default MessageBubble;
 
 
 const StyledMessageBubble = styled.div`
-  width: 400px;
-  height: auto;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  margin-bottom: 30px;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin: 10px 20px;
   background-color: ${colors.white};
   color:${colors.black}; 
   border: 2px solid ${(props) => (props.isSender ? colors.purple : colors.yellow)}; /* Purple border for sender, yellow border for receiver */
-  border-radius: 5px;
+  border-radius: 10px;
+  word-wrap; break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.5;
   position: relative;
   align-self: ${(props) =>
     props.isSender ? "flex-end" : "flex-start"}; 
@@ -30,11 +30,11 @@ const StyledMessageBubble = styled.div`
   &::after {
     content: "";
     position: absolute;
-    bottom: -15px; /* Position tail below the bubble */
+    bottom: -15px; 
     ${(props) =>
       props.isSender
-        ? "right: 15px;" 
-        : "left: 15px;"} 
+        ? "right: 10px;" 
+        : "left: 10px;"} 
     width: 0;
     height: 0;
      border-left: ${(props) =>
