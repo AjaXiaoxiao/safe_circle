@@ -5,6 +5,7 @@ import StatusIcon from "./Notifications/StatusIcon";
 
 const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected }) => {
   console.log("ChildItem props:", { username, guardianEmail, requests });
+  const hasPendingRequests = requests.some((request) => request.get("Status") === "Pending");
 
   return (
     <Item onClick={onChildClick} isSelected={isSelected}>
@@ -14,10 +15,7 @@ const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected
       <TextContainer>
         <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
         <Text>{typeof guardianEmail === "string" ? guardianEmail : "Invalid Email"}</Text>
-
-        {requests.length > 0 && (
-          <StatusIcon title="New Contact Request" />
-        )}
+        {hasPendingRequests && <StatusIcon title="Pending" />}
       </TextContainer>
     </Item>
   );

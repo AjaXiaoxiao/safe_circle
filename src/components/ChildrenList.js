@@ -30,6 +30,7 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
         const childrenQuery = new Parse.Query("UserProfile");
         childrenQuery.equalTo("guardianEmail", ownerEmail); 
         const childrenList = await childrenQuery.find();
+        console.log("childrenList", childrenList);
         setChildren(childrenList);
 
         // Query for pending requests related to this parent
@@ -40,10 +41,8 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
 
         console.log("Pending Requests:", pendingRequests);
 
-        const childRequests = pendingRequests.filter((request) =>
-          childrenList.some((child) => child.id === request.get("child").id)
-        );
-        setRequests(childRequests); 
+        setRequests(pendingRequests); 
+
       } catch (error) {
         console.error("Error fetching children or requests:", error);
         setError("Failed to fetch data.");
@@ -61,35 +60,31 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
     onChildClick(child, childRequests);
   };
  
-
   return (
     <ChildrenListContainer>
       {children.length > 0 ? (
-        children.map((child) => (
-          <ChildItem
-          key={child.id}
-          onChildClick={() => handleChildClick(child)}
-          username={(child.get("username") || "N/A")}
-          guardianEmail={(child.get("guardianEmail") || "N/A")}
-          isSelected={
-            selectedContact &&
-            selectedContact.child &&
-            selectedContact.child.id === child.id
-          }
-          requests={requests.filter((request) => {
-            const requestChild = request.get("child");
-            return String(requestChild.id) === String(child.id);
-
-          })}
-        />
-        ))
+        children.map((child) => {
+          return (
+            <ChildItem
+              key={child.id}
+              onChildClick={() => handleChildClick(child)}
+              username={child.get("username") || "N/A"}
+              guardianEmail={child.get("guardianEmail") || "N/A"}
+              isSelected={
+                selectedContact &&
+                selectedContact.child &&
+                selectedContact.child.id === child.id
+              }
+              requests={requests} 
+            />
+          );
+        })
       ) : (
         <NoChildrenMessage>You don't have any children using SafeCircle.</NoChildrenMessage>
       )}
     </ChildrenListContainer>
-  );
-};
-
+  )};
+  
 export default ChildrenList;
 
 
