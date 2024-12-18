@@ -1,11 +1,38 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Parse from "parse/dist/parse.min.js";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
 
-const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected }) => {
-  console.log("ChildItem props:", { username, guardianEmail, requests });
-  const hasPendingRequests = requests.some((request) => request.get("Status") === "Pending");
+const ChildItem = ({ username, onChildClick, isSelected }) => {
+  const [childRequests, setChildRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchRequestsForChild = async () => {
+        // Step 1: Query the _User table to get the child object by username
+        const userQuery = new Parse.Query("UserProfile");
+        userQuery.equalTo("username", username);
+        console.log("username", username);
+        const child = await userQuery.first();
+        console.log("child", child);
+
+        if (child) {
+          const userPointer = child.get("userPointer"); // gets the pointer to the _User  object from the UserProfile
+          const requestQuery = new Parse.Query("Requests");
+          requestQuery.equalTo("Child", userPointer); //  Requests has pointer to _User called Child
+          const childRequests = await requestQuery.find();
+
+          setChildRequests(childRequests);
+        } else {
+          console.log("User Profile not found.");
+          throw new Error(`No user found with username: ${username}`);
+        }
+    
+       
+      }
+    fetchRequestsForChild();
+  }, [username]);
 
   return (
     <Item onClick={onChildClick} isSelected={isSelected}>
@@ -14,7 +41,7 @@ const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected
       </ProfileContainer>
       <TextContainer>
         <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
-        {hasPendingRequests && <StatusIcon title="Pending" />}
+        {childRequests.length > 0 && <StatusIcon title="Pending" />}
       </TextContainer>
     </Item>
   );
