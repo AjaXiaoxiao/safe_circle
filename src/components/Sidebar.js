@@ -67,7 +67,7 @@ export default Sidebar;
 
 
 const StyledSidebar = styled.div`
-  width: 12vw;
+  width: 9vw;
   height: 88vh;
   background-color: ${colors.yellow};
   display: flex;

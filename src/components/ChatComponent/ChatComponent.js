@@ -95,7 +95,7 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
 export default ChatComponent;
 
 const ChatContainer = styled.div`
-  width: 60vw;
+  width: 63vw;
   height: 88vh;
   margin-top: 12vh;
   display: flex;
