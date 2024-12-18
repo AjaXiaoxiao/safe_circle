@@ -33,21 +33,25 @@ const doUserLogIn = async function () {
     const passwordValue = password;
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-      
-      alert( // logIn returns ParseUser object/ the logged in user in database..
-        	`Success! User ${loggedInUser.get(
-        	'username'
-        	)} has successfully signed in!`
-      );
 
-    const currentUser = await Parse.User.current();
-      console.log(loggedInUser === currentUser);
+        if (!loggedInUser || !loggedInUser.get('isVerified')) {
+          console.log("isVerified", loggedInUser.get('isVerified'));
+            // If profile doesn't exist or isn't verified, log the user out and show an error
+            await Parse.User.logOut();
+            alert('Your account is not verified. Please wait for guardian approval.');
+            return false;
+        }
+        else{
+        alert( // logIn returns ParseUser object/ the logged in user in database..
+        	`Success! User ${loggedInUser.get('username')} has successfully signed in!`
+        );
       setUsername('');
       setPassword('');
       getCurrentUser(); 
       navigate('/');
       return true;
-    } catch (error) {
+    }}
+    catch (error) {
         alert(`Error! ${error.message}`);
         return false;
       }
