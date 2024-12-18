@@ -29,7 +29,7 @@ const Topbar = () => {
   return (
     <StyledTopbar>
       <img src={logo} alt="Logo" className="top-bar-logo" />
-      <UsernameDisplay>Hi, {username}!</UsernameDisplay>
+      <UsernameDisplay>Hi, {username || "and welcome!"}!</UsernameDisplay>
     </StyledTopbar>
   );
 };
