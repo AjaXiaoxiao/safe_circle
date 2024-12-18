@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
-import Button from "../Buttons/Button";
 import colors from '../../assets/colors'; 
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 
@@ -16,7 +15,6 @@ const SelectContact = ({ isVisible, onClose, contact }) => {
       </CloseButton>
       <ProfilePicContainer><ProfilePictureBig /></ProfilePicContainer>
       <ContactName>{contact.username}</ContactName> 
-      <Button title="Chat" />
       <FieldTitle>About</FieldTitle>
       <FieldValue>{contact.about || "No description available"}</FieldValue> 
       <FieldTitle>Email</FieldTitle>
@@ -60,6 +58,7 @@ const ProfilePicContainer = styled.div`
 
 const ContactName = styled.h2`
   font-weight: bold;
+  margin-bottom: 20px;
   color: ${colors.black};
 `;
 
