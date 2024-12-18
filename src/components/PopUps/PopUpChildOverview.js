@@ -15,6 +15,8 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
     try {
       const request = requests[0]; 
       const childObj = child;
+      console.log("Request:", request);
+      console.log("Child Object:", childObj);
 
       request.set("Status", status);
 

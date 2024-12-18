@@ -32,10 +32,9 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
         const childrenList = await childrenQuery.find();
         setChildren(childrenList);
 
-        // Query for pending requests related to this parent
         const requestQuery = new Parse.Query("Requests");
-        requestQuery.equalTo("Parent", owner); // Parent should be the logged-in user
-        requestQuery.equalTo("Status", "Pending"); // Only fetch requests that are still pending
+        requestQuery.equalTo("Parent", owner); 
+        requestQuery.equalTo("Status", "Pending"); 
         const pendingRequests = await requestQuery.find();
 
         console.log("Pending Requests:", pendingRequests);
@@ -56,7 +55,7 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   const handleChildClick = (child) => {
     const childRequests = requests.filter((request) => {
       const requestChild = request.get("child");
-      return requestChild && requestChild.id === child.id; // Check if requestChild exists
+      return requestChild && requestChild.id === child.id;
     });
     onChildClick(child, childRequests);
   };
@@ -67,21 +66,20 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
       {children.length > 0 ? (
         children.map((child) => (
           <ChildItem
-          key={child.id}
-          onChildClick={() => handleChildClick(child)}
-          username={(child.get("username") || "N/A")}
-          guardianEmail={(child.get("guardianEmail") || "N/A")}
-          isSelected={
-            selectedContact &&
-            selectedContact.child &&
-            selectedContact.child.id === child.id
-          }
-          requests={requests.filter((request) => {
-            const requestChild = request.get("child");
-            return String(requestChild.id) === String(child.id);
-
-          })}
-        />
+            key={child.id}
+            onChildClick={() => handleChildClick(child)}
+            username={child.get("username") || "N/A"}
+            guardianEmail={child.get("guardianEmail") || "N/A"}
+            isSelected={
+              selectedContact &&
+              selectedContact.child &&
+              selectedContact.child.id === child.id
+            }
+            requests={requests.filter((request) => {
+              const requestChild = request.get ? request.get("child") : null;
+              return requestChild && requestChild.id === child.id;
+            })}
+          />
         ))
       ) : (
         <NoChildrenMessage>You don't have any children using SafeCircle.</NoChildrenMessage>

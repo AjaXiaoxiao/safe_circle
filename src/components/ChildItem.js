@@ -11,12 +11,23 @@ const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected
       <ProfileContainer>
         <ProfilePictureSmall />
       </ProfileContainer>
+
       <TextContainer>
         <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
         <Text>{typeof guardianEmail === "string" ? guardianEmail : "Invalid Email"}</Text>
-
-        {requests.length > 0 && (
-          <StatusIcon title="New Contact Request" />
+        {requests.length > 0 ? (
+          <RequestsContainer>
+            <StatusIcon title="New Contact Request" />
+            <RequestsList>
+              {requests.map((request, index) => (
+                <RequestItem key={index}>
+                  {request.get("Status") || "Pending"}
+                </RequestItem>
+              ))}
+            </RequestsList>
+          </RequestsContainer>
+        ) : (
+          <Text>No requests</Text>
         )}
       </TextContainer>
     </Item>
@@ -33,6 +44,7 @@ const Item = styled.div`
   border-bottom: 1px solid ${colors.grey};
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const ProfileContainer = styled.div`
@@ -53,4 +65,22 @@ const TextContainer = styled.div`
 const Text = styled.div`
   font-size: 1.2em;
   font-weight: bold;
+`;
+
+const RequestsContainer = styled.div`
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const RequestsList = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: 10px;
+`;
+
+const RequestItem = styled.li`
+  font-size: 0.9em;
+  color: ${colors.grey};
 `;
