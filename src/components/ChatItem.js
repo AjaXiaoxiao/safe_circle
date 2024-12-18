@@ -10,7 +10,7 @@ const ChatItem = ({ username, message, onChatClick }) => {
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        <MessageText>{message}</MessageText>
+        <MessageText>{message || "no messages yet"}</MessageText>
       </TextContainer>
     </Item>
   );
