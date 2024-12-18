@@ -55,6 +55,8 @@ const ChatList = ({
             //gets the latest message
             let messages = await chat.get("Messages");
 
+            messages = messages || [];
+
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
                 const message = await messagePointer.fetch();
@@ -66,7 +68,7 @@ const ChatList = ({
 
             if (resolvedMessages.length === 1) {
               latestMessage = resolvedMessages[0];
-            } else {
+            } else if (resolvedMessages.length > 1) {
               for (const message of resolvedMessages) {
                 if (
                   !latestMessage ||
@@ -77,7 +79,10 @@ const ChatList = ({
               }
             }
 
-            const messageText = latestMessage.get("Text");
+            const messageText = latestMessage
+              ? latestMessage.get("Text")
+              : "No messages yet";
+            console.log("This is the latest message" + messageText);
 
             return {
               id: chat.id,

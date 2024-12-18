@@ -11,27 +11,23 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
 
   const { child, requests } = contact;
 
-  // Function to update request status to Parse Backend
   const updateRequestStatus = async (status) => {
     try {
-      const request = requests[0]; // Assuming requests[0] is the pending request
+      const request = requests[0]; 
       const childObj = child;
 
-      // Update the "Status" field of the request object
       request.set("Status", status);
 
-      // If approving, set the child's "isVerified" field to true
       if (status === "Approved") {
         childObj.set("isVerified", true);
       }
 
-      // Save the request and child objects to Parse
       await request.save();
       await childObj.save();
 
       console.log("Request and child updated successfully.");
       alert(`Request has been ${status}.`);
-      onClose(); // Close the popup
+      onClose(); 
     } catch (error) {
       console.error("Error updating the request:", error);
       alert("An error occurred. Please try again.");

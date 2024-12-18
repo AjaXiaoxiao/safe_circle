@@ -233,9 +233,8 @@ const Label = styled.label`
 
 const ButtonContainer = styled.div`
   margin-top: 10px;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
+  width: 56%;
+  margin-right: 15px;
 `;
 
 const ErrorMessage = styled.div`
