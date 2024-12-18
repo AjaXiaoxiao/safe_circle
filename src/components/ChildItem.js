@@ -14,7 +14,6 @@ const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected
       </ProfileContainer>
       <TextContainer>
         <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
-        <Text>{typeof guardianEmail === "string" ? guardianEmail : "Invalid Email"}</Text>
         {hasPendingRequests && <StatusIcon title="Pending" />}
       </TextContainer>
     </Item>

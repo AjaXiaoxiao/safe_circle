@@ -33,10 +33,9 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
         console.log("childrenList", childrenList);
         setChildren(childrenList);
 
-        // Query for pending requests related to this parent
         const requestQuery = new Parse.Query("Requests");
-        requestQuery.equalTo("Parent", owner); // Parent should be the logged-in user
-        requestQuery.equalTo("Status", "Pending"); // Only fetch requests that are still pending
+        requestQuery.equalTo("Parent", owner); 
+        requestQuery.equalTo("Status", "Pending"); 
         const pendingRequests = await requestQuery.find();
 
         console.log("Pending Requests:", pendingRequests);
@@ -55,35 +54,58 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
   const handleChildClick = (child) => {
     const childRequests = requests.filter((request) => {
       const requestChild = request.get("child");
-      return requestChild && requestChild.id === child.id; // Check if requestChild exists
+      return requestChild?.id === child.id;
     });
-    onChildClick(child, childRequests);
+  
+    const pendingChildApprovalRequests = childRequests.filter(
+      (req) => req.get("Type") === "ChildApproval" && req.get("Status") === "Pending"
+    );
+  
+    const pendingContactApprovalRequests = childRequests.filter(
+      (req) => req.get("Type") === "ContactApproval" && req.get("Status") === "Pending"
+    );
+  
+    if (pendingChildApprovalRequests.length > 0) {
+      onChildClick(child, pendingChildApprovalRequests, "ChildApproval");
+    } else if (pendingContactApprovalRequests.length > 0) {
+      onChildClick(child, pendingContactApprovalRequests, "ContactApproval");
+    } else {
+      alert("No pending requests for this child.");
+    }
   };
  
   return (
     <ChildrenListContainer>
       {children.length > 0 ? (
         children.map((child) => {
+          const childRequests = requests.filter((request) => {
+            const requestChild = request.get("child");
+            return requestChild?.id === child.id;
+          });
+  
           return (
             <ChildItem
               key={child.id}
               onChildClick={() => handleChildClick(child)}
-              username={child.get("username") || "N/A"}
-              guardianEmail={child.get("guardianEmail") || "N/A"}
+              username={child.get("username")}
+              guardianEmail={child.get("guardianEmail")}
               isSelected={
                 selectedContact &&
                 selectedContact.child &&
                 selectedContact.child.id === child.id
               }
-              requests={requests} 
+              requests={childRequests} 
             />
           );
         })
       ) : (
-        <NoChildrenMessage>You don't have any children using SafeCircle.</NoChildrenMessage>
+        <NoChildrenMessage>
+          You don't have any children using SafeCircle.
+        </NoChildrenMessage>
       )}
     </ChildrenListContainer>
   )};
+  
   
 export default ChildrenList;
 
