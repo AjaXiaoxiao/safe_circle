@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import chatIcon from "../assets/ChatIcon.png";
 import contactIcon from "../assets/ContactBookIcon.png";
 import userIcon from "../assets/ProfileIcon.png";
-import colors from '../assets/colors'; 
+import colors from "../assets/colors";
 import LogOut from "../assets/LogOut.png";
 import Parse from "parse/dist/parse.min.js";
 
-
-const Sidebar = ({resetChat}) => {
-  const location = useLocation(); 
+const Sidebar = ({ resetChat }) => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [active, setActive] = useState(location.pathname); 
+  const [active, setActive] = useState(location.pathname);
 
   useEffect(() => {
     setActive(location.pathname);
@@ -20,12 +19,11 @@ const Sidebar = ({resetChat}) => {
 
   const doUserLogOut = async () => {
     try {
-      await Parse.User.logOut(); 
-      const currentUser = await Parse.User.currentAsync(); 
+      await Parse.User.logOut();
+      const currentUser = await Parse.User.currentAsync();
       if (!currentUser) {
         resetChat();
-        alert("Success! You are now logged out.");
-        navigate("/userlogin"); 
+        navigate("/userlogin");
       }
     } catch (error) {
       alert(`Error during logout: ${error.message}`);
@@ -35,23 +33,20 @@ const Sidebar = ({resetChat}) => {
   return (
     <StyledSidebar>
       <ul>
-        <li
-          className={active === "/" ? "active" : ""}
-        >
+        <li className={active === "/" ? "active" : ""}>
           <Link to="/" onClick={() => setActive("/")}>
             <img src={chatIcon} alt="Chat" className="sidebar-icon" />
           </Link>
         </li>
-        <li
-          className={active === "/ContactsOverview" ? "active" : ""}
-        >
-          <Link to="/ContactsOverview" onClick={() => setActive("/ContactsOverview")}>
+        <li className={active === "/ContactsOverview" ? "active" : ""}>
+          <Link
+            to="/ContactsOverview"
+            onClick={() => setActive("/ContactsOverview")}
+          >
             <img src={contactIcon} alt="Contacts" className="sidebar-icon" />
           </Link>
         </li>
-        <li
-          className={active === "/ChildOverview" ? "active" : ""}
-        >
+        <li className={active === "/ChildOverview" ? "active" : ""}>
           <Link to="/ChildOverview" onClick={() => setActive("/ChildOverview")}>
             <img src={userIcon} alt="Child Overview" className="sidebar-icon" />
           </Link>
@@ -65,7 +60,6 @@ const Sidebar = ({resetChat}) => {
 };
 
 export default Sidebar;
-
 
 const StyledSidebar = styled.div`
   width: 9vw;
@@ -111,7 +105,7 @@ const StyledSidebar = styled.div`
 `;
 
 const LogOutContainer = styled.div`
-  margin-top: 35vh; 
+  margin-top: 35vh;
   margin-bottom: 20px;
   cursor: pointer;
 

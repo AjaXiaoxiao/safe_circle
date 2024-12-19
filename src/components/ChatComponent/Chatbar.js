@@ -36,9 +36,9 @@ const Chatbar = ({ selectedChat }) => {
       }
 
       // Get the receiver from the selected chat
-      const receiverProfile = selectedChat.chat.get("Participants").find(
-        (participant) => participant.id !== senderProfile.id
-      );
+      const receiverProfile = selectedChat.chat
+        .get("Participants")
+        .find((participant) => participant.id !== senderProfile.id);
 
       if (!receiverProfile) {
         alert("Receiver not found");
@@ -61,7 +61,6 @@ const Chatbar = ({ selectedChat }) => {
       await Message.save();
       await chat.save();
 
-      alert("Message sent");
       setMessage(""); // Clear the input field
     } catch (error) {
       console.error("Error sending message:", error);
