@@ -3,31 +3,29 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
 
-const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected}) => {
-  console.log("ChildItem props:", { username, guardianEmail, requests, onChildClick });
+const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected }) => {
+  console.log("ChildItem props:", { username, guardianEmail, requests });
 
-    return (
-      <Item onClick = {onChildClick} isSelected={isSelected}>
-        <ProfileContainer>
-          <ProfilePictureSmall />
-        </ProfileContainer>
-        <TextContainer>
-          <Text>{username}</Text>
-          <Text>{guardianEmail}</Text>
-          
-          {requests.length > 0 && (
-            <StatusIcon
-              title="New Contact Request"
-            />
-          )}
-        </TextContainer>
-      </Item>
-    );
-  };
-  
-  export default ChildItem;
+  return (
+    <Item onClick={onChildClick} isSelected={isSelected}>
+      <ProfileContainer>
+        <ProfilePictureSmall />
+      </ProfileContainer>
+      <TextContainer>
+        <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
+        <Text>{typeof guardianEmail === "string" ? guardianEmail : "Invalid Email"}</Text>
 
-  const Item = styled.div`
+        {requests.length > 0 && (
+          <StatusIcon title="New Contact Request" />
+        )}
+      </TextContainer>
+    </Item>
+  );
+};
+
+export default ChildItem;
+
+const Item = styled.div`
   height: 110px;
   width: 100%;
   background-color: ${({ isSelected }) => (isSelected ? colors.yellow : colors.white)};
@@ -56,4 +54,3 @@ const Text = styled.div`
   font-size: 1.2em;
   font-weight: bold;
 `;
-

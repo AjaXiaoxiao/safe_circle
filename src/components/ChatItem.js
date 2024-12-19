@@ -3,6 +3,13 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 
 const ChatItem = ({ username, message, onChatClick }) => {
+  let shortMessage;
+  if (message.length > 30) {
+    shortMessage = message.substring(0, 30) + "...";
+  } else {
+    shortMessage = message;
+  }
+
   return (
     <Item onClick={onChatClick}>
       <ProfileContainer>
@@ -10,7 +17,7 @@ const ChatItem = ({ username, message, onChatClick }) => {
       </ProfileContainer>
       <TextContainer>
         <Name>{username}</Name>
-        <MessageText>{message}</MessageText>
+        <MessageText>{shortMessage || "no messages yet"}</MessageText>
       </TextContainer>
     </Item>
   );

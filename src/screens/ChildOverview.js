@@ -10,13 +10,15 @@ export default function ChildOverviewPage({
   selectedChat,
   setSelectedChat,
   currentReceiverId,
-
 }) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const handleChildClick = (child, requests) => {
-    setSelectedContact({ child, requests }); 
+    console.log("Selected child:", child);
+    console.log("Associated requests:", requests);
+
+    setSelectedContact({ child, requests }); // Pass child and requests
     setPopupVisible(true);
   };
 
@@ -25,28 +27,27 @@ export default function ChildOverviewPage({
     setSelectedContact(null);
   };
 
-  const handleContactClick = (contact) => {
-    setSelectedContact(contact);
-    setPopupVisible(true);
-  };
-
   return (
     <div>
       <Topbar />
       <ColumnContainer>
         <Sidebar />
+
         <SideOverview
           title="Child Overview"
-          onContactClick={handleContactClick}
-          onChildClick={handleChildClick}
+          onChildClick={handleChildClick} // Pass this function
           selectedContact={selectedContact}
+        />
 
-        />
-        <PopUpChildOverview
-          isVisible={isPopupVisible}
-          onClose={togglePopup}
-          contact={selectedContact}           
-        />
+        {/* PopUpChildOverview Component */}
+        {selectedContact && (
+          <PopUpChildOverview
+            isVisible={isPopupVisible}
+            onClose={togglePopup}
+            contact={selectedContact} // Pass child and requests
+          />
+        )}
+
         <BlurredComponent isBlurred={isPopupVisible}>
           <ChatComponent
             selectedChat={selectedChat}

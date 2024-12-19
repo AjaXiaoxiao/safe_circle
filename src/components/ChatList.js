@@ -50,10 +50,12 @@ const ChatList = ({
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
             const usernameId = otherParticipantProfile.id;
-            setCurrentReceiverId(usernameId);
+            setCurrentReceiverId(otherParticipant.id);
 
             //gets the latest message
             let messages = await chat.get("Messages");
+
+            messages = messages || [];
 
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
@@ -66,7 +68,7 @@ const ChatList = ({
 
             if (resolvedMessages.length === 1) {
               latestMessage = resolvedMessages[0];
-            } else {
+            } else if (resolvedMessages.length > 1) {
               for (const message of resolvedMessages) {
                 if (
                   !latestMessage ||
@@ -77,7 +79,10 @@ const ChatList = ({
               }
             }
 
-            const messageText = latestMessage.get("Text");
+            const messageText = latestMessage
+              ? latestMessage.get("Text")
+              : "No messages yet";
+            console.log("This is the latest message" + messageText);
 
             return {
               id: chat.id,
