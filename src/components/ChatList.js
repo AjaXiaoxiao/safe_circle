@@ -50,7 +50,7 @@ const ChatList = ({
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
             const usernameId = otherParticipantProfile.id;
-            setCurrentReceiverId(usernameId);
+            setCurrentReceiverId(otherParticipant.id);
 
             //gets the latest message
             let messages = await chat.get("Messages");
