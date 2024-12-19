@@ -9,7 +9,6 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
   const location = useLocation();
   const showMessage = location.pathname === "/";
 
-
   const fetchContacts = async () => {
     try {
       const currentUser = Parse.User.current(); // Get the current logged-in user
@@ -60,7 +59,7 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
         // Filter out null values in case of errors fetching contacts
         setContacts(fetchedContacts.filter(Boolean));
       } else {
-        setContacts([]); 
+        setContacts([]);
       }
     } catch (error) {
       console.error("Error fetching contacts:", error);
@@ -70,8 +69,7 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
 
   useEffect(() => {
     fetchContacts();
-  }, []);
-
+  }, [contacts]);
 
   return (
     <div>
@@ -81,7 +79,7 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
         contacts.length > 0 &&
         contacts.map((contact) => (
           <ContactItem
-            key = {contact.id}
+            key={contact.id}
             username={contact.username}
             message={contact.about}
             showMessage={showMessage}
@@ -95,4 +93,3 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
 };
 
 export default ContactList;
-
