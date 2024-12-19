@@ -55,35 +55,40 @@ const SideOverview = ({
       if (!senderProfile) throw new Error("Sender profile not found");
   
       const receiverQuery = new Parse.Query("UserProfile");
-      receiverQuery.equalTo("username", contact.username); 
+      receiverQuery.equalTo("username", contact.username);
       const receiverProfile = await receiverQuery.first();
-      console.log("this is the receiver" + receiverProfile.id)
+  
       if (!receiverProfile) throw new Error("Receiver profile not found");
   
-      // Check for existing chat with both participants
+      // Check or create a new chat
       const chatQuery = new Parse.Query("Chat");
       chatQuery.containsAll("Participants", [senderProfile, receiverProfile]);
       let chat = await chatQuery.first();
   
       if (!chat) {
         chat = new Parse.Object("Chat");
-        chat.set("Participants", [senderProfile, receiverProfile]); 
-        chat.set("Messages", []); // Initialize with empty Messages array
+        chat.set("Participants", [senderProfile, receiverProfile]);
+        chat.set("Messages", []);
         await chat.save();
       }
   
+      // Update selectedChat and currentReceiverId
       const newChat = {
         id: chat.id,
         chat,
         username: contact.username,
       };
-  
       setSelectedChat(newChat);
+  
+      // Update currentReceiverId
+      setCurrentReceiverId(receiverProfile.id);
+  
       setIsAddingChat(false);
     } catch (error) {
       console.error("Error creating or navigating to chat:", error);
     }
   };
+  
 
   return (
     <OverviewContainer>

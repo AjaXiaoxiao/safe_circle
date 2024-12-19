@@ -86,7 +86,9 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
             ))}
           </MessageList>
         </StyledMessageBubble>
-        <Chatbar currentReceiverId={currentReceiverId} />
+        <Chatbar 
+        currentReceiverId={currentReceiverId} 
+        selectedChat ={selectedChat}/>
       </ChatContainer>
     </div>
   );

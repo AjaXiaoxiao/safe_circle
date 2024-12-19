@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
+import Parse from "parse/dist/parse.min.js";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
@@ -14,6 +15,16 @@ const ChatOverview = ({
   //handles the chat that is being clicked
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
+
+    const currentUser = Parse.User.current();
+  if (currentUser) {
+    const receiver = chat.chat.get("Participants").find(
+      (participant) => participant.id !== currentUser.id
+    );
+    if (receiver) {
+      setCurrentReceiverId(receiver.id);
+    }
+  }
   };
 
   return (
