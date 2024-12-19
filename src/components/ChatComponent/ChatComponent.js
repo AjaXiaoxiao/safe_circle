@@ -10,7 +10,7 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
   const [messages, setMessages] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
 
-  const fetchMessages = async () => {
+  const getChat = async () => {
     if (!selectedChat || !selectedChat.id) return;
 
     try {
@@ -48,18 +48,16 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
     }
   };
 
-  // Polling for new messages every 3 seconds
   useEffect(() => {
-    fetchMessages(); // Initial fetch
+    getChat(); 
 
     const interval = setInterval(() => {
-      fetchMessages();
-    }, 3000); // Poll every 3 seconds
+      getChat();
+    }, 3000); 
 
-    return () => clearInterval(interval); // Cleanup interval on unmount or `selectedChat` change
+    return () => clearInterval(interval); 
   }, [selectedChat]);
 
-  // Update the chat username when `selectedChat` changes
   useEffect(() => {
     if (selectedChat && selectedChat.username) {
       setChatUsername(selectedChat.username);
@@ -86,7 +84,6 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
         <Chatbar
           currentReceiverId={currentReceiverId}
           selectedChat={selectedChat}
-          fetchMessages={fetchMessages} // Allow Chatbar to trigger a manual fetch
         />
       </ChatContainer>
     </div>
