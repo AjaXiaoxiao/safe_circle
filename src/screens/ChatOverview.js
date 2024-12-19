@@ -12,7 +12,7 @@ const ChatOverview = ({
   currentReceiverId,
   setCurrentReceiverId,
 }) => {
-  //handles the chat that is being clicked
+
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
 
@@ -27,11 +27,15 @@ const ChatOverview = ({
   }
   };
 
+  const resetChat = () => {
+    setSelectedChat(null);
+  }
+
   return (
     <div>
       <Topbar />
       <ColumnContainer>
-        <Sidebar />
+        <Sidebar resetChat={resetChat} />
         <SideOverview
           title="Chats"
           onChatClick={handleChatClick}

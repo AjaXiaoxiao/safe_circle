@@ -9,7 +9,7 @@ import LogOut from "../assets/LogOut.png";
 import Parse from "parse/dist/parse.min.js";
 
 
-const Sidebar = () => {
+const Sidebar = ({resetChat}) => {
   const location = useLocation(); 
   const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname); 
@@ -23,6 +23,7 @@ const Sidebar = () => {
       await Parse.User.logOut(); 
       const currentUser = await Parse.User.currentAsync(); 
       if (!currentUser) {
+        resetChat();
         alert("Success! You are now logged out.");
         navigate("/userlogin"); 
       }
