@@ -7,67 +7,64 @@ import colors from "../../assets/colors";
 import Parse from "parse/dist/parse.min.js";
 
 const ChatComponent = ({ selectedChat, currentReceiverId }) => {
-  const [messages, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
 
-  useEffect(() => {
-    if (!selectedChat || !selectedChat.chat) {
-      return;
-    }
-    const getChat = async () => {
-      const selectedMessages = selectedChat.chat.get("Messages");
+  const fetchMessages = async () => {
+    if (!selectedChat || !selectedChat.id) return;
 
-      try {
-        if (
-          selectedMessages === null ||
-          selectedMessages === undefined ||
-          selectedMessages === 0
-        ) {
-          alert("No messages in chat");
-          return;
-        }
+    try {
+      const chatQuery = new Parse.Query("Chat");
+      const chat = await chatQuery.get(selectedChat.id);
 
-        const loggedInUser = Parse.User.current();
+      const selectedMessages = chat.get("Messages");
 
-        const userProfileQuery = new Parse.Query("UserProfile");
-        userProfileQuery.equalTo("userPointer", loggedInUser);
-        const loggedInUserProfile = await userProfileQuery.first();
-
-        const resolvedMessages = await Promise.all(
-          selectedMessages.map(async (selectedMessage) => {
-            const message = await selectedMessage.fetch();
-
-            const sender = await message.get("Sender").fetch();
-            const isItTheSender =
-              JSON.stringify(sender) === JSON.stringify(loggedInUserProfile);
-            console.log(
-              "this is the sender:" +
-                sender.id +
-                "and this is the logged in user:" +
-                loggedInUserProfile.id +
-                "and isSender is:" +
-                isItTheSender
-            );
-            return {
-              id: message.id, //this is how you get the defualt objectId with Parse
-              text: message.get("Text"),
-              isSender: isItTheSender,
-            };
-          })
-        );
-        setMessage(resolvedMessages);
-      } catch (error) {
-        console.error("Error fetching chat or messages:", error);
+      if (!selectedMessages || selectedMessages.length === 0) {
+        setMessages([]);
+        return;
       }
-    };
-    getChat();
+
+      const loggedInUser = Parse.User.current();
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", loggedInUser);
+      const loggedInUserProfile = await userProfileQuery.first();
+
+      const resolvedMessages = await Promise.all(
+        selectedMessages.map(async (selectedMessage) => {
+          const message = await selectedMessage.fetch();
+          const sender = await message.get("Sender").fetch();
+
+          return {
+            id: message.id,
+            text: message.get("Text"),
+            isSender: sender.id === loggedInUserProfile.id, // Check if the logged-in user sent this message
+          };
+        })
+      );
+
+      setMessages(resolvedMessages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  // Polling for new messages every 3 seconds
+  useEffect(() => {
+    fetchMessages(); // Initial fetch
+
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 3000); // Poll every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount or `selectedChat` change
   }, [selectedChat]);
 
+  // Update the chat username when `selectedChat` changes
   useEffect(() => {
     if (selectedChat && selectedChat.username) {
       setChatUsername(selectedChat.username);
     } else {
-      setChatUsername("Unkown User");
+      setChatUsername("Unknown User");
     }
   }, [selectedChat]);
 
@@ -86,9 +83,11 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
             ))}
           </MessageList>
         </StyledMessageBubble>
-        <Chatbar 
-        currentReceiverId={currentReceiverId} 
-        selectedChat ={selectedChat}/>
+        <Chatbar
+          currentReceiverId={currentReceiverId}
+          selectedChat={selectedChat}
+          fetchMessages={fetchMessages} // Allow Chatbar to trigger a manual fetch
+        />
       </ChatContainer>
     </div>
   );
@@ -96,6 +95,7 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
 
 export default ChatComponent;
 
+// Styled Components
 const ChatContainer = styled.div`
   width: 63vw;
   height: 88vh;
