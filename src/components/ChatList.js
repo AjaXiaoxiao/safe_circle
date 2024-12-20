@@ -9,6 +9,7 @@ const ChatList = ({
   selectedChat,
   setSelectedChat,
   setCurrentReceiverId,
+  displayToast,
 }) => {
   const [chats, setChats] = useState([]);
 
@@ -18,7 +19,7 @@ const ChatList = ({
         //the logged in user object
         const loggedInUser = Parse.User.current();
         if (!loggedInUser) {
-          alert("No user is logged in");
+          displayToast("error", "No user is logged in");
           return;
         }
 
@@ -29,7 +30,7 @@ const ChatList = ({
         const currentUser = await currentUserQuery.first();
 
         if (currentUser === undefined || currentUser === null) {
-          alert("No profile found for the logged-in user.");
+          displayToast("error", "No profile found for the logged-in user.");
           return;
         }
 

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PopUpSignedIn from "../components/PopUps/PopUpSignedIn";
 import Topbar from "../components/Topbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const ChildRegistrationAwait = () => {
   const location = useLocation();
@@ -12,6 +15,8 @@ const ChildRegistrationAwait = () => {
   useEffect(() => {
     if (location.state?.username) {
       setUsername(location.state.username);
+      toast.success("Approval request sent to guardian!");
+
     } else {
       navigate("/userlogin");
     }
@@ -24,6 +29,7 @@ const ChildRegistrationAwait = () => {
 
   return (
     <div>
+    <ToastContainer />
     <Topbar /> 
     {isPopupVisible && (
       <PopUpSignedIn

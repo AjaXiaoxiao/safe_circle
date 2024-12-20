@@ -6,7 +6,7 @@ import TextField from "../TextFields/TextField";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../../assets/colors";
 
-const Chatbar = ({ selectedChat }) => {
+const Chatbar = ({ selectedChat, displayToast }) => {
   const [message, setMessage] = useState("");
 
   const handleEmojiSelect = (emoji) => {
@@ -15,14 +15,14 @@ const Chatbar = ({ selectedChat }) => {
 
   const sendMessage = async () => {
     if (!selectedChat || !selectedChat.chat) {
-      alert("No chat selected!");
+      displayToast("error", "No chat selected!");
       return;
     }
 
     try {
       const loggedInUser = Parse.User.current();
       if (!loggedInUser) {
-        alert("No user logged in");
+        displayToast("error", "No user logged in");
         return;
       }
 
@@ -31,7 +31,7 @@ const Chatbar = ({ selectedChat }) => {
       const senderProfile = await senderQuery.first();
 
       if (!senderProfile) {
-        alert("Sender profile not found");
+        displayToast("error", "Sender profile not found");
         return;
       }
 
@@ -41,7 +41,7 @@ const Chatbar = ({ selectedChat }) => {
         .find((participant) => participant.id !== senderProfile.id);
 
       if (!receiverProfile) {
-        alert("Receiver not found");
+        displayToast("error", "Receiver not found");
         return;
       }
 
@@ -64,7 +64,7 @@ const Chatbar = ({ selectedChat }) => {
       setMessage(""); // Clear the input field
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send the message");
+      displayToast("error", "Failed to send the message");
     }
   };
 

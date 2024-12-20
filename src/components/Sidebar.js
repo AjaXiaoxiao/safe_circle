@@ -8,7 +8,7 @@ import colors from "../assets/colors";
 import LogOut from "../assets/LogOut.png";
 import Parse from "parse/dist/parse.min.js";
 
-const Sidebar = ({ resetChat }) => {
+const Sidebar = ({ resetChat, displayToast }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname);
@@ -26,7 +26,7 @@ const Sidebar = ({ resetChat }) => {
         navigate("/userlogin");
       }
     } catch (error) {
-      alert(`Error during logout: ${error.message}`);
+      displayToast("error", "Error during logout: ${error.message}");
     }
   };
 

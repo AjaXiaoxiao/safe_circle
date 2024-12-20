@@ -6,7 +6,7 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
 
-const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
+const PopUpChildOverview = ({ isVisible, onClose, contact, displayToast }) => {
   if (!isVisible || !contact) return null;
 
   const { child, requests } = contact;
@@ -26,11 +26,11 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
       await childObj.save();
 
       console.log("Request and child updated successfully.");
-      alert(`Request has been ${status}.`);
+      displayToast("success", "Request has been ${status}.");
       onClose(); 
     } catch (error) {
       console.error("Error updating the request:", error);
-      alert("An error occurred. Please try again.");
+      displayToast("error", "An error occurred. Please try again.");
     }
   };
 
