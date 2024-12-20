@@ -137,7 +137,7 @@ const UserRegistration = () => {
   return (
     <LogInContainer>
       <ToastContainer />
-      <Topbar />
+      <Topbar hideWelcome={true} />
       <BackArrowContainer
         src={BackArrow}
         alt="Back Arrow"

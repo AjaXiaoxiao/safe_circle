@@ -67,33 +67,39 @@ const ChatList = ({
 
             let latestMessage = null;
 
-            if (resolvedMessages.length === 1) {
-              latestMessage = resolvedMessages[0];
-            } else if (resolvedMessages.length > 1) {
-              for (const message of resolvedMessages) {
-                if (
-                  !latestMessage ||
-                  message.get("Timestamp") > latestMessage.get("Timestamp")
-                ) {
-                  latestMessage = message;
+            if (resolvedMessages.length > 0) {
+              latestMessage = resolvedMessages.reduce((latest, current) => {
+                if (current.get("Timestamp") > latest.get("Timestamp")) {
+                  return current;
+                } else {
+                  return latest;
                 }
-              }
+              }, resolvedMessages[0]);
             }
 
-            const messageText = latestMessage
-              ? latestMessage.get("Text")
-              : "No messages yet";
-            console.log("This is the latest message" + messageText);
+            let latestTimestamp = null;
+            let messageText = "No messages yet";
 
+            if (latestMessage) {
+              latestTimestamp = latestMessage.get("Timestamp");
+              messageText = latestMessage.get("Text");
+            }
+    
             return {
               id: chat.id,
               username,
               message: messageText,
-              messages: resolvedMessages,
+              latestTimestamp: latestTimestamp,
               chat,
             };
           })
         );
+        
+        const sortedChats = chatDetails.sort((a, b) => {
+          if (!a.latestTimestamp) return 1; // chats with no messages should be in bottom
+          if (!b.latestTimestamp) return -1;
+          return b.latestTimestamp - a.latestTimestamp; // sort in descending order yes?
+        });
 
         setChats(chatDetails);
         if (fetchedChats.length > 0 && !selectedChat) {
