@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
 import MessageBubble from "./MessageBubble";
@@ -9,6 +9,7 @@ import Parse from "parse/dist/parse.min.js";
 const ChatComponent = ({ selectedChat, currentReceiverId, displayToast }) => {
   const [messages, setMessages] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
+  const messageListReference = useRef(null);
 
   const getChat = async () => {
     if (!selectedChat || !selectedChat.id) return;
@@ -66,11 +67,24 @@ const ChatComponent = ({ selectedChat, currentReceiverId, displayToast }) => {
     }
   }, [selectedChat]);
 
+  useEffect(() => {
+    // Scroll to bottom when messages are updated
+    if (messageListReference.current) {
+      messageListReference.current.scrollTop = messageListReference.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {  // Scroll to bottom when component mounts
+    if (messageListReference.current) {
+      messageListReference.current.scrollTop = messageListReference.current.scrollHeight;
+    }
+  }, []);
+
   return (
     <div>
       <ChatContainer>
         <NamebarTop username={chatUsername} />
-        <StyledMessageBubble>
+        <StyledMessageBubble ref ={messageListReference}>
           <MessageList>
             {messages.map((msg) => (
               <MessageBubble
