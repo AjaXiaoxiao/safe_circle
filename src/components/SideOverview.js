@@ -21,6 +21,7 @@ const SideOverview = ({
   selectedChat,
   setCurrentReceiverId,
   selectedContact,
+  displayToast
 }) => {
   const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -103,6 +104,7 @@ const SideOverview = ({
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
           setCurrentReceiverId={setCurrentReceiverId}
+          displayToast={displayToast}
         />
       )}
       {isAddingChat && (

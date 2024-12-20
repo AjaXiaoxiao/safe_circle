@@ -15,6 +15,7 @@ export const UserLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate(); 
     const [isPopupVisible, setPopupVisible] = useState(false); 
 
@@ -40,10 +41,11 @@ const doUserLogIn = async function () {
       setUsername('');
       setPassword('');
       getCurrentUser(); 
+      setErrorMessage('');
       navigate('/');
       return true;
     } catch (error) {
-        alert(`Error! ${error.message}`);
+      setErrorMessage(`Invalid username or password!`);
         return false;
       }
   };
@@ -67,6 +69,7 @@ const doUserLogIn = async function () {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         />
+        <ErrorText>{errorMessage}</ErrorText>
          <Button color="purple" fullWidth title= "Log in" onClick={ () => doUserLogIn() }/>
         <ForgotPassword>Forgot password?</ForgotPassword>
         <Separator><span>or</span></Separator>
@@ -151,4 +154,12 @@ const Separator = styled.div`
     font-size: 1rem;
     font-weight: bold;
   }
+`;
+
+const ErrorText = styled.p`
+  color: ${colors.hoverRed};
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
 `;

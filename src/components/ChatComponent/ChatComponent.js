@@ -6,7 +6,7 @@ import MessageBubble from "./MessageBubble";
 import colors from "../../assets/colors";
 import Parse from "parse/dist/parse.min.js";
 
-const ChatComponent = ({ selectedChat, currentReceiverId }) => {
+const ChatComponent = ({ selectedChat, currentReceiverId, displayToast }) => {
   const [messages, setMessages] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
 
@@ -84,6 +84,7 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
         <Chatbar
           currentReceiverId={currentReceiverId}
           selectedChat={selectedChat}
+          displayToast={displayToast}
         />
       </ChatContainer>
     </div>
