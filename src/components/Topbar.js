@@ -4,7 +4,7 @@ import styled from "styled-components";
 import colors from '../assets/colors'; 
 import Parse from "parse/dist/parse.min.js";
 
-const Topbar = () => {
+const Topbar = ({hideWelcome = false}) => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -18,9 +18,12 @@ const Topbar = () => {
           if (userProfile) {
             setUsername(userProfile.get("username"));
           }
+        } else{
+          setUsername("");
         }
       } catch (error) {
         console.error("Error fetching username:", error);
+        setUsername("");
       }
     };
     fetchUsername();
@@ -29,7 +32,7 @@ const Topbar = () => {
   return (
     <StyledTopbar>
       <img src={logo} alt="Logo" className="top-bar-logo" />
-      <UsernameDisplay>Hi, {username || "and welcome!"}!</UsernameDisplay>
+      {!hideWelcome && <UsernameDisplay>{username ? `Hi, ${username}!` : " "}</UsernameDisplay>}
     </StyledTopbar>
   );
 };
