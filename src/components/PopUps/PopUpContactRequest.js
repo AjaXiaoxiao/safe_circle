@@ -1,39 +1,13 @@
-import React, { useState} from "react";
+import React from "react";
 import {PopUpContainer, CloseButton, ProfilePicContainer, FormContainer, ButtonContainer, Label } from "./PopUpStyling.sc.js";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 
-const PopUpContactRequest = ({ isVisible, onClose, contact, childRequests }) => {
-    const [showModal, setShowModal] = useState(false);
-    if (!isVisible || !contact) return null;
-    
-  
-    const { child} = contact;
-  
-    // const updateRequestStatus = async (status) => {
-    //   try {
-    //     const request = requests[0]; 
-    //     const childObj = child;
-  
-    //     request.set("Status", status);
-  
-    //     if (status === "Approved") {
-    //       childObj.set("isVerified", true);
-    //     }
-  
-    //     await request.save();
-    //     await childObj.save();
-  
-    //     console.log("Request and child updated successfully.");
-    //     alert(`Request has been ${status}.`);
-    //     onClose(); 
-    //   } catch (error) {
-    //     console.error("Error updating the request:", error);
-    //     alert("An error occurred. Please try again.");
-    //   }
-    // };
+const PopUpContactRequest = ({ isVisible, onClose, childRequests, name, email }) => {
+    if (!isVisible ) return null;    
+
 
     const updateContactStatus = async (status) => {
         try {
@@ -42,14 +16,12 @@ const PopUpContactRequest = ({ isVisible, onClose, contact, childRequests }) => 
             await request.save();
          
           // Close modal if no more pending requests
-          if (childRequests.length <= 1) setShowModal(false);
+          if (childRequests.length <= 1) onClose();
+          window.location.reload();
         } catch (error) {
           console.error("Error approving request:", error);
         }
       };
-  
-    const handleApprove = () => updateContactStatus("Approved");
-    const handleDecline = () => updateContactStatus("Declined");
   
     return (
       <div>
@@ -62,14 +34,12 @@ const PopUpContactRequest = ({ isVisible, onClose, contact, childRequests }) => 
           </ProfilePicContainer>
           <FormContainer>
             <Label>Name</Label>
-            <SmallTextField value={child.get("username") || "No name"} disabled />
-            <Label>About</Label>
-            <SmallTextField value={child.get("about") || "No about"} disabled />
+            <SmallTextField value={name}> </SmallTextField>
             <Label>Email</Label>
-            <SmallTextField value={child.get("email") || "No email"} disabled />
+            <SmallTextField value={email}> </SmallTextField>
             <ButtonContainer>
-              <Button title="Approve" onClick={handleApprove}/>
-              <Button title="Decline" color="red" onClick={handleDecline} />
+              <Button title="Approve" onClick={() => updateContactStatus("Approved")} />
+              <Button title="Decline" color="red" onClick={() => updateContactStatus("Declined")} />
             </ButtonContainer>
           </FormContainer>
         </PopUpContainer>

@@ -11,6 +11,7 @@ const ChildrenList = ({ onChildClick, selectedContact, username }) => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalRequests, setModalRequests] = useState([]);
+  const [modalData, setModalData] = useState([]);
 
   useEffect(() => {
     const fetchChildrenAndRequests = async () => {
@@ -48,7 +49,7 @@ const ChildrenList = ({ onChildClick, selectedContact, username }) => {
             const requestQuery = new Parse.Query("Requests");
             requestQuery.equalTo("Child", userPointer);
             requestQuery.equalTo("Status", "Pending");
-            requestQuery.include("Status");
+            requestQuery.include("requestUser");
 
             const childRequests = await requestQuery.find();
             allRequests[username] = childRequests;
@@ -68,10 +69,14 @@ const ChildrenList = ({ onChildClick, selectedContact, username }) => {
     fetchChildrenAndRequests();
   }, []);
 
+  // if request exists we want to show the modal 
   const handleChildClick = (username) => {
     const childRequests = requestsByChild[username] || [];
-// Start Debugging from here!! 
     if (childRequests.length > 0) {
+      const requestUser = childRequests[0].get("requestUser");
+    const name = requestUser?.get("username") || "Unknown";
+    const email = requestUser?.get("email") || "Unknown";
+    setModalData({ name, email });
       setModalRequests(childRequests);
       setShowModal(true); // Open the modal
     } else {
@@ -90,12 +95,12 @@ const ChildrenList = ({ onChildClick, selectedContact, username }) => {
         children.map((child) => {
           const username = child.get("username");
           const childRequests = requestsByChild[username] || [];
-          console.log("childRequest", childRequests)
 
+    
           return (
             <ChildItem
               key={child.id}
-              onChildClick={() => handleChildClick(childRequests)}
+              onChildClick={() => handleChildClick(username)}
               username={username}
               guardianEmail={child.get("guardianEmail")}
               isSelected={
@@ -114,26 +119,10 @@ const ChildrenList = ({ onChildClick, selectedContact, username }) => {
       )}
 
       {showModal && (
-        <PopUpContactRequest onClose={handleModalClose}>
-          <h2>Pending Requests</h2>
-          <ul>
-            {modalRequests.map((request) => (
-              <li key={request.id}>
-                <p>{request.get("info")}</p>
-                <button
-                  onClick={() => {
-                    request.set("Status", "Approved");
-                    request.save();
-                    alert("Request Approved!");
-                    handleModalClose();
-                  }}
-                >
-                  Approve
-                </button>
-              </li>
-            ))}
-          </ul>
-        </PopUpContactRequest>
+        <PopUpContactRequest onClose={handleModalClose}  isVisible={showModal}    childRequests={modalRequests}
+        name={modalData?.name}
+        email={modalData?.email}
+/>
       )}
     </ChildrenListContainer>
   );
