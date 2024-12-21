@@ -1,25 +1,29 @@
+import React from "react";
 import styled from "styled-components";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
+import PopUpContactRequest from "./PopUps/PopUpContactRequest";
+import useFetchRequestsForChild from "./PopUps/useFetchRequestsForChild"
 
-const ChildItem = ({ username, guardianEmail, requests, onChildClick, isSelected }) => {
-  console.log("ChildItem props:", { username, guardianEmail, requests });
+const ChildItem = ({ username, onChildClick, isSelected }) => {
+  const {childRequests} = useFetchRequestsForChild(username);
 
   return (
+
     <Item onClick={onChildClick} isSelected={isSelected}>
       <ProfileContainer>
         <ProfilePictureSmall />
       </ProfileContainer>
       <TextContainer>
         <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
-        <Text>{typeof guardianEmail === "string" ? guardianEmail : "Invalid Email"}</Text>
-
-        {requests.length > 0 && (
-          <StatusIcon title="New Contact Request" />
-        )}
+        {childRequests.length > 0 && <StatusIcon title="Pending" />}
+        { childRequests.length > 0 && 
+      <PopUpContactRequest/>
+    }
       </TextContainer>
     </Item>
+  
   );
 };
 

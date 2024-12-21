@@ -14,7 +14,7 @@ const StyledStatusIcon = styled.div`
   font-weight: bold;
 `;
 
-const StatusIcon = (title) => {
+const StatusIcon = ({title}) => {
   return <StyledStatusIcon>{title}</StyledStatusIcon>;
 };
 

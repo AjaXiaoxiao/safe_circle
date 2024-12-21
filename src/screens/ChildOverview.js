@@ -16,11 +16,8 @@ export default function ChildOverviewPage({
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
-  const handleChildClick = (child, requests) => {
-    console.log("Selected child:", child);
-    console.log("Associated requests:", requests);
-
-    setSelectedContact({ child, requests }); // Pass child and requests
+  const handleChildClick = (child, requests, requestType) => {
+    setSelectedContact({ child, requests, requestType }); 
     setPopupVisible(true);
   };
 

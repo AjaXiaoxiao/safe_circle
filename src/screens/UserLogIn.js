@@ -34,8 +34,6 @@ const doUserLogIn = async function () {
     const passwordValue = password;
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-
-
     const currentUser = await Parse.User.current();
       console.log(loggedInUser === currentUser);
       setUsername('');
