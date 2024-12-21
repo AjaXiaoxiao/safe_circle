@@ -125,7 +125,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         // Save the request
         await newRequest.save();
         console.log("Contact and request saved successfully!");
-        window.location.reload();
       }
 
       // Reset form data and fetch updated contacts
