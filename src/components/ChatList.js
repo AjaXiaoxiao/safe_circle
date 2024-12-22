@@ -122,6 +122,7 @@ const ChatList = ({
             message={chat.message}
             messages={chat.messages}
             onChatClick={() => onChatClick(chat)}
+            isSelected={selectedChat?.id === chat.id}
           />
         ))
       ) : (
@@ -132,7 +133,7 @@ const ChatList = ({
 };
 
 const ChatListContainer = styled.div`
-  padding: 10px;
+  padding: 0px;
   overflow-y: auto;
   height: 100%;
 `;

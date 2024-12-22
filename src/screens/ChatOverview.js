@@ -15,8 +15,10 @@ const ChatOverview = ({
   setCurrentReceiverId,
 }) => {
 
+
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
+    
 
     const currentUser = Parse.User.current();
   if (currentUser) {
