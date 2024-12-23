@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ContactItem from "./ContactItem";
 
-const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
+const ContactList = ({ onContactClick, selectedContact }) => {
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -11,12 +11,11 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
 
   const fetchContacts = async () => {
     try {
-      const currentUser = Parse.User.current(); // Get the current logged-in user
+      const currentUser = Parse.User.current();
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
 
-      // Query the logged-in user (owner of the contact list)
       const ownerUsername = currentUser.get("username");
       const ownerQuery = new Parse.Query("UserProfile");
       const owner = await ownerQuery.equalTo("username", ownerUsername).first();
@@ -25,15 +24,13 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
         throw new Error("No logged-in user.");
       }
 
-      // Get the ContactList of the logged-in user
       const contactListQuery = new Parse.Query("ContactList");
-      contactListQuery.equalTo("owner", owner); // Filter by current user/owner
+      contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
 
       if (contactList) {
         const contactPointers = contactList.get("Contacts") || [];
 
-        // Fetch the Contact objects from the current user's contact list
         const fetchedContacts = await Promise.all(
           contactPointers.map(async (contactPointer) => {
             try {
@@ -56,7 +53,6 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
           })
         );
 
-        // Filter out null values in case of errors fetching contacts
         setContacts(fetchedContacts.filter(Boolean));
       } else {
         setContacts([]);
@@ -69,7 +65,7 @@ const ContactList = ({ onContactClick, selectedContact, isRequest }) => {
 
   useEffect(() => {
     fetchContacts();
-  }, [contacts]);
+  }, []); 
 
   return (
     <div>

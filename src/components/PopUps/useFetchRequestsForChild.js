@@ -27,6 +27,8 @@ const useFetchRequestsForChild = (username) => {
         requestQuery.equalTo("Child", userPointer); // Match Requests to this child
         requestQuery.equalTo("Status", "Pending"); // Only pending requests
         requestQuery.include("Status");
+        requestQuery.include("Type");
+
 
         const fetchedRequests = await requestQuery.find();
         console.log("Fetched child requests:", fetchedRequests);

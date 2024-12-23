@@ -110,25 +110,18 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
         newRequest.set("Parent", guardian);
-        newRequest.set("Status", "Pending"); // Set status to "pending"
-        newRequest.set("Type", "ContactApproval"); // Set type
-        newRequest.set("Child", currentUser); // Set the child
+        newRequest.set("Status", "Pending"); 
+        newRequest.set("Type", "ContactApproval"); 
+        newRequest.set("Child", currentUser); 
+        newRequest.set("requestContact", newContact);
 
-        const requestUserQuery = new Parse.Query("UserProfile");
-        requestUserQuery.equalTo("username", formData.username);
-        const requestUser = await requestUserQuery.first();
-
-        newRequest.set("requestUser", requestUser);
-        if (!requestUser) {
-          throw new Error("No UserProfile found for the given username.");
-        }
-        // Save the request
         await newRequest.save();
         console.log("Contact and request saved successfully!");
       }
 
-      // Reset form data and fetch updated contacts
       setFormData({ username: "", about: "", email: "" });
+      
+      window.location.reload();
 
       onClose();
     } catch (error) {
