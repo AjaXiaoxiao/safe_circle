@@ -7,33 +7,28 @@ import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useChat } from "../contexts/ChatContext";
 
-const ChatOverview = ({
-  selectedChat,
-  setSelectedChat,
-  currentReceiverId,
-  setCurrentReceiverId,
-}) => {
-
+const ChatOverview = ({ currentReceiverId, setCurrentReceiverId }) => {
+  const { setSelectedChat } = useChat();
 
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
-    
 
     const currentUser = Parse.User.current();
-  if (currentUser) {
-    const receiver = chat.chat.get("Participants").find(
-      (participant) => participant.id !== currentUser.id
-    );
-    if (receiver) {
-      setCurrentReceiverId(receiver.id);
+    if (currentUser) {
+      const receiver = chat.chat
+        .get("Participants")
+        .find((participant) => participant.id !== currentUser.id);
+      if (receiver) {
+        setCurrentReceiverId(receiver.id);
+      }
     }
-  }
   };
 
   const resetChat = () => {
     setSelectedChat(null);
-  }
+  };
 
   const displayToast = (type, message) => {
     if (type === "success") {
@@ -48,21 +43,14 @@ const ChatOverview = ({
       <ToastContainer />
       <Topbar />
       <ColumnContainer>
-        <Sidebar 
-        resetChat={resetChat}
-        displayToast={displayToast}
-         />
+        <Sidebar resetChat={resetChat} displayToast={displayToast} />
         <SideOverview
           title="Chats"
           onChatClick={handleChatClick}
-          setSelectedChat={setSelectedChat}
-          selectedChat={selectedChat}
           setCurrentReceiverId={setCurrentReceiverId}
           displayToast={displayToast}
         />
         <ChatComponent
-          selectedChat={selectedChat}
-          setSelectedChat={setSelectedChat}
           currentReceiverId={currentReceiverId}
           displayToast={displayToast}
         />

@@ -10,13 +10,11 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Contacts({
-  selectedChat,
-  setSelectedChat,
-  currentReceiverId,
-}) {
-  const [isAddContactPopupVisible, setAddContactPopUpToVisible] = useState(false);
-  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] = useState(false);
+export default function Contacts({ currentReceiverId }) {
+  const [isAddContactPopupVisible, setAddContactPopUpToVisible] =
+    useState(false);
+  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
+    useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const location = useLocation();
@@ -41,22 +39,20 @@ export default function Contacts({
   const isAnyPopupVisible =
     isAddContactPopupVisible || isSelectContactPopupVisible;
 
-    const displayToast = (type, message) => {
-      if (type === "success") {
-        toast.success(message);
-      } else if (type === "error") {
-        toast.error(message);
-      }
-    };
+  const displayToast = (type, message) => {
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
+    }
+  };
 
   return (
     <div>
       <ToastContainer />
       <Topbar />
       <ColumnContainer>
-        <Sidebar 
-        displayToast={displayToast}
-        />
+        <Sidebar displayToast={displayToast} />
         <SideOverview
           title="Contacts"
           onAddClick={handleOpenAddContactPopup}
@@ -64,11 +60,7 @@ export default function Contacts({
           selectedContact={selectedContact}
         />
         <BlurredComponent isBlurred={isAnyPopupVisible}>
-          <ChatComponent
-            selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
-            currentReceiverId={currentReceiverId}
-          />
+          <ChatComponent currentReceiverId={currentReceiverId} />
         </BlurredComponent>
       </ColumnContainer>
 

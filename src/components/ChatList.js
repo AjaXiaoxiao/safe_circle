@@ -3,15 +3,11 @@ import styled from "styled-components";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
+import { useChat } from "../contexts/ChatContext";
 
-const ChatList = ({
-  onChatClick,
-  selectedChat,
-  setSelectedChat,
-  setCurrentReceiverId,
-  displayToast,
-}) => {
+const ChatList = ({ onChatClick, setCurrentReceiverId, displayToast }) => {
   const [chats, setChats] = useState([]);
+  const { selectedChat, setSelectedChat } = useChat();
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -84,7 +80,7 @@ const ChatList = ({
               latestTimestamp = latestMessage.get("Timestamp");
               messageText = latestMessage.get("Text");
             }
-    
+
             return {
               id: chat.id,
               username,
@@ -94,7 +90,7 @@ const ChatList = ({
             };
           })
         );
-        
+
         const sortedChats = chatDetails.sort((a, b) => {
           if (!a.latestTimestamp) return 1; // chats with no messages should be in bottom
           if (!b.latestTimestamp) return -1;

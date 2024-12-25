@@ -22,7 +22,6 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
-  const [selectedChat, setSelectedChat] = useState(null);
   const [currentReceiverId, setCurrentReceiverId] = useState(null);
 
   return (
@@ -38,8 +37,6 @@ function App() {
                 element={
                   <RequireLogin>
                     <ChatOverview
-                      selectedChat={selectedChat}
-                      setSelectedChat={setSelectedChat}
                       currentReceiverId={currentReceiverId}
                       setCurrentReceiverId={setCurrentReceiverId}
                     />
@@ -51,8 +48,6 @@ function App() {
                 element={
                   <RequireLogin>
                     <ChildOverview
-                      selectedChat={selectedChat}
-                      setSelectedChat={setSelectedChat}
                       currentReceiverId={currentReceiverId}
                       setCurrentReceiverId={setCurrentReceiverId}
                     />
@@ -64,8 +59,6 @@ function App() {
                 element={
                   <RequireLogin>
                     <ContactsOverview
-                      selectedChat={selectedChat}
-                      setSelectedChat={setSelectedChat}
                       currentReceiverId={currentReceiverId}
                       setCurrentReceiverId={setCurrentReceiverId}
                     />
