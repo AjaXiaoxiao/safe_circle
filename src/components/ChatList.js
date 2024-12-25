@@ -4,10 +4,12 @@ import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
 import { useChat } from "../contexts/ChatContext";
+import { useToast } from "../contexts/ToastContext";
 
-const ChatList = ({ onChatClick, displayToast }) => {
+const ChatList = ({ onChatClick }) => {
   const [chats, setChats] = useState([]);
   const { selectedChat, setSelectedChat, setCurrentReceiverId } = useChat();
+  const { displayToast } = useToast();
 
   useEffect(() => {
     const fetchChats = async () => {

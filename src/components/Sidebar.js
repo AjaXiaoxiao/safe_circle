@@ -7,11 +7,14 @@ import userIcon from "../assets/ProfileIcon.png";
 import colors from "../assets/colors";
 import LogOut from "../assets/LogOut.png";
 import Parse from "parse/dist/parse.min.js";
+import { useToast } from "../contexts/ToastContext";
 
-const Sidebar = ({ resetChat, displayToast }) => {
+const Sidebar = ({ resetChat }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname);
+
+  const { displayToast } = useToast();
 
   useEffect(() => {
     setActive(location.pathname);

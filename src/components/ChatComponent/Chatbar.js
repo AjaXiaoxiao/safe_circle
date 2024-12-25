@@ -6,10 +6,13 @@ import TextField from "../TextFields/TextField";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../../assets/colors";
 import { useChat } from "../../contexts/ChatContext";
+import { useToast } from "../../contexts/ToastContext";
 
-const Chatbar = ({ displayToast }) => {
+const Chatbar = () => {
   const [message, setMessage] = useState("");
   const { selectedChat } = useChat();
+
+  const { displayToast } = useToast();
 
   const handleEmojiSelect = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji);

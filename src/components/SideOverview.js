@@ -19,7 +19,6 @@ const SideOverview = ({
   handleOpenPopup,
   handleClosePopup,
   selectedContact,
-  displayToast,
 }) => {
   const [isAddingChat, setIsAddingChat] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -96,9 +95,7 @@ const SideOverview = ({
         onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
         isAddingChat={isAddingChat}
       />
-      {!isAddingChat && isChatList && (
-        <ChatList onChatClick={onChatClick} displayToast={displayToast} />
-      )}
+      {!isAddingChat && isChatList && <ChatList onChatClick={onChatClick} />}
       {isAddingChat && (
         <ContactList
           onContactClick={(contact) => handleContactClick(contact)}

@@ -5,8 +5,6 @@ import Sidebar from "../components/Sidebar";
 import Parse from "parse/dist/parse.min.js";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useChat } from "../contexts/ChatContext";
 
 const ChatOverview = () => {
@@ -30,26 +28,13 @@ const ChatOverview = () => {
     setSelectedChat(null);
   };
 
-  const displayToast = (type, message) => {
-    if (type === "success") {
-      toast.success(message);
-    } else if (type === "error") {
-      toast.error(message);
-    }
-  };
-
   return (
     <div>
-      <ToastContainer />
       <Topbar />
       <ColumnContainer>
-        <Sidebar resetChat={resetChat} displayToast={displayToast} />
-        <SideOverview
-          title="Chats"
-          onChatClick={handleChatClick}
-          displayToast={displayToast}
-        />
-        <ChatComponent displayToast={displayToast} />
+        <Sidebar resetChat={resetChat} />
+        <SideOverview title="Chats" onChatClick={handleChatClick} />
+        <ChatComponent />
       </ColumnContainer>
     </div>
   );

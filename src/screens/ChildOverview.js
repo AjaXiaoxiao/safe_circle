@@ -5,8 +5,6 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function ChildOverviewPage() {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -22,20 +20,11 @@ export default function ChildOverviewPage() {
     setSelectedContact(null);
   };
 
-  const displayToast = (type, message) => {
-    if (type === "success") {
-      toast.success(message);
-    } else if (type === "error") {
-      toast.error(message);
-    }
-  };
-
   return (
     <div>
-      <ToastContainer />
       <Topbar />
       <ColumnContainer>
-        <Sidebar displayToast={displayToast} />
+        <Sidebar />
 
         <SideOverview
           title="Child Overview"
@@ -49,7 +38,6 @@ export default function ChildOverviewPage() {
             isVisible={isPopupVisible}
             onClose={togglePopup}
             contact={selectedContact} // Pass child and requests
-            displayToast={displayToast}
           />
         )}
 
