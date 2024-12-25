@@ -8,6 +8,11 @@ import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
 import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
 import RequireLogin from "./components/RequireLogin";
+import { ChatProvider } from "./contexts/ChatContext";
+import { ToastContainer } from "react-toastify";
+import { ToastProvider } from "./contexts/ToastContext";
+import { PopupProvider } from "./contexts/PopupContext";
+import "react-toastify/dist/ReactToastify.css";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -21,55 +26,63 @@ function App() {
   const [currentReceiverId, setCurrentReceiverId] = useState(null);
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RequireLogin>
-            <ChatOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route
-          path="/childoverview"
-          element={
-            <RequireLogin>
-            <ChildOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route
-          path="/contactsoverview"
-          element={
-            <RequireLogin>
-            <ContactsOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route path="/userregistration" element={<UserRegistration />} />
-        <Route path="/userlogin" element={<UserLogin />} />
-        <Route
-          path="/childregistrationawait"
-          element={<ChildRegistrationAwait />}
-        />
-      </Routes>
-    </Router>
+    <ToastProvider>
+      <ChatProvider>
+        <PopupProvider>
+          <Router>
+            <ToastContainer />
+
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RequireLogin>
+                    <ChatOverview
+                      selectedChat={selectedChat}
+                      setSelectedChat={setSelectedChat}
+                      currentReceiverId={currentReceiverId}
+                      setCurrentReceiverId={setCurrentReceiverId}
+                    />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/childoverview"
+                element={
+                  <RequireLogin>
+                    <ChildOverview
+                      selectedChat={selectedChat}
+                      setSelectedChat={setSelectedChat}
+                      currentReceiverId={currentReceiverId}
+                      setCurrentReceiverId={setCurrentReceiverId}
+                    />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/contactsoverview"
+                element={
+                  <RequireLogin>
+                    <ContactsOverview
+                      selectedChat={selectedChat}
+                      setSelectedChat={setSelectedChat}
+                      currentReceiverId={currentReceiverId}
+                      setCurrentReceiverId={setCurrentReceiverId}
+                    />
+                  </RequireLogin>
+                }
+              />
+              <Route path="/userregistration" element={<UserRegistration />} />
+              <Route path="/userlogin" element={<UserLogin />} />
+              <Route
+                path="/childregistrationawait"
+                element={<ChildRegistrationAwait />}
+              />
+            </Routes>
+          </Router>
+        </PopupProvider>
+      </ChatProvider>
+    </ToastProvider>
   );
 }
 
