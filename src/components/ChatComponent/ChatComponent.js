@@ -65,7 +65,7 @@ const ChatComponent = () => {
     if (selectedChat && selectedChat.username) {
       setChatUsername(selectedChat.username);
     } else {
-      setChatUsername("Unknown User");
+      setChatUsername("No chat selected");
     }
   }, [selectedChat]);
 
