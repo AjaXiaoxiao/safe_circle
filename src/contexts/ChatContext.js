@@ -9,10 +9,6 @@ export const ChatProvider = ({ children }) => {
   const [chatUsername, setChatUsername] = useState("");
   const [chatUpdateTrigger, setChatUpdateTrigger] = useState(0);
 
-  const triggerChatUpdate = () => {
-    setChatUpdateTrigger((prev) => prev + 1);
-  };
-
   return (
     <ChatContext.Provider
       value={{
@@ -25,7 +21,7 @@ export const ChatProvider = ({ children }) => {
         chatUsername,
         setChatUsername,
         chatUpdateTrigger,
-        triggerChatUpdate,
+        setChatUpdateTrigger,
       }}
     >
       {children}

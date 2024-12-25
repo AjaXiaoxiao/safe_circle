@@ -10,7 +10,7 @@ import { useToast } from "../../contexts/ToastContext";
 
 const Chatbar = () => {
   const [message, setMessage] = useState("");
-  const { selectedChat } = useChat();
+  const { selectedChat, setChatUpdateTrigger, chatUpdateTrigger } = useChat();
 
   const { displayToast } = useToast();
 
@@ -67,6 +67,7 @@ const Chatbar = () => {
       await chat.save();
 
       setMessage(""); // Clear the input field
+      setChatUpdateTrigger(chatUpdateTrigger + 1);
     } catch (error) {
       console.error("Error sending message:", error);
       displayToast("error", "Failed to send the message");

@@ -8,7 +8,12 @@ import { useToast } from "../contexts/ToastContext";
 
 const ChatList = ({ onChatClick }) => {
   const [chats, setChats] = useState([]);
-  const { selectedChat, setSelectedChat, setCurrentReceiverId } = useChat();
+  const {
+    selectedChat,
+    setSelectedChat,
+    setCurrentReceiverId,
+    chatUpdateTrigger,
+  } = useChat();
   const { displayToast } = useToast();
 
   useEffect(() => {
@@ -108,7 +113,7 @@ const ChatList = ({ onChatClick }) => {
       }
     };
     fetchChats();
-  }, [setSelectedChat]);
+  }, [setSelectedChat, chatUpdateTrigger]);
 
   return (
     <ChatListContainer>
