@@ -22,8 +22,6 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
-  const [currentReceiverId, setCurrentReceiverId] = useState(null);
-
   return (
     <ToastProvider>
       <ChatProvider>
@@ -36,10 +34,7 @@ function App() {
                 path="/"
                 element={
                   <RequireLogin>
-                    <ChatOverview
-                      currentReceiverId={currentReceiverId}
-                      setCurrentReceiverId={setCurrentReceiverId}
-                    />
+                    <ChatOverview />
                   </RequireLogin>
                 }
               />
@@ -47,10 +42,7 @@ function App() {
                 path="/childoverview"
                 element={
                   <RequireLogin>
-                    <ChildOverview
-                      currentReceiverId={currentReceiverId}
-                      setCurrentReceiverId={setCurrentReceiverId}
-                    />
+                    <ChildOverview />
                   </RequireLogin>
                 }
               />
@@ -58,10 +50,7 @@ function App() {
                 path="/contactsoverview"
                 element={
                   <RequireLogin>
-                    <ContactsOverview
-                      currentReceiverId={currentReceiverId}
-                      setCurrentReceiverId={setCurrentReceiverId}
-                    />
+                    <ContactsOverview />
                   </RequireLogin>
                 }
               />

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Contacts({ currentReceiverId }) {
+export default function Contacts() {
   const [isAddContactPopupVisible, setAddContactPopUpToVisible] =
     useState(false);
   const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
@@ -60,7 +60,7 @@ export default function Contacts({ currentReceiverId }) {
           selectedContact={selectedContact}
         />
         <BlurredComponent isBlurred={isAnyPopupVisible}>
-          <ChatComponent currentReceiverId={currentReceiverId} />
+          <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
 

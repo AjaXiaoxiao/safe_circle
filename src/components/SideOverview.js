@@ -18,7 +18,6 @@ const SideOverview = ({
   onChildClick,
   handleOpenPopup,
   handleClosePopup,
-  setCurrentReceiverId,
   selectedContact,
   displayToast,
 }) => {
@@ -26,7 +25,7 @@ const SideOverview = ({
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
-  const { setSelectedChat } = useChat();
+  const { setSelectedChat, setCurrentReceiverId } = useChat();
 
   const isChatList = location.pathname === "/";
   const isContactList = location.pathname === "/ContactsOverview";
@@ -98,11 +97,7 @@ const SideOverview = ({
         isAddingChat={isAddingChat}
       />
       {!isAddingChat && isChatList && (
-        <ChatList
-          onChatClick={onChatClick}
-          setCurrentReceiverId={setCurrentReceiverId}
-          displayToast={displayToast}
-        />
+        <ChatList onChatClick={onChatClick} displayToast={displayToast} />
       )}
       {isAddingChat && (
         <ContactList

@@ -5,9 +5,9 @@ import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
 import { useChat } from "../contexts/ChatContext";
 
-const ChatList = ({ onChatClick, setCurrentReceiverId, displayToast }) => {
+const ChatList = ({ onChatClick, displayToast }) => {
   const [chats, setChats] = useState([]);
-  const { selectedChat, setSelectedChat } = useChat();
+  const { selectedChat, setSelectedChat, setCurrentReceiverId } = useChat();
 
   useEffect(() => {
     const fetchChats = async () => {

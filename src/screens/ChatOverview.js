@@ -9,8 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useChat } from "../contexts/ChatContext";
 
-const ChatOverview = ({ currentReceiverId, setCurrentReceiverId }) => {
-  const { setSelectedChat } = useChat();
+const ChatOverview = () => {
+  const { setSelectedChat, setCurrentReceiverId } = useChat();
 
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
@@ -47,13 +47,9 @@ const ChatOverview = ({ currentReceiverId, setCurrentReceiverId }) => {
         <SideOverview
           title="Chats"
           onChatClick={handleChatClick}
-          setCurrentReceiverId={setCurrentReceiverId}
           displayToast={displayToast}
         />
-        <ChatComponent
-          currentReceiverId={currentReceiverId}
-          displayToast={displayToast}
-        />
+        <ChatComponent displayToast={displayToast} />
       </ColumnContainer>
     </div>
   );

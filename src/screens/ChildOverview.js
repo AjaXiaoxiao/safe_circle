@@ -8,7 +8,7 @@ import ChatComponent from "../components/ChatComponent/ChatComponent";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function ChildOverviewPage({ currentReceiverId }) {
+export default function ChildOverviewPage() {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -54,7 +54,7 @@ export default function ChildOverviewPage({ currentReceiverId }) {
         )}
 
         <BlurredComponent isBlurred={isPopupVisible}>
-          <ChatComponent currentReceiverId={currentReceiverId} />
+          <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
     </div>
