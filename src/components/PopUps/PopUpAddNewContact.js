@@ -110,9 +110,9 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
         newRequest.set("Parent", guardian);
-        newRequest.set("Status", "Pending"); 
-        newRequest.set("Type", "ContactApproval"); 
-        newRequest.set("Child", currentUser); 
+        newRequest.set("Status", "Pending");
+        newRequest.set("Type", "ContactApproval");
+        newRequest.set("Child", currentUser);
         newRequest.set("requestContact", newContact);
 
         await newRequest.save();
@@ -120,8 +120,8 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       }
 
       setFormData({ username: "", about: "", email: "" });
-      
-      window.location.reload();
+
+      //window.location.reload();
 
       onClose();
     } catch (error) {

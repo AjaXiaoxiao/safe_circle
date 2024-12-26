@@ -65,7 +65,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
 
   useEffect(() => {
     fetchContacts();
-  }, []); 
+  }, [contacts]);
 
   return (
     <div>
