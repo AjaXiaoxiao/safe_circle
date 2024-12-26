@@ -12,6 +12,7 @@ import { ChatProvider } from "./contexts/ChatContext";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./contexts/ToastContext";
 import { PopupProvider } from "./contexts/PopupContext";
+import { ContactProvider } from "./contexts/ContactContext";
 import "react-toastify/dist/ReactToastify.css";
 
 // Parse initialization configuration
@@ -26,42 +27,47 @@ function App() {
     <ToastProvider>
       <ChatProvider>
         <PopupProvider>
-          <Router>
-            <ToastContainer />
+          <ContactProvider>
+            <Router>
+              <ToastContainer />
 
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <RequireLogin>
-                    <ChatOverview />
-                  </RequireLogin>
-                }
-              />
-              <Route
-                path="/childoverview"
-                element={
-                  <RequireLogin>
-                    <ChildOverview />
-                  </RequireLogin>
-                }
-              />
-              <Route
-                path="/contactsoverview"
-                element={
-                  <RequireLogin>
-                    <ContactsOverview />
-                  </RequireLogin>
-                }
-              />
-              <Route path="/userregistration" element={<UserRegistration />} />
-              <Route path="/userlogin" element={<UserLogin />} />
-              <Route
-                path="/childregistrationawait"
-                element={<ChildRegistrationAwait />}
-              />
-            </Routes>
-          </Router>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <RequireLogin>
+                      <ChatOverview />
+                    </RequireLogin>
+                  }
+                />
+                <Route
+                  path="/childoverview"
+                  element={
+                    <RequireLogin>
+                      <ChildOverview />
+                    </RequireLogin>
+                  }
+                />
+                <Route
+                  path="/contactsoverview"
+                  element={
+                    <RequireLogin>
+                      <ContactsOverview />
+                    </RequireLogin>
+                  }
+                />
+                <Route
+                  path="/userregistration"
+                  element={<UserRegistration />}
+                />
+                <Route path="/userlogin" element={<UserLogin />} />
+                <Route
+                  path="/childregistrationawait"
+                  element={<ChildRegistrationAwait />}
+                />
+              </Routes>
+            </Router>
+          </ContactProvider>
         </PopupProvider>
       </ChatProvider>
     </ToastProvider>
