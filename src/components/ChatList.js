@@ -6,13 +6,14 @@ import ChatItem from "./ChatItem";
 import { useChat } from "../contexts/ChatContext";
 import { useToast } from "../contexts/ToastContext";
 
-const ChatList = ({ onChatClick }) => {
+const ChatList = () => {
   const [chats, setChats] = useState([]);
   const {
     selectedChat,
     setSelectedChat,
     setCurrentReceiverId,
     chatUpdateTrigger,
+    handleChatClick,
   } = useChat();
   const { displayToast } = useToast();
 
@@ -124,7 +125,7 @@ const ChatList = ({ onChatClick }) => {
             username={chat.username}
             message={chat.message}
             messages={chat.messages}
-            onChatClick={() => onChatClick(chat)}
+            onChatClick={() => handleChatClick(chat)}
             isSelected={selectedChat?.id === chat.id}
           />
         ))

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import Parse from "parse/dist/parse.min.js";
 
 const ChatContext = createContext();
 
@@ -8,6 +9,20 @@ export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState(null);
   const [chatUsername, setChatUsername] = useState("");
   const [chatUpdateTrigger, setChatUpdateTrigger] = useState(0);
+
+  const handleChatClick = (chat) => {
+    setSelectedChat(chat);
+
+    const currentUser = Parse.User.current();
+    if (currentUser) {
+      const receiver = chat.chat
+        .get("Participants")
+        .find((participant) => participant.id !== currentUser.id);
+      if (receiver) {
+        setCurrentReceiverId(receiver.id);
+      }
+    }
+  };
 
   return (
     <ChatContext.Provider
@@ -22,6 +37,7 @@ export const ChatProvider = ({ children }) => {
         setChatUsername,
         chatUpdateTrigger,
         setChatUpdateTrigger,
+        handleChatClick,
       }}
     >
       {children}

@@ -13,7 +13,6 @@ import { useChat } from "../contexts/ChatContext";
 const SideOverview = ({
   title,
   onContactClick,
-  onChatClick,
   onAddClick,
   onChildClick,
   handleOpenPopup,
@@ -24,7 +23,7 @@ const SideOverview = ({
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
-  const { setSelectedChat, setCurrentReceiverId } = useChat();
+  const { setSelectedChat, setCurrentReceiverId, handleChatClick } = useChat();
 
   const isChatList = location.pathname === "/";
   const isContactList = location.pathname === "/ContactsOverview";
@@ -95,7 +94,7 @@ const SideOverview = ({
         onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
         isAddingChat={isAddingChat}
       />
-      {!isAddingChat && isChatList && <ChatList onChatClick={onChatClick} />}
+      {!isAddingChat && isChatList && <ChatList />}
       {isAddingChat && (
         <ContactList
           onContactClick={(contact) => handleContactClick(contact)}

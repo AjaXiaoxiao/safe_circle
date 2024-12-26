@@ -8,21 +8,7 @@ import ChatComponent from "../components/ChatComponent/ChatComponent";
 import { useChat } from "../contexts/ChatContext";
 
 const ChatOverview = () => {
-  const { setSelectedChat, setCurrentReceiverId } = useChat();
-
-  const handleChatClick = (chat) => {
-    setSelectedChat(chat);
-
-    const currentUser = Parse.User.current();
-    if (currentUser) {
-      const receiver = chat.chat
-        .get("Participants")
-        .find((participant) => participant.id !== currentUser.id);
-      if (receiver) {
-        setCurrentReceiverId(receiver.id);
-      }
-    }
-  };
+  const { setSelectedChat, handleChatClick } = useChat();
 
   const resetChat = () => {
     setSelectedChat(null);
@@ -33,7 +19,7 @@ const ChatOverview = () => {
       <Topbar />
       <ColumnContainer>
         <Sidebar resetChat={resetChat} />
-        <SideOverview title="Chats" onChatClick={handleChatClick} />
+        <SideOverview title="Chats" />
         <ChatComponent />
       </ColumnContainer>
     </div>
