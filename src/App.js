@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
 import ChildOverview from "./screens/ChildOverview";
@@ -11,7 +10,6 @@ import RequireLogin from "./components/RequireLogin";
 import { ChatProvider } from "./contexts/ChatContext";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./contexts/ToastContext";
-import { PopupProvider } from "./contexts/PopupContext";
 import { ContactProvider } from "./contexts/ContactContext";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -26,49 +24,43 @@ function App() {
   return (
     <ToastProvider>
       <ChatProvider>
-        <PopupProvider>
-          <ContactProvider>
-            <Router>
-              <ToastContainer />
-
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <RequireLogin>
-                      <ChatOverview />
-                    </RequireLogin>
-                  }
-                />
-                <Route
-                  path="/childoverview"
-                  element={
-                    <RequireLogin>
-                      <ChildOverview />
-                    </RequireLogin>
-                  }
-                />
-                <Route
-                  path="/contactsoverview"
-                  element={
-                    <RequireLogin>
-                      <ContactsOverview />
-                    </RequireLogin>
-                  }
-                />
-                <Route
-                  path="/userregistration"
-                  element={<UserRegistration />}
-                />
-                <Route path="/userlogin" element={<UserLogin />} />
-                <Route
-                  path="/childregistrationawait"
-                  element={<ChildRegistrationAwait />}
-                />
-              </Routes>
-            </Router>
-          </ContactProvider>
-        </PopupProvider>
+        <ContactProvider>
+          <Router>
+            <ToastContainer />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RequireLogin>
+                    <ChatOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/childoverview"
+                element={
+                  <RequireLogin>
+                    <ChildOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/contactsoverview"
+                element={
+                  <RequireLogin>
+                    <ContactsOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route path="/userregistration" element={<UserRegistration />} />
+              <Route path="/userlogin" element={<UserLogin />} />
+              <Route
+                path="/childregistrationawait"
+                element={<ChildRegistrationAwait />}
+              />
+            </Routes>
+          </Router>
+        </ContactProvider>
       </ChatProvider>
     </ToastProvider>
   );
