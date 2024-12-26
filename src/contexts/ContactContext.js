@@ -9,14 +9,6 @@ export const ContactProvider = ({ children }) => {
   const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
     useState(false);
 
-  const location = useLocation();
-
-  const handleOpenAddContactPopup = () => {
-    if (location.pathname === "/ContactsOverview") {
-      setAddContactPopUpToVisible(true);
-    }
-  };
-
   return (
     <ContactContext.Provider
       value={{
@@ -24,7 +16,6 @@ export const ContactProvider = ({ children }) => {
         setAddContactPopUpToVisible,
         isSelectContactPopupVisible,
         setSelectContactPopUpToVisible,
-        handleOpenAddContactPopup,
       }}
     >
       {children}
