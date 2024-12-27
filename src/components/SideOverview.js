@@ -23,7 +23,7 @@ const SideOverview = ({
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const location = useLocation();
 
-  const { setSelectedChat, setCurrentReceiverId, handleChatClick } = useChat();
+  const { setSelectedChat, setCurrentReceiverId } = useChat();
 
   const isChatList = location.pathname === "/";
   const isContactList = location.pathname === "/ContactsOverview";
