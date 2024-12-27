@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ContactItem from "./ContactItem";
+import { useContact } from "../contexts/ContactContext";
 
 const ContactList = ({ onContactClick, selectedContact }) => {
+  const { reloadContactList } = useContact();
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -65,7 +67,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
 
   useEffect(() => {
     fetchContacts();
-  }, [contacts]);
+  }, [reloadContactList]);
 
   return (
     <div>
