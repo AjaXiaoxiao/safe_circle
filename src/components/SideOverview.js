@@ -41,6 +41,7 @@ const SideOverview = ({
     setIsAddingChat(false);
   };
 
+  //handles contact click when a new chat is added
   const handleContactClick = async (contact) => {
     try {
       const currentUser = Parse.User.current();
