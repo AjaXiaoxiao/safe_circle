@@ -8,6 +8,7 @@ export const ContactProvider = ({ children }) => {
     useState(false);
   const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
     useState(false);
+  const [reloadContactList, setReloadContactList] = useState(0);
 
   return (
     <ContactContext.Provider
@@ -16,6 +17,8 @@ export const ContactProvider = ({ children }) => {
         setAddContactPopUpToVisible,
         isSelectContactPopupVisible,
         setSelectContactPopUpToVisible,
+        reloadContactList,
+        setReloadContactList,
       }}
     >
       {children}

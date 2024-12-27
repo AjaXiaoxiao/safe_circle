@@ -56,7 +56,7 @@ const ChatComponent = () => {
 
     const interval = setInterval(() => {
       getChat();
-    }, 3000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [selectedChat]);
