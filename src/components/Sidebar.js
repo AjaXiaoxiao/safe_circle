@@ -8,13 +8,15 @@ import colors from "../assets/colors";
 import LogOut from "../assets/LogOut.png";
 import Parse from "parse/dist/parse.min.js";
 import { useToast } from "../contexts/ToastContext";
+import { useChat } from "../contexts/ChatContext";
 
-const Sidebar = ({ resetChat }) => {
+const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [active, setActive] = useState(location.pathname);
 
   const { displayToast } = useToast();
+  const { resetChat } = useChat();
 
   useEffect(() => {
     setActive(location.pathname);

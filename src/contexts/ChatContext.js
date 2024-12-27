@@ -24,6 +24,10 @@ export const ChatProvider = ({ children }) => {
     }
   };
 
+  const resetChat = () => {
+    setSelectedChat(null);
+  };
+
   return (
     <ChatContext.Provider
       value={{
@@ -38,6 +42,7 @@ export const ChatProvider = ({ children }) => {
         chatUpdateTrigger,
         setChatUpdateTrigger,
         handleChatClick,
+        resetChat,
       }}
     >
       {children}
