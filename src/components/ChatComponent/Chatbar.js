@@ -14,6 +14,12 @@ const Chatbar = ({ selectedChat, displayToast }) => {
   };
 
   const sendMessage = async () => {
+
+    if (!message.trim()) {
+      displayToast("error", "Message cannot be empty!");
+      return;
+    }
+
     if (!selectedChat || !selectedChat.chat) {
       displayToast("error", "No chat selected!");
       return;
