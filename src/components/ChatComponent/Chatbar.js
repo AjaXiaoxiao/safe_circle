@@ -5,9 +5,14 @@ import EmojiPickerButton from "../Buttons/EmojiPickerButton";
 import TextField from "../TextFields/TextField";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../../assets/colors";
+import { useChat } from "../../contexts/ChatContext";
+import { useToast } from "../../contexts/ToastContext";
 
-const Chatbar = ({ selectedChat, displayToast }) => {
+const Chatbar = () => {
   const [message, setMessage] = useState("");
+  const { selectedChat, setChatUpdateTrigger, chatUpdateTrigger } = useChat();
+
+  const { displayToast } = useToast();
 
   const handleEmojiSelect = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji);
@@ -68,6 +73,7 @@ const Chatbar = ({ selectedChat, displayToast }) => {
       await chat.save();
 
       setMessage(""); // Clear the input field
+      setChatUpdateTrigger(chatUpdateTrigger + 1);
     } catch (error) {
       console.error("Error sending message:", error);
       displayToast("error", "Failed to send the message");

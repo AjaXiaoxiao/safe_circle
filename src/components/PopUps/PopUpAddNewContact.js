@@ -5,10 +5,12 @@ import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import colors from "../../assets/colors";
+import { useContact } from "../../contexts/ContactContext";
 
 import SmallTextField from "../TextFields/SmallTextField";
 
 const PopUpAddNewContact = ({ isVisible, onClose }) => {
+  const { reloadContactList, setReloadContactList } = useContact();
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
@@ -19,51 +21,51 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log("Form submitted with data:", formData);
-
+  
     try {
       const currentUser = Parse.User.current();
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-
+  
       const isChild = currentUser.get("isChild");
 
       // Fetch the current user's Profile
       const userProfileQuery = new Parse.Query("UserProfile");
       userProfileQuery.equalTo("userPointer", currentUser);
       const owner = await userProfileQuery.first();
-
+  
       if (!owner) {
         throw new Error("Owner profile not found for the logged-in user.");
       }
-
-      // Check if the UserProfile for the contact exists
+  
+      // Check if the contact exists
       const contactQuery = new Parse.Query("UserProfile");
-      const contactUserProfile = await contactQuery
-        .equalTo("username", formData.username)
-        .equalTo("email", formData.email)
-        .first();
-
+      contactQuery.equalTo("username", formData.username);
+      contactQuery.equalTo("email", formData.email);
+      const contactUserProfile = await contactQuery.first();
+  
       if (!contactUserProfile) {
         throw new Error("The contact must be a registered user.");
       }
-
-      // Check if contact is already in ContactList
+  
+      // Check if the contact is already added
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
-
+  
       if (contactList) {
         const existingContacts = contactList.get("Contacts") || [];
         const isDuplicate = existingContacts.some(
-          (contactPointer) => contactPointer.id === contactUserProfile.id
+          (contactPointer) =>
+            contactPointer.get("ContactUserProfile").id === contactUserProfile.id
         );
-
+  
         if (isDuplicate) {
           throw new Error("This contact is already in your contact list.");
         }
       }
-
+  
       const Contact = Parse.Object.extend("Contact");
       const newContact = new Contact();
       newContact.set("ContactUserProfile", contactUserProfile);
@@ -73,10 +75,10 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       if (isChild) {
         newContact.set("isRequest", true);
       }
-
+  
       const savedContact = await newContact.save();
       console.log("Contact saved successfully!");
-
+  
       if (!contactList) {
         const newContactList = new Parse.Object("ContactList");
         newContactList.set("Contacts", [savedContact]);
@@ -110,19 +112,19 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
         newRequest.set("Parent", guardian);
-        newRequest.set("Status", "Pending"); 
-        newRequest.set("Type", "ContactApproval"); 
-        newRequest.set("Child", currentUser); 
+        newRequest.set("Status", "Pending");
+        newRequest.set("Type", "ContactApproval");
+        newRequest.set("Child", currentUser);
         newRequest.set("requestContact", newContact);
 
         await newRequest.save();
         console.log("Contact and request saved successfully!");
       }
-
+  
       setFormData({ username: "", about: "", email: "" });
-      
-      window.location.reload();
 
+      //window.location.reload();
+      setReloadContactList(reloadContactList + 1);
       onClose();
     } catch (error) {
       console.error("Error saving contact:", error);

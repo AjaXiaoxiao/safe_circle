@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ContactItem from "./ContactItem";
+import { useContact } from "../contexts/ContactContext";
 
 const ContactList = ({ onContactClick, selectedContact }) => {
+  const { reloadContactList } = useContact();
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -15,45 +17,45 @@ const ContactList = ({ onContactClick, selectedContact }) => {
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-
-      const ownerUsername = currentUser.get("username");
+  
       const ownerQuery = new Parse.Query("UserProfile");
-      const owner = await ownerQuery.equalTo("username", ownerUsername).first();
-
+      ownerQuery.equalTo("userPointer", currentUser);
+      const owner = await ownerQuery.first();
+  
       if (!owner) {
         throw new Error("No logged-in user.");
       }
-
+  
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
-
+  
       if (contactList) {
         const contactPointers = contactList.get("Contacts") || [];
 
         const fetchedContacts = await Promise.all(
           contactPointers.map(async (contactPointer) => {
-            try {
-              const contact = await contactPointer.fetch();
-              const contactUserProfile = await contact
-                .get("ContactUserProfile")
-                .fetch();
-
-              return {
-                id: contact.id,
-                username: contactUserProfile.get("username"),
-                email: contactUserProfile.get("email"),
-                about: contact.get("about"),
-                isRequest: contact.get("isRequest"),
-              };
-            } catch (error) {
-              console.error("Error fetching contact:", error);
-              return null;
-            }
+            const contact = await contactPointer.fetch();
+            const contactUserProfile = await contact
+              .get("ContactUserProfile")
+              .fetch();
+  
+            return {
+              id: contact.id,
+              username: contactUserProfile.get("username"),
+              email: contactUserProfile.get("email"),
+              about: contact.get("about"),
+              isRequest: contact.get("isRequest"),
+            };
           })
         );
-
-        setContacts(fetchedContacts.filter(Boolean));
+  
+        const uniqueContacts = fetchedContacts.filter(
+          (contact, index, self) =>
+            index === self.findIndex((c) => c.username === contact.username)
+        );
+  
+        setContacts(uniqueContacts); 
       } else {
         setContacts([]);
       }
@@ -65,7 +67,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
 
   useEffect(() => {
     fetchContacts();
-  }, []); 
+  }, [reloadContactList]);
 
   return (
     <div>

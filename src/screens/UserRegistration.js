@@ -10,13 +10,13 @@ import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import colors from "../assets/colors";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../contexts/ToastContext";
 
 const UserRegistration = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const registrationType = location.state?.registrationType || "parent";
+  const { displayToast } = useToast();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -53,14 +53,16 @@ const UserRegistration = () => {
 
     try {
       let guardian = null;
-      
+
       if (registrationType === "child") {
         const parentQuery = new Parse.Query("UserProfile");
         parentQuery.equalTo("email", guardianEmail);
         guardian = await parentQuery.first();
-          
+
         if (!guardian) {
-          setErrorMessage("Guardian email not found! Cannot proceed with registration.");
+          setErrorMessage(
+            "Guardian email not found! Cannot proceed with registration."
+          );
           return;
         }
       }
@@ -92,7 +94,7 @@ const UserRegistration = () => {
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
       await userProfile.save();
-      
+
       if (registrationType === "child") {
         const request = new Parse.Object("Requests");
         request.set("Type", "ChildApproval");
@@ -100,7 +102,6 @@ const UserRegistration = () => {
         request.set("child", userProfile);
         request.set("Parent", guardian);
         await request.save();
-
 
         navigate("/childregistrationawait", {
           state: {
@@ -118,25 +119,33 @@ const UserRegistration = () => {
       return true;
     } catch (error) {
       switch (error.code) {
-    case 125:
-      toast.error("Invalid email address format. Please try again.");
-      break;
-    case 202:
-      toast.error("Username already taken. Please choose a different one.");
-      break;
-    case 203:
-      toast.error("Email address already registered. Use a different email or log in.");
-      break;
-    default:
-      toast.error(`Unexpected error: ${error.message}`);
-  }
+        case 125:
+          displayToast(
+            "error",
+            "Invalid email address format. Please try again."
+          );
+          break;
+        case 202:
+          displayToast(
+            "error",
+            "Username already taken. Please choose a different one."
+          );
+          break;
+        case 203:
+          displayToast(
+            "error",
+            "Email address already registered. Use a different email or log in."
+          );
+          break;
+        default:
+          displayToast("error", `Unexpected error: ${error.message}`);
+      }
       return false;
     }
   };
 
   return (
     <LogInContainer>
-      <ToastContainer />
       <Topbar hideWelcome={true} />
       <BackArrowContainer
         src={BackArrow}
@@ -144,10 +153,14 @@ const UserRegistration = () => {
         onClick={() => navigate("/userlogin")}
       />
       <Title>
-        {registrationType === "parent" ? "Create parent account" : "Create child account"}
+        {registrationType === "parent"
+          ? "Create parent account"
+          : "Create child account"}
       </Title>
       <SubTitle>
-        {registrationType === "parent" ? "Sign up as a parent" : "Sign up as a child"}
+        {registrationType === "parent"
+          ? "Sign up as a parent"
+          : "Sign up as a child"}
       </SubTitle>
 
       <FormContainer>

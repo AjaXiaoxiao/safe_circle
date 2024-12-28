@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ChatOverview from "./screens/ChatOverview";
 import ChildOverview from "./screens/ChildOverview";
@@ -8,6 +7,11 @@ import UserRegistration from "./screens/UserRegistration";
 import UserLogin from "./screens/UserLogIn";
 import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
 import RequireLogin from "./components/RequireLogin";
+import { ChatProvider } from "./contexts/ChatContext";
+import { ToastContainer } from "react-toastify";
+import { ToastProvider } from "./contexts/ToastContext";
+import { ContactProvider } from "./contexts/ContactContext";
+import "react-toastify/dist/ReactToastify.css";
 
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
@@ -17,59 +21,48 @@ Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
-  const [selectedChat, setSelectedChat] = useState(null);
-  const [currentReceiverId, setCurrentReceiverId] = useState(null);
-
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RequireLogin>
-            <ChatOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route
-          path="/childoverview"
-          element={
-            <RequireLogin>
-            <ChildOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route
-          path="/contactsoverview"
-          element={
-            <RequireLogin>
-            <ContactsOverview
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              currentReceiverId={currentReceiverId}
-              setCurrentReceiverId={setCurrentReceiverId}
-            />
-            </RequireLogin>
-          }
-        />
-        <Route path="/userregistration" element={<UserRegistration />} />
-        <Route path="/userlogin" element={<UserLogin />} />
-        <Route
-          path="/childregistrationawait"
-          element={<ChildRegistrationAwait />}
-        />
-      </Routes>
-    </Router>
+    <ToastProvider>
+      <ChatProvider>
+        <ContactProvider>
+          <Router>
+            <ToastContainer />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RequireLogin>
+                    <ChatOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/childoverview"
+                element={
+                  <RequireLogin>
+                    <ChildOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route
+                path="/contactsoverview"
+                element={
+                  <RequireLogin>
+                    <ContactsOverview />
+                  </RequireLogin>
+                }
+              />
+              <Route path="/userregistration" element={<UserRegistration />} />
+              <Route path="/userlogin" element={<UserLogin />} />
+              <Route
+                path="/childregistrationawait"
+                element={<ChildRegistrationAwait />}
+              />
+            </Routes>
+          </Router>
+        </ContactProvider>
+      </ChatProvider>
+    </ToastProvider>
   );
 }
 

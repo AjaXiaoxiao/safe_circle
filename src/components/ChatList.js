@@ -3,42 +3,42 @@ import styled from "styled-components";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
+import { useChat } from "../contexts/ChatContext";
+import { useToast } from "../contexts/ToastContext";
 
-const ChatList = ({
-  onChatClick,
-  selectedChat,
-  setSelectedChat,
-  setCurrentReceiverId,
-  displayToast,
-}) => {
+const ChatList = () => {
   const [chats, setChats] = useState([]);
+  const {
+    selectedChat,
+    setSelectedChat,
+    setCurrentReceiverId,
+    chatUpdateTrigger,
+    handleChatClick,
+  } = useChat();
+  const { displayToast } = useToast();
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        //the logged in user object
         const loggedInUser = Parse.User.current();
         if (!loggedInUser) {
           displayToast("error", "No user is logged in");
           return;
         }
-
-        //find logged in user in the UserProfile table
+  
         const currentUserQuery = new Parse.Query("UserProfile");
-        //the userPointer column should contain the logged in user object
         currentUserQuery.equalTo("userPointer", loggedInUser);
         const currentUser = await currentUserQuery.first();
-
-        if (currentUser === undefined || currentUser === null) {
+  
+        if (!currentUser) {
           displayToast("error", "No profile found for the logged-in user.");
           return;
         }
-
-        //filter chats that the logged in user is a participant of
+  
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser]);
         const fetchedChats = await chatQuery.find();
-
+  
         //stores the receiver profiles in the otherParticipant variable
         const chatDetails = await Promise.all(
           fetchedChats.map(async (chat) => {
@@ -46,25 +46,21 @@ const ChatList = ({
             const otherParticipant = participants.find(
               (participant) => participant.id !== currentUser.id
             );
-
-            //finds the username of the other participant
+  
+            //finds username of the other participant
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
             const usernameId = otherParticipantProfile.id;
             setCurrentReceiverId(otherParticipant.id);
-
-            //gets the latest message
-            let messages = await chat.get("Messages");
-
-            messages = messages || [];
-
+  
+            let messages = chat.get("Messages") || [];
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
                 const message = await messagePointer.fetch();
                 return message;
               })
             );
-
+  
             let latestMessage = null;
 
             if (resolvedMessages.length > 0) {
@@ -76,32 +72,37 @@ const ChatList = ({
                 }
               }, resolvedMessages[0]);
             }
-
-            let latestTimestamp = null;
-            let messageText = "No messages yet";
-
+  
+            let latestTimestamp;
             if (latestMessage) {
               latestTimestamp = latestMessage.get("Timestamp");
-              messageText = latestMessage.get("Text");
+            } else {
+              latestTimestamp = chat.createdAt;
             }
-    
+
+            let messageText;
+            if (latestMessage) {
+              messageText = latestMessage.get("Text");
+            } else {
+              messageText = "No messages yet";
+            }
+  
             return {
               id: chat.id,
               username,
               message: messageText,
-              latestTimestamp: latestTimestamp,
+              latestTimestamp,
               chat,
             };
           })
         );
-        
-        const sortedChats = chatDetails.sort((a, b) => {
-          if (!a.latestTimestamp) return 1; // chats with no messages should be in bottom
-          if (!b.latestTimestamp) return -1;
-          return b.latestTimestamp - a.latestTimestamp; // sort in descending order yes?
-        });
-
-        setChats(chatDetails);
+  
+        // Sorting chats, latestTimestamp
+        const sortedChats = chatDetails.sort((a, b) =>
+          b.latestTimestamp - a.latestTimestamp
+        );
+  
+        setChats(sortedChats);
         if (fetchedChats.length > 0 && !selectedChat) {
           setSelectedChat(chatDetails[0]);
         }
@@ -109,8 +110,10 @@ const ChatList = ({
         console.error("Error fetching existing chats", error);
       }
     };
+  
     fetchChats();
-  }, [setSelectedChat]);
+  }, [setSelectedChat, chatUpdateTrigger]);
+  
 
   return (
     <ChatListContainer>
@@ -121,7 +124,7 @@ const ChatList = ({
             username={chat.username}
             message={chat.message}
             messages={chat.messages}
-            onChatClick={() => onChatClick(chat)}
+            onChatClick={() => handleChatClick(chat)}
             isSelected={selectedChat?.id === chat.id}
           />
         ))

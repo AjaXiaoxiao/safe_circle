@@ -5,15 +5,18 @@ import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
+import { useToast } from "../../contexts/ToastContext";
 
-const PopUpChildOverview = ({ isVisible, onClose, contact, displayToast }) => {
+const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
+  const { displayToast } = useToast();
+
   if (!isVisible || !contact) return null;
 
   const { child, requests } = contact;
 
   const updateRequestStatus = async (status) => {
     try {
-      const request = requests[0]; 
+      const request = requests[0];
       const childObj = child;
 
       request.set("Status", status);
@@ -27,7 +30,7 @@ const PopUpChildOverview = ({ isVisible, onClose, contact, displayToast }) => {
 
       console.log("Request and child updated successfully.");
       displayToast("success", "Request has been ${status}.");
-      onClose(); 
+      onClose();
     } catch (error) {
       console.error("Error updating the request:", error);
       displayToast("error", "An error occurred. Please try again.");
@@ -51,9 +54,7 @@ const PopUpChildOverview = ({ isVisible, onClose, contact, displayToast }) => {
           <SmallTextField value={child.get("username") || "No name"} disabled />
           <Label>Email</Label>
           <SmallTextField value={child.get("email") || "No email"} disabled />
-          {requests.length > 0 && (
-            <Label>Requests: {requests.length}</Label>
-          )}
+          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
           <ButtonContainer>
             <Button title="Approve" onClick={handleApprove} />
             <Button title="Decline" color="red" onClick={handleDecline} />
