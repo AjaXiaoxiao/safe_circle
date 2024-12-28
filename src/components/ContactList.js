@@ -55,7 +55,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
             index === self.findIndex((c) => c.username === contact.username)
         );
   
-        setContacts(uniqueContacts); // Set unique contacts only
+        setContacts(uniqueContacts); 
       } else {
         setContacts([]);
       }

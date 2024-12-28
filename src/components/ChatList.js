@@ -26,7 +26,6 @@ const ChatList = () => {
           return;
         }
   
-        //find logged in user in the UserProfile table
         const currentUserQuery = new Parse.Query("UserProfile");
         currentUserQuery.equalTo("userPointer", loggedInUser);
         const currentUser = await currentUserQuery.first();
@@ -36,7 +35,6 @@ const ChatList = () => {
           return;
         }
   
-        //filter chats that the logged in user is a participant of
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser]);
         const fetchedChats = await chatQuery.find();
@@ -49,13 +47,12 @@ const ChatList = () => {
               (participant) => participant.id !== currentUser.id
             );
   
-            //finds the username of the other participant
+            //finds username of the other participant
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
             const usernameId = otherParticipantProfile.id;
             setCurrentReceiverId(otherParticipant.id);
   
-            // Get messages
             let messages = chat.get("Messages") || [];
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
@@ -100,7 +97,7 @@ const ChatList = () => {
           })
         );
   
-        // Sorting chats by latestTimestamp
+        // Sorting chats, latestTimestamp
         const sortedChats = chatDetails.sort((a, b) =>
           b.latestTimestamp - a.latestTimestamp
         );
