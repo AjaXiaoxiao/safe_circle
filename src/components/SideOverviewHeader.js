@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import plusIcon from "../assets/Plus.png";
-import colors from '../assets/colors'; 
+import colors from "../assets/colors";
 import BackArrow from "../assets/BackArrow.png";
 
-export default function SideOverviewHeader({ title, onAddClick, isAddingChat }) {
+export default function SideOverviewHeader({
+  title,
+  onAddClick,
+  isAddingChat,
+}) {
   return (
     <HeaderContainer>
-      {isAddingChat && (
-        <StyledBackArrow onClick={onAddClick} src={BackArrow} />
-      )}
+      {isAddingChat && <StyledBackArrow onClick={onAddClick} src={BackArrow} />}
       <Header>{title}</Header>
-      <StyledPlusIcon onClick={onAddClick} src={plusIcon}/>
+      <StyledPlusIcon onClick={onAddClick} src={plusIcon} />
     </HeaderContainer>
   );
 }
@@ -22,10 +24,11 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = styled.h2`
-  font-size: 18px;
+  font-size: 20px;
   color: ${colors.black};
   text-align: left;
   margin: 20px 20px;
+  font-family: "Barlow", serif;
 `;
 
 const StyledPlusIcon = styled.img`
