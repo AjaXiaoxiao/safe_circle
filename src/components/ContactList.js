@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import ContactItem from "./ContactItem";
 import { useContact } from "../contexts/ContactContext";
+import colors from "../assets/colors";
+import styled from "styled-components";
 
 const ContactList = ({ onContactClick, selectedContact }) => {
   const { reloadContactList } = useContact();
@@ -17,19 +19,19 @@ const ContactList = ({ onContactClick, selectedContact }) => {
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-  
+
       const ownerQuery = new Parse.Query("UserProfile");
       ownerQuery.equalTo("userPointer", currentUser);
       const owner = await ownerQuery.first();
-  
+
       if (!owner) {
         throw new Error("No logged-in user.");
       }
-  
+
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
-  
+
       if (contactList) {
         const contactPointers = contactList.get("Contacts") || [];
 
@@ -39,7 +41,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
             const contactUserProfile = await contact
               .get("ContactUserProfile")
               .fetch();
-  
+
             return {
               id: contact.id,
               username: contactUserProfile.get("username"),
@@ -49,13 +51,13 @@ const ContactList = ({ onContactClick, selectedContact }) => {
             };
           })
         );
-  
+
         const uniqueContacts = fetchedContacts.filter(
           (contact, index, self) =>
             index === self.findIndex((c) => c.username === contact.username)
         );
-  
-        setContacts(uniqueContacts); 
+
+        setContacts(uniqueContacts);
       } else {
         setContacts([]);
       }
@@ -72,7 +74,9 @@ const ContactList = ({ onContactClick, selectedContact }) => {
   return (
     <div>
       {error && <p>{error}</p>}
-      {!error && contacts.length === 0 && <p>No contacts found.</p>}
+      {!error && contacts.length === 0 && (
+        <NoContacts>No contacts found.</NoContacts>
+      )}
       {!error &&
         contacts.length > 0 &&
         contacts.map((contact) => (
@@ -89,5 +93,11 @@ const ContactList = ({ onContactClick, selectedContact }) => {
     </div>
   );
 };
+
+const NoContacts = styled.p`
+  text-align: center;
+  color: ${colors.grey};
+  font-family: "Barlow", serif;
+`;
 
 export default ContactList;
