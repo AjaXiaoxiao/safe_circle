@@ -30,10 +30,10 @@ const StyledNamebarTop = styled.div`
   fill: ${colors.white};
   align-items: center;
   justify-content: left;
-  font-size: large;
-  font-weight: 700;
+  font-family: "Barlow", serif;
+  font-size: 20px;
+  font-weight: 550;
   background-color: ${colors.white};
-  font-family: Arial, Helvetica, sans-serif;
 `;
 
 const StyledImage = styled.img`

@@ -8,13 +8,11 @@ import PopUpAddNewContact from "../components/PopUps/PopUpAddNewContact";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
-export default function Contacts({
-  selectedChat,
-  setSelectedChat,
-  currentReceiverId,
-}) {
-  const [isAddContactPopupVisible, setAddContactPopUpToVisible] = useState(false);
-  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] = useState(false);
+export default function Contacts() {
+  const [isAddContactPopupVisible, setAddContactPopUpToVisible] =
+    useState(false);
+  const [isSelectContactPopupVisible, setSelectContactPopUpToVisible] =
+    useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const location = useLocation();
@@ -51,11 +49,7 @@ export default function Contacts({
           selectedContact={selectedContact}
         />
         <BlurredComponent isBlurred={isAnyPopupVisible}>
-          <ChatComponent
-            selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
-            currentReceiverId={currentReceiverId}
-          />
+          <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
 

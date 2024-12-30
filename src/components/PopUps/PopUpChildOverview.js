@@ -5,36 +5,35 @@ import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
+import { useToast } from "../../contexts/ToastContext";
 
 const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
+  const { displayToast } = useToast();
+
   if (!isVisible || !contact) return null;
 
   const { child, requests } = contact;
 
-  // Function to update request status to Parse Backend
   const updateRequestStatus = async (status) => {
     try {
-      const request = requests[0]; // Assuming requests[0] is the pending request
+      const request = requests[0];
       const childObj = child;
 
-      // Update the "Status" field of the request object
       request.set("Status", status);
 
-      // If approving, set the child's "isVerified" field to true
       if (status === "Approved") {
         childObj.set("isVerified", true);
       }
 
-      // Save the request and child objects to Parse
       await request.save();
       await childObj.save();
 
       console.log("Request and child updated successfully.");
-      alert(`Request has been ${status}.`);
-      onClose(); // Close the popup
+      displayToast("success", "Request has been ${status}.");
+      onClose();
     } catch (error) {
       console.error("Error updating the request:", error);
-      alert("An error occurred. Please try again.");
+      displayToast("error", "An error occurred. Please try again.");
     }
   };
 
@@ -55,9 +54,7 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
           <SmallTextField value={child.get("username") || "No name"} disabled />
           <Label>Email</Label>
           <SmallTextField value={child.get("email") || "No email"} disabled />
-          {requests.length > 0 && (
-            <Label>Requests: {requests.length}</Label>
-          )}
+          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
           <ButtonContainer>
             <Button title="Approve" onClick={handleApprove} />
             <Button title="Decline" color="red" onClick={handleDecline} />
@@ -115,6 +112,7 @@ const Label = styled.label`
   color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;
+  font-family: "Barlow", serif;
 `;
 
 const ButtonContainer = styled.div`

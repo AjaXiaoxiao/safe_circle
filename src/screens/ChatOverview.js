@@ -5,34 +5,14 @@ import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-const ChatOverview = ({
-  selectedChat,
-  setSelectedChat,
-  currentReceiverId,
-  setCurrentReceiverId,
-}) => {
-  //handles the chat that is being clicked
-  const handleChatClick = (chat) => {
-    setSelectedChat(chat);
-  };
-
+const ChatOverview = () => {
   return (
     <div>
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-        <SideOverview
-          title="Chats"
-          onChatClick={handleChatClick}
-          setSelectedChat={setSelectedChat}
-          selectedChat={selectedChat}
-          setCurrentReceiverId={setCurrentReceiverId}
-        />
-        <ChatComponent
-          selectedChat={selectedChat}
-          setSelectedChat={setSelectedChat}
-          currentReceiverId={currentReceiverId}
-        />
+        <SideOverview title="Chats" />
+        <ChatComponent />
       </ColumnContainer>
     </div>
   );

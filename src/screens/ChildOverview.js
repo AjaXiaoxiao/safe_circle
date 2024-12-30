@@ -6,19 +6,12 @@ import SideOverview from "../components/SideOverview";
 import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
-export default function ChildOverviewPage({
-  selectedChat,
-  setSelectedChat,
-  currentReceiverId,
-}) {
+export default function ChildOverviewPage() {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
-  const handleChildClick = (child, requests) => {
-    console.log("Selected child:", child);
-    console.log("Associated requests:", requests);
-
-    setSelectedContact({ child, requests }); // Pass child and requests
+  const handleChildClick = (child, requests, requestType) => {
+    setSelectedContact({ child, requests, requestType });
     setPopupVisible(true);
   };
 
@@ -49,11 +42,7 @@ export default function ChildOverviewPage({
         )}
 
         <BlurredComponent isBlurred={isPopupVisible}>
-          <ChatComponent
-            selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
-            currentReceiverId={currentReceiverId}
-          />
+          <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
     </div>

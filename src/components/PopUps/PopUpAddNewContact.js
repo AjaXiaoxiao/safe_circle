@@ -5,10 +5,12 @@ import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import colors from "../../assets/colors";
+import { useContact } from "../../contexts/ContactContext";
 
 import SmallTextField from "../TextFields/SmallTextField";
 
 const PopUpAddNewContact = ({ isVisible, onClose }) => {
+  const { reloadContactList, setReloadContactList } = useContact();
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
@@ -19,61 +21,65 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log("Form submitted with data:", formData);
-  
+
     try {
       const currentUser = Parse.User.current();
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-  
+
       const isChild = currentUser.get("isChild");
-  
+
       // Fetch the current user's Profile
       const userProfileQuery = new Parse.Query("UserProfile");
       userProfileQuery.equalTo("userPointer", currentUser);
       const owner = await userProfileQuery.first();
-  
+
       if (!owner) {
         throw new Error("Owner profile not found for the logged-in user.");
       }
-  
-       // Check if the UserProfile for the contact exists
-       const contactQuery = new Parse.Query("UserProfile");
-       const contactUserProfile = await contactQuery.equalTo("username", formData.username).equalTo("email", formData.email).first();
-  
+
+      // Check if the contact exists
+      const contactQuery = new Parse.Query("UserProfile");
+      contactQuery.equalTo("username", formData.username);
+      contactQuery.equalTo("email", formData.email);
+      const contactUserProfile = await contactQuery.first();
+
       if (!contactUserProfile) {
         throw new Error("The contact must be a registered user.");
       }
-  
-      // Check if contact is already in ContactList
+
+      // Check if the contact is already added
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
-  
+
       if (contactList) {
         const existingContacts = contactList.get("Contacts") || [];
         const isDuplicate = existingContacts.some(
-          (contactPointer) => contactPointer.id === contactUserProfile.id
+          (contactPointer) =>
+            contactPointer.get("ContactUserProfile").id ===
+            contactUserProfile.id
         );
-  
+
         if (isDuplicate) {
           throw new Error("This contact is already in your contact list.");
         }
       }
-  
+
       const Contact = Parse.Object.extend("Contact");
       const newContact = new Contact();
-      newContact.set("ContactUserProfile", contactUserProfile); 
+      newContact.set("ContactUserProfile", contactUserProfile);
       newContact.set("about", formData.about);
-      newContact.set("owner", owner); 
-  
+      newContact.set("owner", owner);
+
       if (isChild) {
         newContact.set("isRequest", true);
       }
-  
+
       const savedContact = await newContact.save();
       console.log("Contact saved successfully!");
-  
+
       if (!contactList) {
         const newContactList = new Parse.Object("ContactList");
         newContactList.set("Contacts", [savedContact]);
@@ -84,7 +90,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         contactList.addUnique("Contacts", savedContact);
         await contactList.save();
       }
-  
+
       if (isChild) {
         const guardianEmail = currentUser.get("guardianEmail");
         if (!guardianEmail) {
@@ -92,49 +98,51 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
           setError("Guardian email not found.");
           return;
         }
-  
+
         const guardianQuery = new Parse.Query("UserProfile");
-        const guardian = await guardianQuery.equalTo("email", guardianEmail).first();
-  
+        const guardian = await guardianQuery
+          .equalTo("email", guardianEmail)
+          .first();
+
         if (!guardian) {
           console.error("Guardian not found.");
           setError("Guardian not found. Ask your parent to sign up!");
           return;
         }
-  
+
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
-        newRequest.set("Parent", guardian); 
-        newRequest.set("Status", "Pending"); // Set status to "pending"
-        newRequest.set("Type", "ContactApproval"); // Set type 
-        newRequest.set("Child", currentUser); // Set the child 
-  
-        // Save the request
+        newRequest.set("Parent", guardian);
+        newRequest.set("Status", "Pending");
+        newRequest.set("Type", "ContactApproval");
+        newRequest.set("Child", currentUser);
+        newRequest.set("requestContact", newContact);
+
         await newRequest.save();
         console.log("Contact and request saved successfully!");
       }
-  
-      // Reset form data and fetch updated contacts
+
       setFormData({ username: "", about: "", email: "" });
 
+      //window.location.reload();
+      setReloadContactList(reloadContactList + 1);
       onClose();
-      
     } catch (error) {
       console.error("Error saving contact:", error);
       setError(error.message || "Failed to save contact.");
     }
   };
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (error) {
-      setError(null);  // clear the error if the user starts typing
+      setError(null); // clear the error if the user starts typing
     }
     setFormData({ ...formData, [name]: value });
   };
 
   if (!isVisible) return null;
-  
+
   return (
     <PopUpContainer>
       <CloseButton onClick={onClose}>
@@ -167,7 +175,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
           onChange={handleInputChange}
           placeholder="Email"
         />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <ButtonContainer>
           <Button
@@ -225,7 +233,9 @@ const FormContainer = styled.div`
 `;
 
 const Label = styled.label`
+  font-family: "Barlow", serif;
   font-size: 10px;
+  font-weight: 550;
   color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;
@@ -233,9 +243,8 @@ const Label = styled.label`
 
 const ButtonContainer = styled.div`
   margin-top: 10px;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
+  width: 56%;
+  margin-right: 15px;
 `;
 
 const ErrorMessage = styled.div`

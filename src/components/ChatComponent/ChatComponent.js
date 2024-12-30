@@ -1,72 +1,95 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import NamebarTop from "./NamebarTop";
 import Chatbar from "./Chatbar";
 import MessageBubble from "./MessageBubble";
 import colors from "../../assets/colors";
 import Parse from "parse/dist/parse.min.js";
+import { useChat } from "../../contexts/ChatContext";
 
-const ChatComponent = ({ selectedChat, currentReceiverId }) => {
-  const [messages, setMessage] = useState([]);
-  const [chatUsername, setChatUsername] = useState("Unkown user");
+const ChatComponent = () => {
+  const [messages, setMessages] = useState([]);
+  const [chatUsername, setChatUsername] = useState("No chat selected");
+  const messageListReference = useRef(null);
+  const { selectedChat } = useChat();
+
+  const getChat = async () => {
+    if (!selectedChat || !selectedChat.id) return;
+
+    try {
+      const chatQuery = new Parse.Query("Chat");
+      const chat = await chatQuery.get(selectedChat.id);
+
+      const selectedMessages = chat.get("Messages");
+
+      if (!selectedMessages || selectedMessages.length === 0) {
+        setMessages([]);
+        return;
+      }
+
+      const loggedInUser = Parse.User.current();
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", loggedInUser);
+      const loggedInUserProfile = await userProfileQuery.first();
+
+      const resolvedMessages = await Promise.all(
+        selectedMessages.map(async (selectedMessage) => {
+          const message = await selectedMessage.fetch();
+          const sender = await message.get("Sender").fetch();
+
+          return {
+            id: message.id,
+            text: message.get("Text"),
+            isSender: sender.id === loggedInUserProfile.id, // Check if the logged-in user sent this message
+          };
+        })
+      );
+
+      setMessages(resolvedMessages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
 
   useEffect(() => {
-    if (!selectedChat || !selectedChat.chat) {
-      return;
-    }
-    const getChat = async () => {
-      const selectedMessages = selectedChat.chat.get("Messages");
-
-      try {
-        if (
-          selectedMessages === null ||
-          selectedMessages === undefined ||
-          selectedMessages === 0
-        ) {
-          alert("No messages in chat");
-          return;
-        }
-
-        const loggedInUser = Parse.User.current();
-
-        const userProfileQuery = new Parse.Query("UserProfile");
-        userProfileQuery.equalTo("userPointer", loggedInUser);
-        const loggedInUserProfile = await userProfileQuery.first();
-
-        const resolvedMessages = await Promise.all(
-          selectedMessages.map(async (selectedMessage) => {
-            const message = await selectedMessage.fetch();
-
-            const sender = await message.get("Sender").fetch();
-            const isItTheSender = sender === loggedInUserProfile;
-            return {
-              id: message.id, //this is how you get the defualt objectId with Parse
-              text: message.get("Text"),
-              isSender: isItTheSender,
-            };
-          })
-        );
-        setMessage(resolvedMessages);
-      } catch (error) {
-        console.error("Error fetching chat or messages:", error);
-      }
-    };
     getChat();
+
+    const interval = setInterval(() => {
+      getChat();
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [selectedChat]);
 
   useEffect(() => {
     if (selectedChat && selectedChat.username) {
       setChatUsername(selectedChat.username);
     } else {
-      setChatUsername("Unkown User");
+      setChatUsername("No chat selected");
     }
   }, [selectedChat]);
+
+  useEffect(() => {
+    // Scroll to bottom when messages are updated
+    if (messageListReference.current) {
+      messageListReference.current.scrollTop =
+        messageListReference.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    // Scroll to bottom when component mounts
+    if (messageListReference.current) {
+      messageListReference.current.scrollTop =
+        messageListReference.current.scrollHeight;
+    }
+  }, []);
 
   return (
     <div>
       <ChatContainer>
         <NamebarTop username={chatUsername} />
-        <StyledMessageBubble>
+        <StyledMessageBubble ref={messageListReference}>
           <MessageList>
             {messages.map((msg) => (
               <MessageBubble
@@ -77,7 +100,7 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
             ))}
           </MessageList>
         </StyledMessageBubble>
-        <Chatbar currentReceiverId={currentReceiverId} />
+        <Chatbar />
       </ChatContainer>
     </div>
   );
@@ -85,8 +108,9 @@ const ChatComponent = ({ selectedChat, currentReceiverId }) => {
 
 export default ChatComponent;
 
+// Styled Components
 const ChatContainer = styled.div`
-  width: 60vw;
+  width: 63vw;
   height: 88vh;
   margin-top: 12vh;
   display: flex;

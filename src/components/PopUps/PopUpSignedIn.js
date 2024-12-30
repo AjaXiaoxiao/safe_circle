@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import XButton from "../Buttons/XButton";
 
-const PopUpSignedIn = ({ isVisible, onClose, username, isChild, isVerified }) => {
-    if (!isVisible) return null;
+const PopUpSignedIn = ({
+  isVisible,
+  onClose,
+  username,
+  isChild,
+  isVerified,
+}) => {
+  if (!isVisible) return null;
 
-    const message = isChild
+  const message = isChild
     ? isVerified
       ? `You are now ready to use SafeCircle!`
       : `Now you just have to wait for your guardian to approve your profile. We will let you know when you can start using SafeCircle.`
@@ -40,8 +46,9 @@ const PopUpContainer = styled.div`
   align-items: center;
   text-align: center;
   justify-content: center;
-  z-index: 2; 
-  border: 3px solid #BB65FF;
+  z-index: 2;
+  border: 3px solid #bb65ff;
+  font-family: "Barlow", serif;
 `;
 const CloseButton = styled.div`
   position: absolute;

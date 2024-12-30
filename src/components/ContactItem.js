@@ -4,7 +4,14 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import StatusIcon from "./Notifications/StatusIcon";
 import colors from "../assets/colors";
 
-const ContactItem = ({ username, message, showMessage, isRequest, onClick, isSelected }) => {
+const ContactItem = ({
+  username,
+  message,
+  showMessage,
+  isRequest,
+  onClick,
+  isSelected,
+}) => {
   return (
     <Item onClick={onClick} isSelected={isSelected}>
       <ProfileContainer>
@@ -24,7 +31,8 @@ export default ContactItem;
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: ${props => (props.isSelected ? colors.yellow : colors.white)};
+  background-color: ${(props) =>
+    props.isSelected ? colors.yellow : colors.white};
   border-top: 1px solid ${colors.grey};
   border-bottom: 1px solid ${colors.grey};
   display: flex;
@@ -47,8 +55,9 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.div`
+  font-family: "Barlow", serif;
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const MessageText = styled.p`

@@ -10,54 +10,59 @@ import Topbar from "../components/Topbar";
 import BackArrow from "../assets/BackArrow.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import colors from "../assets/colors";
+import { useToast } from "../contexts/ToastContext";
 
 const UserRegistration = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const registrationType = location.state?.registrationType || "parent";
+  const { displayToast } = useToast();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [guardianEmail, setGuardianEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const doUserRegistration = async function () {
     if (!username) {
-      alert("Username is required.");
+      setErrorMessage("Username is required.");
       return;
     }
 
     if (!email) {
-      alert("Email is required.");
+      setErrorMessage("Email is required!");
       return;
     }
 
     if (!password) {
-      alert("Password is required.");
+      setErrorMessage("Password is required!");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      setErrorMessage("Passwords do not match!");
       return;
     }
 
     if (registrationType === "child" && !guardianEmail) {
-      alert("Guardian email is required.");
+      setErrorMessage("Guardian email is required!");
       return;
     }
 
     try {
       let guardian = null;
-      
+
       if (registrationType === "child") {
         const parentQuery = new Parse.Query("UserProfile");
         parentQuery.equalTo("email", guardianEmail);
         guardian = await parentQuery.first();
-          
+
         if (!guardian) {
-          alert("Guardian email not found! Cannot proceed with registration.");
+          setErrorMessage(
+            "Guardian email not found! Cannot proceed with registration."
+          );
           return;
         }
       }
@@ -89,10 +94,7 @@ const UserRegistration = () => {
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
       await userProfile.save();
-      alert(
-        `Success! User ${createdUser.getUsername()} was successfully created!`
-      );
-      
+
       if (registrationType === "child") {
         const request = new Parse.Object("Requests");
         request.set("Type", "ChildApproval");
@@ -100,8 +102,6 @@ const UserRegistration = () => {
         request.set("child", userProfile);
         request.set("Parent", guardian);
         await request.save();
-          alert("Approval request sent to guardian!");
-
 
         navigate("/childregistrationawait", {
           state: {
@@ -115,26 +115,52 @@ const UserRegistration = () => {
           },
         });
       }
+      setErrorMessage("");
       return true;
     } catch (error) {
-      alert(`Error! ${error}`);
+      switch (error.code) {
+        case 125:
+          displayToast(
+            "error",
+            "Invalid email address format. Please try again."
+          );
+          break;
+        case 202:
+          displayToast(
+            "error",
+            "Username already taken. Please choose a different one."
+          );
+          break;
+        case 203:
+          displayToast(
+            "error",
+            "Email address already registered. Use a different email or log in."
+          );
+          break;
+        default:
+          displayToast("error", `Unexpected error: ${error.message}`);
+      }
       return false;
     }
   };
 
   return (
     <LogInContainer>
-      <Topbar />
+      <Topbar hideWelcome={true} />
       <BackArrowContainer
         src={BackArrow}
         alt="Back Arrow"
         onClick={() => navigate("/userlogin")}
       />
       <Title>
-        {registrationType === "parent" ? "Create parent account" : "Create child account"}
+        {registrationType === "parent"
+          ? "Create parent account"
+          : "Create child account"}
       </Title>
       <SubTitle>
-        {registrationType === "parent" ? "Sign up as a parent" : "Sign up as a child"}
+        {registrationType === "parent"
+          ? "Sign up as a parent"
+          : "Sign up as a child"}
       </SubTitle>
 
       <FormContainer>
@@ -170,6 +196,7 @@ const UserRegistration = () => {
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
+        <ErrorText>{errorMessage}</ErrorText>
         <Button
           color="blue"
           fullWidth
@@ -207,6 +234,7 @@ const Title = styled.h1`
   font-weight: bold;
   color: ${colors.black};
   margin: 10px 0;
+  font-family: "Barlow", serif;
 `;
 
 const SubTitle = styled.p`
@@ -214,6 +242,7 @@ const SubTitle = styled.p`
   color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
+  font-family: "Barlow", serif;
 `;
 
 const FormContainer = styled.div`
@@ -221,4 +250,12 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const ErrorText = styled.p`
+  color: ${colors.hoverRed};
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
 `;

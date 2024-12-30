@@ -1,84 +1,85 @@
-import TextField from "../TextFields/TextField";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../Buttons/Button";
 import EmojiPickerButton from "../Buttons/EmojiPickerButton";
-import { useState } from "react";
+import TextField from "../TextFields/TextField";
 import Parse from "parse/dist/parse.min.js";
 import colors from "../../assets/colors";
+import { useChat } from "../../contexts/ChatContext";
+import { useToast } from "../../contexts/ToastContext";
 
-const Chatbar = ({ currentReceiverId }) => {
+const Chatbar = () => {
   const [message, setMessage] = useState("");
+  const { selectedChat, setChatUpdateTrigger, chatUpdateTrigger } = useChat();
+
+  const { displayToast } = useToast();
 
   const handleEmojiSelect = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji);
   };
 
-  async function sendMessage() {
-    try {
-      //create a new Parse Message Object
-      const Message = new Parse.Object("Message");
+  const sendMessage = async () => {
 
-      //Define the attributes you want for your Object
+    if (!message.trim()) {
+      displayToast("error", "Message cannot be empty!");
+      return;
+    }
+
+    if (!selectedChat || !selectedChat.chat) {
+      displayToast("error", "No chat selected!");
+      return;
+    }
+
+    try {
+      const loggedInUser = Parse.User.current();
+      if (!loggedInUser) {
+        displayToast("error", "No user logged in");
+        return;
+      }
+
+      const senderQuery = new Parse.Query("UserProfile");
+      senderQuery.equalTo("userPointer", loggedInUser);
+      const senderProfile = await senderQuery.first();
+
+      if (!senderProfile) {
+        displayToast("error", "Sender profile not found");
+        return;
+      }
+
+      // Get the receiver from the selected chat
+      const receiverProfile = selectedChat.chat
+        .get("Participants")
+        .find((participant) => participant.id !== senderProfile.id);
+
+      if (!receiverProfile) {
+        displayToast("error", "Receiver not found");
+        return;
+      }
+
+      // Create the message
+      const Message = new Parse.Object("Message");
       Message.set("Text", message);
       Message.set("Timestamp", new Date());
+      Message.set("Sender", senderProfile);
+      Message.set("Receiver", receiverProfile);
 
-      //Create another instance with a pointer to another object
-      const loggedInUser = Parse.User.current();
-
-      if (loggedInUser === null || loggedInUser === undefined) {
-        alert("No user is currently logged in. So there is no sender");
-        return;
-      }
-      const currentUser = new Parse.Query("UserProfile");
-      //const currentUser = Parse.User.current();
-
-      const sender = await currentUser
-        .equalTo("userPointer", loggedInUser)
-        .first();
-
-      if (sender === null || sender === undefined) {
-        alert("The sender profile does not exist");
-        return;
-      }
-      const receiverQuery = new Parse.Query("UserProfile");
-      receiverQuery.equalTo("objectId", currentReceiverId); // Use equalTo for matching
-      const receiver = await receiverQuery.first();
-      //const receiver = await receiverQuery.equalTo("username", "Tommy").first(); //hard coded for now
-
-      if (receiver === null || receiver === undefined) {
-        alert("The receiver profile does not exist");
-        return;
-      }
-
-      Message.set("Sender", sender);
-      Message.set("Receiver", receiver);
-
-      const chatQuery = new Parse.Query("Chat");
-      chatQuery.containsAll("Participants", [sender, receiver]);
-
-      let Chat = await chatQuery.first();
-
-      //if the a chat between the participants does not exist. Create a new one.
-      if (Chat === null || Chat === undefined) {
-        Chat = new Parse.Object("Chat");
-        Chat.set("Participants", [sender, receiver]);
-        Chat.set("Messages", [Message]);
-      } else {
-        let messages = Chat.get("Messages");
-        messages.push(Message);
-        Chat.set("Messages", messages);
-      }
+      // Save the message in the chat
+      const chat = selectedChat.chat;
+      const messages = chat.get("Messages") || [];
+      messages.push(Message);
+      chat.set("Messages", messages);
 
       await Message.save();
-      await Chat.save();
+      await chat.save();
 
-      alert("Message sent and chat updated");
-      setMessage("");
+      setMessage(""); // Clear the input field
+      setChatUpdateTrigger(chatUpdateTrigger + 1);
     } catch (error) {
-      console.log("error", error);
-      alert("There was an error sending the message.");
+      console.error("Error sending message:", error);
+      displayToast("error", "Failed to send the message");
     }
-  }
+  };
+
   return (
     <StyledChatbar>
       <EmojiPickerButton onSelectEmoji={handleEmojiSelect} />
@@ -96,7 +97,6 @@ const StyledChatbar = styled.div`
   display: flex;
   flex-direction: row;
   border: solid ${colors.grey} 1px;
-  fill: ${colors.white};
   align-items: center;
   justify-content: center;
   background-color: ${colors.white};
