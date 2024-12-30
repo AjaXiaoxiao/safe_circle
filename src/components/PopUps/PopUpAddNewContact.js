@@ -21,51 +21,52 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log("Form submitted with data:", formData);
-  
+
     try {
       const currentUser = Parse.User.current();
       if (!currentUser) {
         throw new Error("No user is currently logged in.");
       }
-  
+
       const isChild = currentUser.get("isChild");
 
       // Fetch the current user's Profile
       const userProfileQuery = new Parse.Query("UserProfile");
       userProfileQuery.equalTo("userPointer", currentUser);
       const owner = await userProfileQuery.first();
-  
+
       if (!owner) {
         throw new Error("Owner profile not found for the logged-in user.");
       }
-  
+
       // Check if the contact exists
       const contactQuery = new Parse.Query("UserProfile");
       contactQuery.equalTo("username", formData.username);
       contactQuery.equalTo("email", formData.email);
       const contactUserProfile = await contactQuery.first();
-  
+
       if (!contactUserProfile) {
         throw new Error("The contact must be a registered user.");
       }
-  
+
       // Check if the contact is already added
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
-  
+
       if (contactList) {
         const existingContacts = contactList.get("Contacts") || [];
         const isDuplicate = existingContacts.some(
           (contactPointer) =>
-            contactPointer.get("ContactUserProfile").id === contactUserProfile.id
+            contactPointer.get("ContactUserProfile").id ===
+            contactUserProfile.id
         );
-  
+
         if (isDuplicate) {
           throw new Error("This contact is already in your contact list.");
         }
       }
-  
+
       const Contact = Parse.Object.extend("Contact");
       const newContact = new Contact();
       newContact.set("ContactUserProfile", contactUserProfile);
@@ -75,10 +76,10 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       if (isChild) {
         newContact.set("isRequest", true);
       }
-  
+
       const savedContact = await newContact.save();
       console.log("Contact saved successfully!");
-  
+
       if (!contactList) {
         const newContactList = new Parse.Object("ContactList");
         newContactList.set("Contacts", [savedContact]);
@@ -120,7 +121,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         await newRequest.save();
         console.log("Contact and request saved successfully!");
       }
-  
+
       setFormData({ username: "", about: "", email: "" });
 
       //window.location.reload();
@@ -232,7 +233,9 @@ const FormContainer = styled.div`
 `;
 
 const Label = styled.label`
+  font-family: "Barlow", serif;
   font-size: 10px;
+  font-weight: 550;
   color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;

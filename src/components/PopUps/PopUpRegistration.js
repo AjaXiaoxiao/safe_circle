@@ -77,6 +77,7 @@ const Title = styled.h2`
   font-weight: bold;
   color: ${colors.black};
   text-align: center;
+  font-family: "Barlow", serif;
 `;
 
 const ButtonContainer = styled.div`

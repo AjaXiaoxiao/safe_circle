@@ -1,10 +1,10 @@
 import logo from "../assets/Logo.png";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import colors from '../assets/colors'; 
+import colors from "../assets/colors";
 import Parse from "parse/dist/parse.min.js";
 
-const Topbar = ({hideWelcome = false}) => {
+const Topbar = ({ hideWelcome = false }) => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Topbar = ({hideWelcome = false}) => {
           if (userProfile) {
             setUsername(userProfile.get("username"));
           }
-        } else{
+        } else {
           setUsername("");
         }
       } catch (error) {
@@ -32,7 +32,9 @@ const Topbar = ({hideWelcome = false}) => {
   return (
     <StyledTopbar>
       <img src={logo} alt="Logo" className="top-bar-logo" />
-      {!hideWelcome && <UsernameDisplay>{username ? `Hi, ${username}!` : " "}</UsernameDisplay>}
+      {!hideWelcome && (
+        <UsernameDisplay>{username ? `Hi, ${username}!` : " "}</UsernameDisplay>
+      )}
     </StyledTopbar>
   );
 };
@@ -59,8 +61,9 @@ const StyledTopbar = styled.div`
 `;
 
 const UsernameDisplay = styled.div`
-  font-size: 18px;
-  font-weight: bold;
+  font-family: "Barlow", serif;
+  font-size: 20px;
+  font-weight: 400;
   color: ${colors.black};
   margin-right: 20px;
 `;
