@@ -25,20 +25,20 @@ const ChatList = () => {
           displayToast("error", "No user is logged in");
           return;
         }
-  
+
         const currentUserQuery = new Parse.Query("UserProfile");
         currentUserQuery.equalTo("userPointer", loggedInUser);
         const currentUser = await currentUserQuery.first();
-  
+
         if (!currentUser) {
           displayToast("error", "No profile found for the logged-in user.");
           return;
         }
-  
+
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser]);
         const fetchedChats = await chatQuery.find();
-  
+
         //stores the receiver profiles in the otherParticipant variable
         const chatDetails = await Promise.all(
           fetchedChats.map(async (chat) => {
@@ -46,13 +46,13 @@ const ChatList = () => {
             const otherParticipant = participants.find(
               (participant) => participant.id !== currentUser.id
             );
-  
+
             //finds username of the other participant
             const otherParticipantProfile = await otherParticipant.fetch();
             const username = otherParticipantProfile.get("username");
             const usernameId = otherParticipantProfile.id;
             setCurrentReceiverId(otherParticipant.id);
-  
+
             let messages = chat.get("Messages") || [];
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
@@ -60,7 +60,7 @@ const ChatList = () => {
                 return message;
               })
             );
-  
+
             let latestMessage = null;
 
             if (resolvedMessages.length > 0) {
@@ -72,7 +72,7 @@ const ChatList = () => {
                 }
               }, resolvedMessages[0]);
             }
-  
+
             let latestTimestamp;
             if (latestMessage) {
               latestTimestamp = latestMessage.get("Timestamp");
@@ -86,7 +86,7 @@ const ChatList = () => {
             } else {
               messageText = "No messages yet";
             }
-  
+
             return {
               id: chat.id,
               username,
@@ -96,12 +96,12 @@ const ChatList = () => {
             };
           })
         );
-  
+
         // Sorting chats, latestTimestamp
-        const sortedChats = chatDetails.sort((a, b) =>
-          b.latestTimestamp - a.latestTimestamp
+        const sortedChats = chatDetails.sort(
+          (a, b) => b.latestTimestamp - a.latestTimestamp
         );
-  
+
         setChats(sortedChats);
         if (fetchedChats.length > 0 && !selectedChat) {
           setSelectedChat(chatDetails[0]);
@@ -110,10 +110,9 @@ const ChatList = () => {
         console.error("Error fetching existing chats", error);
       }
     };
-  
+
     fetchChats();
   }, [setSelectedChat, chatUpdateTrigger]);
-  
 
   return (
     <ChatListContainer>
@@ -144,6 +143,7 @@ const ChatListContainer = styled.div`
 const NoChatsMessage = styled.p`
   text-align: center;
   color: ${colors.grey};
+  font-family: "Barlow", serif;
 `;
 
 export default ChatList;

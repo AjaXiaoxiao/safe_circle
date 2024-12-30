@@ -154,4 +154,5 @@ const ChildrenListContainer = styled.div`
 const NoChildrenMessage = styled.p`
   text-align: center;
   color: ${colors.grey};
+  font-family: "Barlow", serif;
 `;

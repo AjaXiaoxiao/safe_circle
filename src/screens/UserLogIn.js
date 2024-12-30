@@ -101,7 +101,7 @@ const LogInContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px;
+  width: 200px;
   height: auto;
   margin-bottom: -10px;
   margin-right: 10px;
