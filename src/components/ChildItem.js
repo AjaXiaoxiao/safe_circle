@@ -4,26 +4,24 @@ import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
 import PopUpContactRequest from "./PopUps/PopUpContactRequest";
-import useFetchRequestsForChild from "./PopUps/useFetchRequestsForChild"
+import useFetchRequestsForChild from "./PopUps/useFetchRequestsForChild";
 
 const ChildItem = ({ username, onChildClick, isSelected }) => {
-  const {childRequests} = useFetchRequestsForChild(username);
+  const { childRequests } = useFetchRequestsForChild(username);
 
   return (
-
     <Item onClick={onChildClick} isSelected={isSelected}>
       <ProfileContainer>
         <ProfilePictureSmall />
       </ProfileContainer>
       <TextContainer>
-        <Text>{typeof username === "string" ? username : "Invalid Username"}</Text>
+        <Text>
+          {typeof username === "string" ? username : "Invalid Username"}
+        </Text>
         {childRequests.length > 0 && <StatusIcon title="Pending" />}
-        { childRequests.length > 0 && 
-      <PopUpContactRequest/>
-    }
+        {childRequests.length > 0 && <PopUpContactRequest />}
       </TextContainer>
     </Item>
-  
   );
 };
 
@@ -32,7 +30,8 @@ export default ChildItem;
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: ${({ isSelected }) => (isSelected ? colors.yellow : colors.white)};
+  background-color: ${({ isSelected }) =>
+    isSelected ? colors.yellow : colors.white};
   border-top: 1px solid ${colors.grey};
   border-bottom: 1px solid ${colors.grey};
   display: flex;
@@ -55,6 +54,7 @@ const TextContainer = styled.div`
 `;
 
 const Text = styled.div`
+  font-family: "Barlow", serif;
+  font-weight: 500;
   font-size: 1.2em;
-  font-weight: bold;
 `;

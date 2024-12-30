@@ -29,7 +29,7 @@ const getColor = (color) => {
     case "yellow":
       return { base: colors.yellow, hover: colors.hoverYellow };
     case "white":
-        return {base: colors.white, hover: colors.white};
+      return { base: colors.white, hover: colors.white };
     default:
       return { base: colors.purple, hover: colors.hoverPurple };
   }
@@ -59,7 +59,14 @@ const getWidth = (width) => {
 
 const Button = ({ title, color, icon, width, textColor, onClick }) => {
   return (
-    <StyledButton type="button" color={color} width={width} iconOnly={!!icon} textColor={textColor} onClick={onClick}>
+    <StyledButton
+      type="button"
+      color={color}
+      width={width}
+      iconOnly={!!icon}
+      textColor={textColor}
+      onClick={onClick}
+    >
       {icon ? <img src={getIcon(icon)} alt={`${icon} icon`} /> : title}
     </StyledButton>
   );
@@ -92,6 +99,7 @@ const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   text-align: center;
+  font-family: "Barlow", serif;
 
   &:hover {
     background-color: ${({ color }) => getColor(color).hover};

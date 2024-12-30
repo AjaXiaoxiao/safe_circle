@@ -112,6 +112,7 @@ const Label = styled.label`
   color: ${colors.grey};
   margin-bottom: 0px;
   align-items: left;
+  font-family: "Barlow", serif;
 `;
 
 const ButtonContainer = styled.div`

@@ -26,7 +26,8 @@ export default ChatItem;
 const Item = styled.div`
   height: 110px;
   width: 100%;
-  background-color: ${(props) => (props.isSelected ? colors.yellow : colors.white)};
+  background-color: ${(props) =>
+    props.isSelected ? colors.yellow : colors.white};
   border-top: 1px solid ${colors.grey};
   border-bottom: 1px solid ${colors.grey};
   display: flex;
@@ -50,8 +51,9 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 1.2em;
-  font-weight: bold;
+  font-family: "Barlow", serif;
+  font-size: 1.1em;
+  font-weight: 500;
 `;
 
 const MessageText = styled.p`

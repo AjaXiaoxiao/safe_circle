@@ -234,6 +234,7 @@ const Title = styled.h1`
   font-weight: bold;
   color: ${colors.black};
   margin: 10px 0;
+  font-family: "Barlow", serif;
 `;
 
 const SubTitle = styled.p`
@@ -241,6 +242,7 @@ const SubTitle = styled.p`
   color: ${colors.black};
   margin-top: 5px;
   margin-bottom: 5px;
+  font-family: "Barlow", serif;
 `;
 
 const FormContainer = styled.div`
