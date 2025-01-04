@@ -16,52 +16,49 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
 
   const updateRequestStatus = async (status) => {
     try {
-      const request = requests[0];
-      const childObj = child;
+      const request = requests?.[0];
+      if (!request) {
+        throw new Error("No request available to update.");
+      }
 
       request.set("Status", status);
 
-      if (status === "Approved") {
-        childObj.set("isVerified", true);
+      if (status === "Approved" && child) {
+        child.set("isVerified", true);
       }
 
       await request.save();
-      await childObj.save();
+      if (child) await child.save();
 
-      console.log("Request and child updated successfully.");
-      displayToast("success", "Request has been ${status}.");
+      displayToast("success", `Request has been ${status}.`);
       onClose();
+      window.location.reload();
     } catch (error) {
       console.error("Error updating the request:", error);
       displayToast("error", "An error occurred. Please try again.");
     }
   };
 
-  const handleApprove = () => updateRequestStatus("Approved");
-  const handleDecline = () => updateRequestStatus("Declined");
-
   return (
-    <div>
-      <PopUpContainer>
-        <CloseButton onClick={onClose}>
-          <XButton />
-        </CloseButton>
-        <ProfilePicContainer>
-          <ProfilePictureBig />
-        </ProfilePicContainer>
-        <FormContainer>
-          <Label>Name</Label>
-          <SmallTextField value={child.get("username") || "No name"} disabled />
-          <Label>Email</Label>
-          <SmallTextField value={child.get("email") || "No email"} disabled />
-          {requests.length > 0 && <Label>Requests: {requests.length}</Label>}
-          <ButtonContainer>
-            <Button title="Approve" onClick={handleApprove} />
-            <Button title="Decline" color="red" onClick={handleDecline} />
-          </ButtonContainer>
-        </FormContainer>
-      </PopUpContainer>
-    </div>
+    <PopUpContainer>
+      <CloseButton onClick={onClose}>
+        <XButton />
+      </CloseButton>
+      <ProfilePicContainer>
+        <ProfilePictureBig />
+      </ProfilePicContainer>
+      <FormContainer>
+        <Label>Name</Label>
+        <SmallTextField value={child?.get("username") || "No name"} disabled />
+        <Label>Email</Label>
+        <SmallTextField value={child?.get("email") || "No email"} disabled />
+        {requests?.length > 0 && <Label>Requests: {requests.length}</Label>}
+        <ButtonContainer>
+          <Button title="Approve" onClick={() => updateRequestStatus("Approved")} />
+          <Button title="Decline" color="red" onClick={() => updateRequestStatus("Declined")} />
+        </ButtonContainer>
+      </FormContainer>
+    </PopUpContainer>
   );
 };
 

@@ -28,16 +28,15 @@ export default function ChildOverviewPage() {
 
         <SideOverview
           title="Child Overview"
-          onChildClick={handleChildClick} // Pass this function
+          onChildClick={handleChildClick} 
           selectedContact={selectedContact}
         />
 
-        {/* PopUpChildOverview Component */}
         {selectedContact && (
           <PopUpChildOverview
             isVisible={isPopupVisible}
             onClose={togglePopup}
-            contact={selectedContact} // Pass child and requests
+            contact={selectedContact} 
           />
         )}
 
