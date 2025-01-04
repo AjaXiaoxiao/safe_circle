@@ -31,21 +31,33 @@ export const UserLogin = () => {
   const doUserLogIn = async function () {
     const usernameValue = username;
     const passwordValue = password;
+  
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-      const isVerified = loggedInUser.get("isVerified");
-      if(isVerified){
       const currentUser = await Parse.User.current();
-      console.log(loggedInUser === currentUser);
-      setUsername("");
-      setPassword("");
-      getCurrentUser();
-      setErrorMessage("");
-      navigate("/");
-      return true;}
-      else { setErrorMessage(`Your account is not approved. Remind your parent to do this for you. 😊`)}
+  
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", currentUser); 
+      const userProfile = await userProfileQuery.first();
+  
+      if (!userProfile) {
+        setErrorMessage("UserProfile not found. Please contact support.");
+        return false;
+      }
+  
+      const isVerified = userProfile.get("isVerified");
+      if (isVerified) {
+        setUsername("");
+        setPassword("");
+        setErrorMessage("");
+        navigate("/");
+        return true;
+      } else {
+        setErrorMessage("Your account is not approved. Please ask your parent to approve your account.");
+        return false;
+      }
     } catch (error) {
-      setErrorMessage(`Invalid username or password!`);
+      setErrorMessage("Invalid username or password!");
       return false;
     }
   };
