@@ -33,6 +33,8 @@ export const UserLogin = () => {
     const passwordValue = password;
     try {
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
+      const isVerified = loggedInUser.get("isVerified");
+      if(isVerified){
       const currentUser = await Parse.User.current();
       console.log(loggedInUser === currentUser);
       setUsername("");
@@ -40,7 +42,8 @@ export const UserLogin = () => {
       getCurrentUser();
       setErrorMessage("");
       navigate("/");
-      return true;
+      return true;}
+      else { setErrorMessage(`Your account is not approved. Remind your parent to do this for you. 😊`)}
     } catch (error) {
       setErrorMessage(`Invalid username or password!`);
       return false;
