@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  PopUpContainer,
-  CloseButton,
-  ProfilePicContainer,
-  FormContainer,
-  ButtonContainer,
-  Label,
-} from "./PopUpStyling.sc.js";
+import styled from "styled-components";
+import colors from "../../assets/colors";
 import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
@@ -45,6 +39,8 @@ const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, e
         <CloseButton onClick={onClose}>
           <XButton />
         </CloseButton>
+        <ContentWrapper>
+        <HeaderText>New contact request</HeaderText>
         <ProfilePicContainer>
           <ProfilePictureBig />
         </ProfilePicContainer>
@@ -60,9 +56,80 @@ const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, e
             <Button title="Decline" color="red" onClick={() => updateChildRequestStatus("Declined")} />
           </ButtonContainer>
         </FormContainer>
+        </ContentWrapper>
       </PopUpContainer>
     </div>
   );
 };
 
 export default PopUpContactRequest;
+
+const HeaderText = styled.p`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: ${colors.black};
+  margin-bottom: 0px;
+  text-align: center;
+`;
+
+export const PopUpContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 450px;
+  margin-left: 20%;
+  background-color: ${colors.white};
+  color: ${colors.black};
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+`;
+
+export const CloseButton = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+`;
+
+export const ProfilePicContainer = styled.div`
+  margin-top: 25px;
+`;
+
+export const FormContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 0px;
+`;
+
+export const Label = styled.label`
+  font-size: 10px;
+  color: ${colors.grey};
+  margin-bottom: 0px;
+  margin-top: 5px;
+  align-items: left;
+  font-family: "Barlow", serif;
+`;
+
+export const ButtonContainer = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const ContentWrapper = styled.div`
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

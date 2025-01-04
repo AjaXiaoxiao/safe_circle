@@ -3,45 +3,23 @@ import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
 import SideOverview from "../components/SideOverview";
-import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
 export default function ChildOverviewPage() {
-  const [isPopupVisible, setPopupVisible] = useState(false);
-  const [selectedContact, setSelectedContact] = useState(null);
 
-  const handleChildClick = (child, requests, requestType) => {
-    setSelectedContact({ child, requests, requestType });
-    setPopupVisible(true);
-  };
-
-  const togglePopup = () => {
-    setPopupVisible(!isPopupVisible);
-    setSelectedContact(null);
-  };
+const [isAnyPopupVisible, setIsAnyPopupVisible] = useState(false);
 
   return (
     <div>
       <Topbar />
       <ColumnContainer>
         <Sidebar />
-
         <SideOverview
           title="Child Overview"
-          onChildClick={handleChildClick} 
-          selectedContact={selectedContact}
+          setIsAnyPopupVisible={setIsAnyPopupVisible}
         />
-
-        {selectedContact && (
-          <PopUpChildOverview
-            isVisible={isPopupVisible}
-            onClose={togglePopup}
-            contact={selectedContact} 
-          />
-        )}
-
-        <BlurredComponent isBlurred={isPopupVisible}>
-          <ChatComponent />
+        <BlurredComponent isBlurred={isAnyPopupVisible}>
+        <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
     </div>

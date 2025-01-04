@@ -44,6 +44,7 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
       <CloseButton onClick={onClose}>
         <XButton />
       </CloseButton>
+      <Header>New child request</Header>
       <ProfilePicContainer>
         <ProfilePictureBig />
       </ProfilePicContainer>
@@ -91,8 +92,16 @@ const CloseButton = styled.div`
   cursor: pointer;
 `;
 
+const Header = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: ${colors.black};
+  margin-bottom: 0px;
+  text-align: center;
+`;
+
 const ProfilePicContainer = styled.div`
-  margin-top: 60px;
+  margin-top: 40px;
 `;
 
 const FormContainer = styled.div`
