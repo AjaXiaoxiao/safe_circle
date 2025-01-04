@@ -3,11 +3,9 @@ import styled from "styled-components";
 import ProfilePictureSmall from "./ProfilePictures/ProfilePictureSmall";
 import colors from "../assets/colors";
 import StatusIcon from "./Notifications/StatusIcon";
-import PopUpContactRequest from "./PopUps/PopUpContactRequest";
-import useFetchRequestsForChild from "./PopUps/useFetchRequestsForChild";
 
-const ChildItem = ({ username, onChildClick, isSelected }) => {
-  const { childRequests } = useFetchRequestsForChild(username);
+const ChildItem = ({ username, onChildClick, isSelected, requests }) => {
+  const hasRequests = requests.length > 0;
 
   return (
     <Item onClick={onChildClick} isSelected={isSelected}>
@@ -18,8 +16,7 @@ const ChildItem = ({ username, onChildClick, isSelected }) => {
         <Text>
           {typeof username === "string" ? username : "Invalid Username"}
         </Text>
-        {childRequests.length > 0 && <StatusIcon title="Pending" />}
-        {childRequests.length > 0 && <PopUpContactRequest />}
+        {hasRequests && <StatusIcon title="Pending" />}
       </TextContainer>
     </Item>
   );

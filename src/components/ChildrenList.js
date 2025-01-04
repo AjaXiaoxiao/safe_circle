@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Parse from "parse/dist/parse.min.js";
 import ChildItem from "./ChildItem";
 import PopUpContactRequest from "../components/PopUps/PopUpContactRequest.js";
+import PopUpChildOverview from "../components/PopUps/PopUpChildOverview.js";
 import colors from "../assets/colors";
 
 const ChildrenList = ({ selectedContact }) => {
@@ -10,10 +11,12 @@ const ChildrenList = ({ selectedContact }) => {
   const [requestsByChild, setRequestsByChild] = useState({});
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
   const [modalRequests, setModalRequests] = useState([]);
   const [modalData, setModalData] = useState([]);
+  const [modalChildApprovalRequests, setModalChildApprovalRequests] = useState([]);
+  const [modalDataChild, setModalDataChild] = useState([]);
 
-  // Fetch children and requests
   const fetchChildrenAndRequests = async () => {
     try {
       const currentUser = Parse.User.current();
@@ -43,16 +46,19 @@ const ChildrenList = ({ selectedContact }) => {
         const userQuery = new Parse.Query("UserProfile");
         userQuery.equalTo("username", username);
 
+
         const child = await userQuery.first();
+        console.log("child", child)
         if (child) {
-          const userPointer = child.get("userPointer");
           const requestQuery = new Parse.Query("Requests");
-          requestQuery.equalTo("Child", userPointer);
+          requestQuery.include("child");
+          requestQuery.equalTo("child", child);
           requestQuery.equalTo("Status", "Pending");
           requestQuery.include("requestContact");
           requestQuery.include("requestContact.ContactUserProfile");
 
           const childRequests = await requestQuery.find();
+          console.log("childRequests", childRequests)
           allRequests[username] = childRequests;
         } else {
           console.error(`No user found with username: ${username}`);
@@ -73,31 +79,67 @@ const ChildrenList = ({ selectedContact }) => {
   const handleChildClick = (username) => {
     const childRequests = requestsByChild[username] || [];
     if (childRequests.length > 0) {
-      const firstRequest = childRequests[0];
-      const requestContact = firstRequest.get("requestContact");
-
-      if (requestContact) {
-        const contactUserProfile = requestContact.get("ContactUserProfile");
-
-        const about = requestContact.get("about") || "Unknown";
-        const name = contactUserProfile?.get("username") || "Unknown";
-        const email = contactUserProfile?.get("email") || "Unknown";
-
-        setModalData({ name, email, about });
-        setModalRequests(childRequests);
-        setShowModal(true);
+      const childApprovalRequests = childRequests.filter(
+        (req) => req.get("Type") === "ChildApproval"
+      );
+      const contactApprovalRequests = childRequests.filter(
+        (req) => req.get("Type") === "ContactApproval"
+      );
+  
+  
+      if (childApprovalRequests.length > 0) {
+        const firstRequest = childApprovalRequests[0];
+        const child = firstRequest.get("child");
+  
+        if (child) {
+          const child = firstRequest.get("child");
+          setModalDataChild(child);
+          setModalChildApprovalRequests(childApprovalRequests);
+          setShowPopUp(true); 
+          console.log("Showing ChildApproval modal with data:", {
+            name: child.get("username"),
+            email: child.get("email"),
+          });
+          console.log("setModalChildData", setModalDataChild)
+        } else {
+          alert("No child information found for this request.");
+        }
+      } else if (contactApprovalRequests.length > 0) {
+        const firstRequest = contactApprovalRequests[0];
+        const requestContact = firstRequest.get("requestContact");
+  
+        if (requestContact) {
+          const contactUserProfile = requestContact.get("ContactUserProfile");
+  
+          const about = requestContact.get("about") || "Unknown";
+          const name = contactUserProfile?.get("username") || "Unknown";
+          const email = contactUserProfile?.get("email") || "Unknown";
+  
+          setModalData({ name, email, about });
+          setModalRequests(contactApprovalRequests);
+          setShowModal(true); 
+        } else {
+          alert("No request contact found for this request.");
+        }
       } else {
-        alert("No request contact found for this request.");
+        alert("No pending requests for this child.");
       }
     } else {
       alert("No pending requests for this child.");
     }
   };
+  
 
   const handleModalClose = () => {
     setShowModal(false);
     setModalRequests([]);
     setModalData({});
+  };
+
+  const handlePopUpClose = () => {
+    setShowPopUp(false);
+    setModalChildApprovalRequests([]);
+    setModalDataChild({});
   };
 
   return (
@@ -136,9 +178,20 @@ const ChildrenList = ({ selectedContact }) => {
           name={modalData?.name}
           about={modalData?.about}
           email={modalData?.email}
-          refreshChildRequests={fetchChildrenAndRequests} // Pass the refresh function
         />
       )}
+      {showPopUp && (
+        <PopUpChildOverview
+        isVisible={showPopUp}
+        onClose={handlePopUpClose}
+        contact={{
+          child: modalDataChild,
+          requests: modalChildApprovalRequests,
+        }}
+        />
+      )}
+
+
     </ChildrenListContainer>
   );
 };

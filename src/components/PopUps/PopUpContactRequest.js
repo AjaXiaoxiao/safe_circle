@@ -12,7 +12,7 @@ import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 
-const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, email, refreshChildRequests }) => {
+const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, email }) => {
   if (!isVisible) return null;
 
   const updateChildRequestStatus = async (status) => {
@@ -32,12 +32,8 @@ const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, e
           await relatedContact.save(); 
         }
       }
-  
-      if (refreshChildRequests) {
-        refreshChildRequests();
-      }
-  
       onClose();
+      window.location.reload();
     } catch (error) {
       console.error("Error updating child request status:", error);
     }

@@ -115,7 +115,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         newRequest.set("Parent", guardian);
         newRequest.set("Status", "Pending");
         newRequest.set("Type", "ContactApproval");
-        newRequest.set("Child", currentUser);
+        newRequest.set("child", owner);
         newRequest.set("requestContact", newContact);
 
         await newRequest.save();
