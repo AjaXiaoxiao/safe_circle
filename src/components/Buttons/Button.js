@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import SendIcon from "../../assets/Send.png";
-import PropTypes from "prop-types";
-import { GrClose } from "react-icons/gr";
+import PropTypes from "prop-types"; //validates the values of props passed to the Button component
+import { GrClose } from "react-icons/gr"; //The close button from the react library
 import PlusIcon from "../../assets/Plus.png";
 import colors from "../../assets/colors"; // imports our color library which is referenced in getColor
 
+//Depending on what button we want this function renders the correct one.
 const getIcon = (icon) => {
   switch (icon) {
     case "send":
@@ -17,7 +18,7 @@ const getIcon = (icon) => {
       return null;
   }
 };
-
+//base is the default color
 const getColor = (color) => {
   switch (color) {
     case "purple":
@@ -57,6 +58,7 @@ const getWidth = (width) => {
   }
 };
 
+//StyledButton is a styled component
 const Button = ({ title, color, icon, width, textColor, onClick }) => {
   return (
     <StyledButton

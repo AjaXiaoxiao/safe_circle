@@ -1,5 +1,7 @@
+//for comments on code see ProfilePictureSmall.js.
+//They are the exact same. The only difference is that width and height are bigger in this one.
 import styled from "styled-components";
-import colors from '../../assets/colors'; 
+import colors from "../../assets/colors";
 
 const ProfilePictureBig = () => {
   return (
@@ -22,8 +24,6 @@ const ProfilePic = styled.img`
   height: 80px;
   object-fit: cover;
   border-radius: ${(props) => (props.rounded ? "50%" : "0")};
-
-
-  box-shadow: 0 0 0 9px  ${colors.white}, 0 0 0 13px ${colors.blue};
+  box-shadow: 0 0 0 9px ${colors.white}, 0 0 0 13px ${colors.blue};
   background-color: ${colors.white};
 `;

@@ -23,6 +23,8 @@ const ChatItem = ({ username, message, onChatClick, isSelected }) => {
 
 export default ChatItem;
 
+//align-items: aligns the items vertically
+//without the display: flex we cannot work with align-items since it is a property of flex.
 const Item = styled.div`
   height: 110px;
   width: 100%;
@@ -35,12 +37,17 @@ const Item = styled.div`
   cursor: pointer;
 `;
 
+//align-items - we define that the profile container items should be aligned vertically
+//margin-left: 20px; - defines that there should be a 20px emtpy space to the left.
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: 20px;
 `;
 
+//flex-direction: column - the elemnts inside Text container are aligned underneath each other in a column
+//justify-content: aligns horisontally
+//aligns elements to the left
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,6 +57,7 @@ const TextContainer = styled.div`
   margin-top: 10px;
 `;
 
+//em is more dynamic compared to px since em is a relative measurment in relation to parent.
 const Name = styled.div`
   font-family: "Barlow", serif;
   font-size: 1.1em;
