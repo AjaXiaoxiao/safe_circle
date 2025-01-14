@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+//I rename BrowserRouter to Router to make it more convenient.
 import ChatOverview from "./screens/ChatOverview";
 import ChildOverview from "./screens/ChildOverview";
 import Parse from "parse/dist/parse.min.js";
@@ -20,10 +21,17 @@ import "react-toastify/dist/ReactToastify.css";
 // Parse initialization configuration
 const PARSE_APPLICATION_ID = process.env.REACT_APP_PARSE_APPLICATION_ID;
 const PARSE_HOST_URL = process.env.REACT_APP_PARSE_HOST_URL;
+//Authenticates your app when it connects to the parse server
 const PARSE_JAVASCRIPT_KEY = process.env.REACT_APP_PARSE_JAVASCRIPT_KEY;
+//Tells parse which app I am using and authenticates your connection
 Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
+//Tells parse where the Parse server is located.
 Parse.serverURL = PARSE_HOST_URL;
+//Details are stored in the .env file since this is sensitive information.
 
+//Router is the top level component providing the infrastructures for the routing
+//Routes is the container for all routes
+//Route is each sepcific roupte
 function App() {
   return (
     <ToastProvider>

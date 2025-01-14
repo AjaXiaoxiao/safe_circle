@@ -128,7 +128,10 @@ const ChatList = () => {
         //looped through inside the return block, hence the messages are sorted.
         setChats(sortedChats);
         if (fetchedChats.length > 0 && !selectedChat) {
+          //My conclusion is that we are not sorting them right now. But we are lucky since it looks like back4app sorts it in a specific order.
+          //We should probably have sorted them by sortedChats[0] instead
           setSelectedChat(chatDetails[0]);
+          //moreover I am thinking that we should have moved setCurrentReceiverId to here and also use the receiver of the chatDetails[0] chat?
         }
       } catch (error) {
         console.error("Error fetching existing chats", error);
