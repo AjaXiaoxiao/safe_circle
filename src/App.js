@@ -8,6 +8,10 @@ import UserLogin from "./screens/UserLogIn";
 import ChildRegistrationAwait from "./screens/ChildRegistrationAwait";
 import RequireLogin from "./components/RequireLogin";
 import { ChatProvider } from "./contexts/ChatContext";
+//Responsible for rendering the Toast
+//The reason for the Curcly braces is because that we
+//ecport the ToastProvider component for instance differently
+//compared to ChatOverview for instance.
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./contexts/ToastContext";
 import { ContactProvider } from "./contexts/ContactContext";
