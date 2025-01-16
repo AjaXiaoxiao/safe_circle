@@ -19,7 +19,6 @@ const Chatbar = () => {
   };
 
   const sendMessage = async () => {
-
     if (!message.trim()) {
       displayToast("error", "Message cannot be empty!");
       return;

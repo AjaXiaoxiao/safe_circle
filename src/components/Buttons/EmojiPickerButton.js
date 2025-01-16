@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker from "emoji-picker-react"; //third party component that provides a ready-made emoji picker
 import { useState } from "react";
 
 function EmojiButton({ onSelectEmoji }) {
@@ -17,7 +17,7 @@ function EmojiButton({ onSelectEmoji }) {
       </StyledEmojiButton>
 
       {showPicker && (
-        <EmojiPickerWrapper >
+        <EmojiPickerWrapper>
           <EmojiPicker onEmojiClick={onEmojiClick} />
         </EmojiPickerWrapper>
       )}
@@ -26,7 +26,6 @@ function EmojiButton({ onSelectEmoji }) {
 }
 
 export default EmojiButton;
-
 
 const StyledEmojiButton = styled.div`
   background-color: transparent;
@@ -40,10 +39,10 @@ const StyledEmojiButton = styled.div`
   font-size: x-large;
 `;
 
-const EmojiButtonWrapper= styled.div`
+const EmojiButtonWrapper = styled.div`
   position: relative;
 `;
-const EmojiPickerWrapper=styled.div`
+const EmojiPickerWrapper = styled.div`
   position: absolute;
   bottom: 32px;
 `;
