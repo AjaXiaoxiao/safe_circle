@@ -14,6 +14,7 @@ export const UserLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  //error message is the read message dispalyed in the login container showing errors.
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -34,6 +35,12 @@ export const UserLogin = () => {
     const passwordValue = password;
 
     try {
+      //the login method verifies credentials with server.
+      //If I remove logged in user I get an error and cannot login.
+      //As I understand it login both authenticates that username and password is correct
+      //It creates a session token is a unique key connected to the user, meaning that the user does not have to log in every time they need access to personal data
+      //It also ensures that we can identify the user by working with .current()
+      //in our case it also helps us to rememebr what user that was logged in before
       const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
       const currentUser = await Parse.User.current();
 
@@ -65,13 +72,15 @@ export const UserLogin = () => {
       return false;
     }
   };
-
+  //onChange is a variable triggered every time the user changes the contect in the input field.
+  //the event argument in the arrow function is an object automatically passed by React when the onChange event is triggered.
+  //event.target refers to the HTML element that triggered the event
+  //event.target.value retrieves the current value of the input field
   return (
     <LogInContainer>
       <Logo src={logo} alt="Logo" />
       <Title>Login</Title>
       <SubTitle>Log in to your account</SubTitle>
-
       <FormContainer>
         <LoginInput
           icon={ProfileIcon}
@@ -108,6 +117,8 @@ export const UserLogin = () => {
   );
 };
 export default UserLogin;
+//We could have been better at name conventions the function attached to event handlers should be names handleXXX, so in our case
+//a good name for togglePopup could be handleTogglePopup()
 
 const LogInContainer = styled.div`
   display: flex;

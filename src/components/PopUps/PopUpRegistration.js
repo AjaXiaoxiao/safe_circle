@@ -7,8 +7,11 @@ import colors from "../../assets/colors";
 const PopUp = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
 
+  //if visible is false then exit and do not render the component
   if (!isVisible) return null;
-
+  //I believe that onClick below in CloseButton component is the togglePopup.
+  //togglePopup changes the useState value in UserLogin making the UserLogin component
+  //to re-render making the Pop up also rerender, hence the popupregistration will not be renedered :)
   return (
     <PopUpContainer>
       <CloseButton onClick={onClose}>
@@ -42,9 +45,11 @@ const PopUp = ({ isVisible, onClose }) => {
     </PopUpContainer>
   );
 };
-
+//useNavigate cna pass a state object that in this case is an object
+//so that I can pass data down to another component
 export default PopUp;
 
+//Fixed makes the popup container stay in the same location even if the page scrolls
 const PopUpContainer = styled.div`
   position: fixed;
   top: 50%;
