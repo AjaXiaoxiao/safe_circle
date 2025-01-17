@@ -19,7 +19,6 @@ const Chatbar = () => {
   };
 
   const sendMessage = async () => {
-
     if (!message.trim()) {
       displayToast("error", "Message cannot be empty!");
       return;
@@ -54,6 +53,21 @@ const Chatbar = () => {
       if (!receiverProfile) {
         displayToast("error", "Receiver not found");
         return;
+      }
+
+      if (senderProfile.get("isChild")) {
+        const contactQuery = new Parse.Query("Contact");
+        contactQuery.equalTo("owner", senderProfile);
+        contactQuery.equalTo("ContactUserProfile", receiverProfile);
+        const contact = await contactQuery.first();
+
+        if (!contact || contact.get("isRequest")) {
+          displayToast(
+            "error",
+            "You cannot send a message to this contact. Request is not approved!"
+          );
+          return;
+        }
       }
 
       // Create the message
