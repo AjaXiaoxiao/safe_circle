@@ -13,7 +13,6 @@ import colors from "../assets/colors";
 export const UserLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -22,29 +21,23 @@ export const UserLogin = () => {
     setPopupVisible(!isPopupVisible);
   };
 
-  const getCurrentUser = async function () {
-    const currentUser = await Parse.User.current();
-    setCurrentUser(currentUser);
-    return currentUser;
-  };
-
   const doUserLogIn = async function () {
     const usernameValue = username;
     const passwordValue = password;
-  
+
     try {
-      const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
+      await Parse.User.logIn(usernameValue, passwordValue);
       const currentUser = await Parse.User.current();
-  
+
       const userProfileQuery = new Parse.Query("UserProfile");
-      userProfileQuery.equalTo("userPointer", currentUser); 
+      userProfileQuery.equalTo("userPointer", currentUser);
       const userProfile = await userProfileQuery.first();
-  
+
       if (!userProfile) {
         setErrorMessage("UserProfile not found. Please contact support.");
         return false;
       }
-  
+
       const isVerified = userProfile.get("isVerified");
       if (isVerified) {
         setUsername("");
@@ -53,7 +46,9 @@ export const UserLogin = () => {
         navigate("/");
         return true;
       } else {
-        setErrorMessage("Your account is not approved. Please ask your parent to approve your account.");
+        setErrorMessage(
+          "Your account is not approved. Please ask your parent to approve your account."
+        );
         return false;
       }
     } catch (error) {
