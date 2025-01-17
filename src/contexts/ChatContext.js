@@ -61,3 +61,6 @@ export const ChatProvider = ({ children }) => {
 export const useChat = () => {
   return useContext(ChatContext);
 };
+
+//It makes sense to create the useChat in here. In this way you do not need to import useContext into each file you want to use the useContext
+//and you neither need to create the useContext every time you want to work with it.
