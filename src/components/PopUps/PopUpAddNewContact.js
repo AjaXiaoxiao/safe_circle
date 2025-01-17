@@ -142,11 +142,17 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
     if (error) {
       setError(null); // clear the error if the user starts typing
     }
+    //...formData is called spread syntax maken sure that
+    //all the other values are kept intact while updating part of the state.
+    //[name] allows us to dynamically define a key in the object
+    //whether it is username, email or about that matches, the corresponding email will show
+
     setFormData({ ...formData, [name]: value });
   };
 
+  //about onChange. When react sees this it knows there is an event handler that should listen for changes.
   if (!isVisible) return null;
-
+  //a little note when onChange attribute inside an elemenen it know it should listen for changes
   return (
     <PopUpContainer>
       <CloseButton onClick={onClose}>
