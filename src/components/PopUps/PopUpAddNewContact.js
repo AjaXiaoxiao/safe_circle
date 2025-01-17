@@ -31,6 +31,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       const isChild = currentUser.get("isChild");
 
       // Fetch the current user's Profile
+      //Could have created a customHook out of this.
       const userProfileQuery = new Parse.Query("UserProfile");
       userProfileQuery.equalTo("userPointer", currentUser);
       const owner = await userProfileQuery.first();

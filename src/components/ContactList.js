@@ -17,6 +17,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
     try {
       const currentUser = Parse.User.current();
       if (!currentUser) {
+        //Error like this is typically shown in the Developers tool
         throw new Error("No user is currently logged in.");
       }
 
@@ -29,15 +30,22 @@ const ContactList = ({ onContactClick, selectedContact }) => {
       }
 
       const contactListQuery = new Parse.Query("ContactList");
+      //The owner of the contact list is a pointer to UserProfile.
       contactListQuery.equalTo("owner", owner);
+      //Find the first Contact List that matches the owner.
       const contactList = await contactListQuery.first();
 
       if (contactList) {
+        //Contacts is an array of all contacts in the contactList
         const contactPointers = contactList.get("Contacts") || [];
 
         const fetchedContacts = await Promise.all(
+          //Check through each contact pointer pointing to contact
           contactPointers.map(async (contactPointer) => {
+            //fetch() fetches the full object that the contactpointer is poitning towareds
+            //Which is in Contacts
             const contact = await contactPointer.fetch();
+            //Fetches the data in the ContactUserProfile in Contact table
             const contactUserProfile = await contact
               .get("ContactUserProfile")
               .fetch();
@@ -52,6 +60,12 @@ const ContactList = ({ onContactClick, selectedContact }) => {
           })
         );
 
+        //A contact of a specific user can show up multiple times, since one contact can have different owners.
+        //I think this one is not neccessary, because it is not possible to add a contact you have already added.
+        //contact is the contact, index is the current index in fetchedContacts
+        //self is the array itself
+        //if index does not match the index found through findIndex
+        //we know that there are duplicates and this duplicate should be removed
         const uniqueContacts = fetchedContacts.filter(
           (contact, index, self) =>
             index === self.findIndex((c) => c.username === contact.username)
