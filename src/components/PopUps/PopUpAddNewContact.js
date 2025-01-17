@@ -111,6 +111,9 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
           return;
         }
 
+        //When you use the extend you create a blueprint of the class in parse ensuring
+        //that we will follow the structure of the class and names should start with capital
+        //letter
         const Request = Parse.Object.extend("Requests");
         const newRequest = new Request();
         newRequest.set("Parent", guardian);
