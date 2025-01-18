@@ -30,7 +30,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
 
       const isChild = currentUser.get("isChild");
 
-      // Fetch the current user's Profile
+      // fetch the current user's Profile
       const userProfileQuery = new Parse.Query("UserProfile");
       userProfileQuery.equalTo("userPointer", currentUser);
       const owner = await userProfileQuery.first();
@@ -39,7 +39,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         throw new Error("Owner profile not found for the logged-in user.");
       }
 
-      // Check if the contact exists
+      // check if the contact exists
       const contactQuery = new Parse.Query("UserProfile");
       contactQuery.equalTo("username", formData.username);
       contactQuery.equalTo("email", formData.email);
@@ -49,7 +49,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         throw new Error("The contact must be a registered user.");
       }
 
-      // Check if the contact is already added
+      // check if the contact is already added
       const contactListQuery = new Parse.Query("ContactList");
       contactListQuery.equalTo("owner", owner);
       const contactList = await contactListQuery.first();
@@ -86,7 +86,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         newContactList.set("owner", owner);
         await newContactList.save();
       } else {
-        // Append new contact to the existing ContactList
+        // append new contact to the existing ContactList
         contactList.addUnique("Contacts", savedContact);
         await contactList.save();
       }
@@ -124,7 +124,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
 
       setFormData({ username: "", about: "", email: "" });
 
-      //window.location.reload();
       setReloadContactList(reloadContactList + 1);
       onClose();
     } catch (error) {

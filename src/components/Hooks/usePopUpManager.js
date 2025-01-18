@@ -1,0 +1,116 @@
+import { useState, useEffect } from "react";
+
+export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
+  // state for all popups
+  const [isAddingChat, setIsAddingChat] = useState(false);
+  const [isAddNewContactPopupVisible, setIsAddNewContactPopupVisible] =
+  useState(false);  const [isContactRequestPopupVisible, setIsContactRequestPopupVisible] = 
+    useState(false);
+  const [isChildApprovalPopupVisible, setIsChildApprovalPopupVisible] =
+    useState(false);
+  const [isSelectContactPopupVisible, setIsSelectContactPopupVisible] =
+    useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [contactRequestData, setContactRequestData] = useState([]);
+  const [contactRequestDetails, setContactRequestDetails] = useState(null);
+  const [childApprovalRequests, setChildApprovalRequests] = useState([]);
+  const [childApprovalDetails, setChildApprovalDetails] = useState(null);
+
+  const isAnyPopupVisible =
+  isAddNewContactPopupVisible ||
+    isContactRequestPopupVisible ||
+    isChildApprovalPopupVisible ||
+    isSelectContactPopupVisible ;
+
+  // side effect to update setIsAnyPopupVisible
+  useEffect(() => {
+    if (setIsAnyPopupVisible) {
+      setIsAnyPopupVisible(isAnyPopupVisible);
+    }
+  }, [isAnyPopupVisible, setIsAnyPopupVisible]);
+
+  // handlers for popups
+  const handleAddContactClick = () => {
+    if (pathname === "/ContactsOverview") {
+      setIsAddNewContactPopupVisible(true); 
+    }
+  };
+
+  const handleBackClick = () => {
+    setIsAddingChat(false);
+  };
+
+  const handleContactClick = (contact) => {
+    setSelectedContact(contact);
+    if (pathname === "/ContactsOverview") {
+      setIsSelectContactPopupVisible(true);
+    }
+  };
+
+  const handleChildClick = (child, requests) => {
+    const childApprovalRequests = requests.filter(
+      (req) => req.get("Type") === "ChildApproval"
+    );
+    const contactApprovalRequests = requests.filter(
+      (req) => req.get("Type") === "ContactApproval"
+    );
+
+    if (childApprovalRequests.length > 0) {
+      const firstRequest = childApprovalRequests[0];
+      const childData = firstRequest.get("child");
+      setChildApprovalDetails(childData);
+      setChildApprovalRequests(childApprovalRequests);
+      setIsChildApprovalPopupVisible(true);
+    } else if (contactApprovalRequests.length > 0) {
+      const firstRequest = contactApprovalRequests[0];
+      const requestContact = firstRequest.get("requestContact");
+
+      if (requestContact) {
+        const contactUserProfile = requestContact.get("ContactUserProfile");
+        setContactRequestDetails({
+          name: contactUserProfile?.get("username") || "",
+          email: contactUserProfile?.get("email") || "",
+          about: requestContact.get("about") || "",
+        });
+        setContactRequestData(contactApprovalRequests);
+        setIsContactRequestPopupVisible(true);
+      }
+    }
+  };
+
+  const closeAllPopups = () => {
+    setIsAddNewContactPopupVisible(false);
+    setIsContactRequestPopupVisible(false);
+    setIsChildApprovalPopupVisible(false);
+    setIsSelectContactPopupVisible(false);
+    setSelectedContact(null);
+    setContactRequestData([]);
+    setContactRequestDetails(null);
+    setChildApprovalRequests([]);
+    setChildApprovalDetails(null);
+  };
+
+  return {
+    // popup states
+    isAddingChat,
+    isAddNewContactPopupVisible,
+    isContactRequestPopupVisible,
+    isChildApprovalPopupVisible,
+    isSelectContactPopupVisible,
+    selectedContact,
+    contactRequestData,
+    contactRequestDetails,
+    childApprovalRequests,
+    childApprovalDetails,
+
+    // true if a popup is visible else false
+    isAnyPopupVisible,
+
+    // pop up handlers
+    handleAddContactClick,
+    handleBackClick,
+    handleContactClick,
+    handleChildClick,
+    closeAllPopups,
+  };
+};

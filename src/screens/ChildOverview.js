@@ -6,8 +6,7 @@ import SideOverview from "../components/SideOverview";
 import ChatComponent from "../components/ChatComponent/ChatComponent";
 
 export default function ChildOverviewPage() {
-
-const [isAnyPopupVisible, setIsAnyPopupVisible] = useState(false);
+  const [isAnyPopupVisible, setIsAnyPopupVisible] = useState(false);
 
   return (
     <div>
@@ -19,7 +18,7 @@ const [isAnyPopupVisible, setIsAnyPopupVisible] = useState(false);
           setIsAnyPopupVisible={setIsAnyPopupVisible}
         />
         <BlurredComponent isBlurred={isAnyPopupVisible}>
-        <ChatComponent />
+          <ChatComponent />
         </BlurredComponent>
       </ColumnContainer>
     </div>

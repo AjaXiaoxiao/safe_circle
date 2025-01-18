@@ -1,50 +1,56 @@
 import styled from "styled-components";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import SideOverviewHeader from "./SideOverviewHeader";
 import colors from "../assets/colors";
-import { useLocation } from "react-router-dom";
 import ContactList from "./ContactList";
 import ChatList from "./ChatList";
-import React, { useState, useEffect } from "react";
-import Parse from "parse/dist/parse.min.js";
 import ChildrenList from "./ChildrenList";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 import PopUpContactRequest from "../components/PopUps/PopUpContactRequest";
-import PopUpChildOverview from "../components/PopUps/PopUpChildOverview";
+import PopUpChildRequest from "./PopUps/PopUpChildRequest";
+import SelectContact from "./PopUps/SelectContact";
+
+import { usePopUpManager } from "./Hooks/usePopUpManager";
 import { useChat } from "../contexts/ChatContext";
+import Parse from "parse/dist/parse.min.js";
 
-const SideOverview = ({
-  title,
-  onContactClick,
-  onAddClick,
-  setIsAnyPopupVisible,
-  handleOpenPopup,
-  handleClosePopup,
-  selectedContact,
-}) => {
-  const [isAddingChat, setIsAddingChat] = useState(false);
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [isContactRequestPopupVisible, setisContactRequestPopupVisible] = useState(false);
-  const [isChildApprovalPopupVisible, setisChildApprovalPopupVisible] = useState(false);
-  const [contactRequestData, setcontactRequestData] = useState([]);
-  const [contactRequestDetails, setcontactRequestDetails] = useState(null);
-  const [childApprovalRequests, setchildApprovalRequests] = useState([]);
-  const [childApprovalDetails, setchildApprovalDetails] = useState(null);
+const SideOverview = ({ title, setIsAnyPopupVisible }) => {
   const location = useLocation();
+  const pathname = location.pathname;
 
-  const { setSelectedChat, setCurrentReceiverId } = useChat();
+  const { setSelectedChat, setCurrentReceiverId } = useChat(); 
 
-  const isChatList = location.pathname === "/";
-  const isContactList = location.pathname === "/ContactsOverview";
-  const isChildOverview = location.pathname === "/ChildOverview";
+  const {
+    // popup states
+    isAddNewContactPopupVisible,
+    isContactRequestPopupVisible,
+    isChildApprovalPopupVisible,
+    isSelectContactPopupVisible,
+    selectedContact,
+    contactRequestData,
+    contactRequestDetails,
+    childApprovalRequests,
+    childApprovalDetails,
 
-  const isAnyPopupVisible =
-  isContactRequestPopupVisible || isChildApprovalPopupVisible;
+    // popup handlers
+    handleContactClick,
+    handleChildClick,
+    handleAddContactClick,
+    closeAllPopups,
+  } = usePopUpManager(pathname, setIsAnyPopupVisible);
+
+  const [isAddingChat, setIsAddingChat] = useState(false);
+
+  const isChatList = pathname === "/";
+  const isContactList = pathname === "/ContactsOverview";
+  const isChildOverview = pathname === "/ChildOverview";
 
   const handleAddChatClick = () => {
     if (isChatList) {
       setIsAddingChat(true);
-    } else if (isContactList && onAddClick) {
-      onAddClick();
+    } else if (isContactList) {
+      handleAddContactClick(); 
     }
   };
 
@@ -52,51 +58,7 @@ const SideOverview = ({
     setIsAddingChat(false);
   };
 
-  const handleChildClick = (child, requests) => {
-    const childApprovalRequests = requests.filter(
-      (req) => req.get("Type") === "ChildApproval"
-    );
-    const contactApprovalRequests = requests.filter(
-      (req) => req.get("Type") === "ContactApproval"
-    );
-
-    if (childApprovalRequests.length > 0) {
-      const firstRequest = childApprovalRequests[0];
-      const childData = firstRequest.get("child");
-      setchildApprovalDetails(childData);
-      setchildApprovalRequests(childApprovalRequests);
-      setisChildApprovalPopupVisible(true);
-    } else if (contactApprovalRequests.length > 0) {
-      const firstRequest = contactApprovalRequests[0];
-      const requestContact = firstRequest.get("requestContact");
-
-      if (requestContact) {
-        const contactUserProfile = requestContact.get("ContactUserProfile");
-        setcontactRequestDetails({
-          name: contactUserProfile?.get("username") || "Unknown",
-          email: contactUserProfile?.get("email") || "Unknown",
-          about: requestContact.get("about") || "Unknown",
-        });
-        setcontactRequestData(contactApprovalRequests);
-        setisContactRequestPopupVisible(true);
-      }
-    }
-  };
-
-  const handleModalClose = () => {
-    setisContactRequestPopupVisible(false);
-    setcontactRequestData([]);
-    setcontactRequestDetails(null);
-  };
-
-  const handlePopUpClose = () => {
-    setisChildApprovalPopupVisible(false);
-    setchildApprovalRequests([]);
-    setchildApprovalDetails(null);
-  };
-
-  //handles contact click when a new chat is added
-  const handleContactClick = async (contact) => {
+  const handleNewChatContactClick = async (contact) => {
     try {
       const currentUser = Parse.User.current();
       if (!currentUser) throw new Error("User not logged in");
@@ -113,7 +75,7 @@ const SideOverview = ({
 
       if (!receiverProfile) throw new Error("Receiver profile not found");
 
-      // Check or create a new chat
+      // check or create a new chat
       const chatQuery = new Parse.Query("Chat");
       chatQuery.containsAll("Participants", [senderProfile, receiverProfile]);
       let chat = await chatQuery.first();
@@ -125,14 +87,13 @@ const SideOverview = ({
         await chat.save();
       }
 
-      // Update selectedChat and currentReceiverId
+      // update selectedChat and currentReceiverId
       const newChat = {
         id: chat.id,
         chat,
         username: contact.username,
       };
       setSelectedChat(newChat);
-
       setCurrentReceiverId(receiverProfile.id);
 
       setIsAddingChat(false);
@@ -141,47 +102,31 @@ const SideOverview = ({
     }
   };
 
-  useEffect(() => {
-    if (setIsAnyPopupVisible) {
-      setIsAnyPopupVisible(isAnyPopupVisible);
-    }
-  }, [isAnyPopupVisible, setIsAnyPopupVisible]);
-
   return (
     <OverviewContainer>
       <SideOverviewHeader
         title={isAddingChat ? "New Chat" : title}
         onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
-        isAddingChat={isAddingChat}
       />
       {!isAddingChat && isChatList && <ChatList />}
-      {isAddingChat && (
-        <ContactList
-          onContactClick={(contact) => handleContactClick(contact)}
-        />
-      )}
+      {isAddingChat && <ContactList onContactClick={handleNewChatContactClick} />}
       {isContactList && (
-        <ContactList
-          onContactClick={onContactClick}
-          selectedContact={selectedContact}
-        />
+        <ContactList onContactClick={handleContactClick} selectedContact={selectedContact} />
       )}
       {isChildOverview && (
         <ChildrenList
-        onChildClick={(child, childRequests) => handleChildClick(child, childRequests)}
-        selectedContact={selectedContact}
-/>
+          onChildClick={(child, requests) => handleChildClick(child, requests)}
+          selectedContact={selectedContact}
+        />
       )}
-
-      <PopUpAddNewContact
-        onClick={handleOpenPopup}
-        isVisible={isPopupVisible}
-        onClose={handleClosePopup}
-      />
+      {isAddNewContactPopupVisible && (
+        <PopUpAddNewContact isVisible={isAddNewContactPopupVisible} 
+        onClose={closeAllPopups} />
+      )}
       {isContactRequestPopupVisible && (
         <PopUpContactRequest
           isVisible={isContactRequestPopupVisible}
-          onClose={handleModalClose}
+          onClose={closeAllPopups}
           childRequests={contactRequestData}
           name={contactRequestDetails?.name}
           about={contactRequestDetails?.about}
@@ -189,19 +134,26 @@ const SideOverview = ({
         />
       )}
       {isChildApprovalPopupVisible && (
-        <PopUpChildOverview
+        <PopUpChildRequest
           isVisible={isChildApprovalPopupVisible}
-          onClose={handlePopUpClose}
+          onClose={closeAllPopups}
           contact={{
             child: childApprovalDetails,
             requests: childApprovalRequests,
           }}
         />
       )}
-
+      {isSelectContactPopupVisible && (
+        <SelectContact
+          isVisible={isSelectContactPopupVisible}
+          onClose={closeAllPopups}
+          contact={selectedContact}
+        />
+      )}
     </OverviewContainer>
   );
 };
+
 export default SideOverview;
 
 const OverviewContainer = styled.div`

@@ -7,7 +7,7 @@ import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
 import { useToast } from "../../contexts/ToastContext";
 
-const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
+const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
   const { displayToast } = useToast();
 
   if (!isVisible || !contact) return null;
@@ -63,7 +63,7 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
   );
 };
 
-export default PopUpChildOverview;
+export default PopUpChildRequest;
 
 const PopUpContainer = styled.div`
   position: absolute;

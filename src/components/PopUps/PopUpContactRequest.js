@@ -46,11 +46,12 @@ const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, e
         </ProfilePicContainer>
         <FormContainer>
           <Label>Name</Label>
-          <SmallTextField value={name} readOnly />
+          <SmallTextField value={name}/>
           <Label>About</Label>
-          <SmallTextField value={about} readOnly />
+          <SmallTextField value={about} />
           <Label>Email</Label>
-          <SmallTextField value={email} readOnly />
+          <SmallTextField value={email} />
+          {childRequests?.length > 0 && <Label>Requests: {childRequests.length}</Label>}
           <ButtonContainer>
             <Button title="Approve" onClick={() => updateChildRequestStatus("Approved")} />
             <Button title="Decline" color="red" onClick={() => updateChildRequestStatus("Declined")} />
@@ -115,13 +116,13 @@ export const Label = styled.label`
   font-size: 10px;
   color: ${colors.grey};
   margin-bottom: 0px;
-  margin-top: 5px;
+  margin-top: 2px;
   align-items: left;
   font-family: "Barlow", serif;
 `;
 
 export const ButtonContainer = styled.div`
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
 `;
