@@ -6,10 +6,12 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
 import { useToast } from "../../contexts/ToastContext";
+import { useListReload } from "../../contexts/ListReloadContext";
 import Parse from "parse/dist/parse.min.js";
 
 const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
   const { displayToast } = useToast();
+  const { triggerChildrenListReload } = useListReload();
 
   if (!isVisible || !contact) return null;
 
@@ -97,7 +99,8 @@ const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
 
       displayToast("success", `Request has been ${status}.`);
       onClose();
-      window.location.reload();
+      triggerChildrenListReload();
+      
     } catch (error) {
       console.error("Error updating the request:", error);
       displayToast("error", "An error occurred. Please try again.");

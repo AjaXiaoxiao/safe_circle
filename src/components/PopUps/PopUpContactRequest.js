@@ -5,9 +5,14 @@ import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
+import { useListReload } from "../../contexts/ListReloadContext";
+
 
 const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, email }) => {
+  const { triggerChildrenListReload } = useListReload();
+
   if (!isVisible) return null;
+
 
   const updateChildRequestStatus = async (status) => {
     try {
@@ -27,8 +32,8 @@ const PopUpContactRequest = ({ isVisible, onClose, childRequests, about, name, e
         }
       }
       onClose();
-      window.location.reload();
-    } catch (error) {
+      triggerChildrenListReload();
+        } catch (error) {
       console.error("Error updating child request status:", error);
     }
   };

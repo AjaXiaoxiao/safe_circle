@@ -10,7 +10,7 @@ import RequireLogin from "./components/RequireLogin";
 import { ChatProvider } from "./contexts/ChatContext";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./contexts/ToastContext";
-import { ContactProvider } from "./contexts/ContactContext";
+import { ListReloadProvider } from "./contexts/ListReloadContext";
 import "react-toastify/dist/ReactToastify.css";
 
 // Parse initialization configuration
@@ -24,7 +24,7 @@ function App() {
   return (
     <ToastProvider>
       <ChatProvider>
-        <ContactProvider>
+        <ListReloadProvider>
           <Router>
             <ToastContainer />
             <Routes>
@@ -60,7 +60,7 @@ function App() {
               />
             </Routes>
           </Router>
-        </ContactProvider>
+        </ListReloadProvider>
       </ChatProvider>
     </ToastProvider>
   );

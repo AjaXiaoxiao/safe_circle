@@ -5,12 +5,12 @@ import XButton from "../Buttons/XButton";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 import Button from "../Buttons/Button";
 import colors from "../../assets/colors";
-import { useContact } from "../../contexts/ContactContext";
+import { useListReload } from "../../contexts/ListReloadContext";
 
 import SmallTextField from "../TextFields/SmallTextField";
 
 const PopUpAddNewContact = ({ isVisible, onClose }) => {
-  const { reloadContactList, setReloadContactList } = useContact();
+  const { triggerContactListReload } = useListReload();
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
@@ -124,7 +124,7 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
 
       setFormData({ username: "", about: "", email: "" });
 
-      setReloadContactList(reloadContactList + 1);
+      triggerContactListReload();
       onClose();
     } catch (error) {
       console.error("Error saving contact:", error);
