@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 
 export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
   // state for all popups
-  const [isAddingChat, setIsAddingChat] = useState(false);
   const [isAddNewContactPopupVisible, setIsAddNewContactPopupVisible] =
-  useState(false);  const [isContactRequestPopupVisible, setIsContactRequestPopupVisible] = 
+  useState(false);  
+  const [isContactRequestPopupVisible, setIsContactRequestPopupVisible] = 
     useState(false);
   const [isChildApprovalPopupVisible, setIsChildApprovalPopupVisible] =
     useState(false);
@@ -36,9 +36,6 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
     }
   };
 
-  const handleBackClick = () => {
-    setIsAddingChat(false);
-  };
 
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
@@ -92,7 +89,6 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
 
   return {
     // popup states
-    isAddingChat,
     isAddNewContactPopupVisible,
     isContactRequestPopupVisible,
     isChildApprovalPopupVisible,
@@ -108,7 +104,6 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
 
     // pop up handlers
     handleAddContactClick,
-    handleBackClick,
     handleContactClick,
     handleChildClick,
     closeAllPopups,

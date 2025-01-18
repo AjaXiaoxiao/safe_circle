@@ -53,12 +53,7 @@ const ContactList = ({ onContactClick, selectedContact }) => {
           })
         );
 
-        const uniqueContacts = fetchedContacts.filter(
-          (contact, index, self) =>
-            index === self.findIndex((c) => c.username === contact.username)
-        );
-
-        setContacts(uniqueContacts);
+        setContacts(fetchedContacts);
       } else {
         setContacts([]);
       }

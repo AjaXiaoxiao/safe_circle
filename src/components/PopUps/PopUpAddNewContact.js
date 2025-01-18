@@ -78,7 +78,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       }
 
       const savedContact = await newContact.save();
-      console.log("Contact saved successfully!");
 
       if (!contactList) {
         const newContactList = new Parse.Object("ContactList");
@@ -94,7 +93,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
       if (isChild) {
         const guardianEmail = currentUser.get("guardianEmail");
         if (!guardianEmail) {
-          console.error("Guardian email not found.");
           setError("Guardian email not found.");
           return;
         }
@@ -105,7 +103,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
           .first();
 
         if (!guardian) {
-          console.error("Guardian not found.");
           setError("Guardian not found. Ask your parent to sign up!");
           return;
         }
@@ -119,7 +116,6 @@ const PopUpAddNewContact = ({ isVisible, onClose }) => {
         newRequest.set("requestContact", newContact);
 
         await newRequest.save();
-        console.log("Contact and request saved successfully!");
       }
 
       setFormData({ username: "", about: "", email: "" });

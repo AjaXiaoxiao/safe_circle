@@ -9,8 +9,7 @@ import ChildrenList from "./ChildrenList";
 import PopUpAddNewContact from "./PopUps/PopUpAddNewContact";
 import PopUpContactRequest from "../components/PopUps/PopUpContactRequest";
 import PopUpChildRequest from "./PopUps/PopUpChildRequest";
-import SelectContact from "./PopUps/SelectContact";
-
+import PopUpSelectContact from "./PopUps/PopUpSelectContact";
 import { usePopUpManager } from "./Hooks/usePopUpManager";
 import { useChat } from "../contexts/ChatContext";
 import Parse from "parse/dist/parse.min.js";
@@ -144,7 +143,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
         />
       )}
       {isSelectContactPopupVisible && (
-        <SelectContact
+        <PopUpSelectContact
           isVisible={isSelectContactPopupVisible}
           onClose={closeAllPopups}
           contact={selectedContact}

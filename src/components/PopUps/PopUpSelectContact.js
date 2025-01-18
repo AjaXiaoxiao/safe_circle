@@ -3,7 +3,7 @@ import XButton from "../Buttons/XButton";
 import colors from "../../assets/colors";
 import ProfilePictureBig from "../ProfilePictures/ProfilePictureBig";
 
-const SelectContact = ({ isVisible, onClose, contact }) => {
+const PopUpSelectContact = ({ isVisible, onClose, contact }) => {
   if (!isVisible) return null;
 
   return (
@@ -23,7 +23,7 @@ const SelectContact = ({ isVisible, onClose, contact }) => {
   );
 };
 
-export default SelectContact;
+export default PopUpSelectContact;
 
 const PopUpContainer = styled.div`
   position: absolute;
