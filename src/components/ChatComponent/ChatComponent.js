@@ -40,7 +40,7 @@ const ChatComponent = () => {
           return {
             id: message.id,
             text: message.get("Text"),
-            isSender: sender.id === loggedInUserProfile.id, // Check if the logged-in user sent this message
+            isSender: sender.id === loggedInUserProfile.id, // check if the logged-in user sent this message
           };
         })
       );
@@ -108,7 +108,6 @@ const ChatComponent = () => {
 
 export default ChatComponent;
 
-// Styled Components
 const ChatContainer = styled.div`
   width: 63vw;
   height: 88vh;

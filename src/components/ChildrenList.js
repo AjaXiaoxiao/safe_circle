@@ -5,13 +5,10 @@ import ChildItem from "./ChildItem";
 import colors from "../assets/colors";
 import { useListReload } from "../contexts/ListReloadContext";
 
-
 const ChildrenList = ({ onChildClick, selectedContact }) => {
   const [children, setChildren] = useState([]);
   const [requestsByChild, setRequestsByChild] = useState({});
-  const [error, setError] = useState(null);
   const { reloadChildrenList } = useListReload();
-
 
   const fetchChildrenAndRequests = async () => {
     try {
@@ -60,7 +57,6 @@ const ChildrenList = ({ onChildClick, selectedContact }) => {
       setRequestsByChild(allRequests);
     } catch (error) {
       console.error("Error fetching children or requests:", error);
-      setError("Failed to fetch data.");
     }
   };
 

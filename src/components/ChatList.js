@@ -4,6 +4,7 @@ import Parse from "parse/dist/parse.min.js";
 import colors from "../assets/colors";
 import ChatItem from "./ChatItem";
 import { useChat } from "../contexts/ChatContext";
+import { useListReload } from "../contexts/ListReloadContext";
 import { useToast } from "../contexts/ToastContext";
 
 const ChatList = () => {
@@ -12,10 +13,11 @@ const ChatList = () => {
     selectedChat,
     setSelectedChat,
     setCurrentReceiverId,
-    chatUpdateTrigger,
     handleChatClick,
   } = useChat();
   const { displayToast } = useToast();
+  const { triggerChatListReload } = useListReload();
+
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -97,7 +99,7 @@ const ChatList = () => {
           })
         );
 
-        // Sorting chats, latestTimestamp
+        // sorting chats, latestTimestamp
         const sortedChats = chatDetails.sort(
           (a, b) => b.latestTimestamp - a.latestTimestamp
         );
@@ -112,7 +114,7 @@ const ChatList = () => {
     };
 
     fetchChats();
-  }, [setSelectedChat, chatUpdateTrigger]);
+  }, [setSelectedChat, triggerChatListReload]);
 
   return (
     <ChatListContainer>

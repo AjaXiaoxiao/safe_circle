@@ -5,6 +5,7 @@ const ListReloadContext = createContext();
 export const ListReloadProvider = ({ children }) => {
   const [reloadContactList, setReloadContactList] = useState(0);
   const [reloadChildrenList, setReloadChildrenList] = useState(0);
+  const [reloadChatList, setReloadChatList] = useState(0);
 
   const triggerContactListReload = () => {
     setReloadContactList((prev) => prev + 1);
@@ -14,6 +15,10 @@ export const ListReloadProvider = ({ children }) => {
     setReloadChildrenList((prev) => prev + 1);
   };
 
+  const triggerChatListReload = () => {
+    setReloadChatList((prev) => prev + 1);
+  };
+
   return (
     <ListReloadContext.Provider
       value={{
@@ -21,6 +26,8 @@ export const ListReloadProvider = ({ children }) => {
         triggerContactListReload,
         reloadChildrenList,
         triggerChildrenListReload,
+        reloadChatList, 
+        triggerChatListReload, 
       }}
     >
       {children}

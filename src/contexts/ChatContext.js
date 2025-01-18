@@ -8,7 +8,6 @@ export const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState(null);
   const [chatUsername, setChatUsername] = useState("");
-  const [chatUpdateTrigger, setChatUpdateTrigger] = useState(0);
 
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
@@ -39,8 +38,6 @@ export const ChatProvider = ({ children }) => {
         setMessages,
         chatUsername,
         setChatUsername,
-        chatUpdateTrigger,
-        setChatUpdateTrigger,
         handleChatClick,
         resetChat,
       }}
