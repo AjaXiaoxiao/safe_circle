@@ -13,7 +13,7 @@ const PopUpSignedIn = ({
   const message = isChild
     ? isVerified
       ? `You are now ready to use SafeCircle!`
-      : `Now you just have to wait for your guardian to approve your profile. We will let you know when you can start using SafeCircle.`
+      : `Welcome to SafeCircle! Your guardian needs to approve your profile before you can login.`
     : `You are now ready to use SafeCircle!`;
 
   return (
