@@ -6,6 +6,7 @@ import Button from "../Buttons/Button";
 import SmallTextField from "../TextFields/SmallTextField";
 import colors from "../../assets/colors";
 import { useToast } from "../../contexts/ToastContext";
+import Parse from "parse/dist/parse.min.js";
 
 const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
   const { displayToast } = useToast();
@@ -13,6 +14,8 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
   if (!isVisible || !contact) return null;
 
   const { child, requests } = contact;
+  console.log("child", child)
+ 
 
   const updateRequestStatus = async (status) => {
     try {
@@ -29,6 +32,68 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
 
       await request.save();
       if (child) await child.save();
+
+      // getting the parent profile
+      const currentUser = Parse.User.current();
+      console.log("currentUser", currentUser);
+      const userProfileQuery = new Parse.Query("UserProfile");
+      userProfileQuery.equalTo("userPointer", currentUser);
+      const owner = await userProfileQuery.first();
+
+      // get contact list for this parent
+      const contactListQuery = new Parse.Query("ContactList");
+      contactListQuery.equalTo("owner", owner);
+      const contactList = await contactListQuery.first();
+
+      // creating a contact for the child
+      const Contact = Parse.Object.extend("Contact");
+      const newContact = new Contact();
+      newContact.set("ContactUserProfile", child);
+      newContact.set("owner", owner);
+      const savedContact = await newContact.save();
+
+      // add the contact to the parent's contact List
+      if (!contactList) {
+        const newContactList = new Parse.Object("ContactList");
+        newContactList.set("Contacts", [savedContact]);
+        newContactList.set("owner", owner);
+        await newContactList.save();
+      } else {
+        contactList.addUnique("Contacts", savedContact);
+        await contactList.save();
+      }
+
+      // // getting the child profile  
+      const childProfile = await child.fetch();
+      console.log("childProfile", child);
+
+      const userProfileQueryChild = new Parse.Query("UserProfile");
+      userProfileQueryChild.equalTo("userPointer", childProfile);
+      const childOwner = await userProfileQueryChild.first();
+      console.log("childOwner", childOwner);
+
+      // get contact list for this child
+      const contactListQueryChild = new Parse.Query("ContactList");
+      contactListQueryChild.equalTo("owner", childOwner);
+      const contactListChild = await contactListQueryChild.first();
+
+      // creating a contact of the parent for the child
+      const ContactChild = Parse.Object.extend("Contact");
+      const newContactChild = new ContactChild();
+      newContactChild.set("ContactUserProfile", owner);
+      newContactChild.set("owner", childOwner);
+      const savedContactChild = await newContactChild.save();
+
+      // add the contact to the child's contact List
+      if (!contactListChild) {
+        const newContactListChild = new Parse.Object("ContactList");
+        newContactListChild.set("Contacts", [savedContactChild]);
+        newContactListChild.set("owner", childOwner);
+        await newContactListChild.save();
+      } else {
+        contactListChild.addUnique("Contacts", savedContactChild);
+        await contactListChild.save();
+      }
 
       displayToast("success", `Request has been ${status}.`);
       onClose();
@@ -55,8 +120,15 @@ const PopUpChildOverview = ({ isVisible, onClose, contact }) => {
         <SmallTextField value={child?.get("email") || "No email"} disabled />
         {requests?.length > 0 && <Label>Requests: {requests.length}</Label>}
         <ButtonContainer>
-          <Button title="Approve" onClick={() => updateRequestStatus("Approved")} />
-          <Button title="Decline" color="red" onClick={() => updateRequestStatus("Declined")} />
+          <Button
+            title="Approve"
+            onClick={() => updateRequestStatus("Approved")}
+          />
+          <Button
+            title="Decline"
+            color="red"
+            onClick={() => updateRequestStatus("Declined")}
+          />
         </ButtonContainer>
       </FormContainer>
     </PopUpContainer>
