@@ -8,6 +8,8 @@ export default function SideOverviewHeader({
   onAddClick,
   isAddingChat,
 }) {
+  //onAddClick is a little bit stupid here, but it is either the back arrow function or the createNewChat function.
+  //So clicking the plus icon or the back arrow will result in going back to the chat overview
   return (
     <HeaderContainer>
       {isAddingChat && <StyledBackArrow onClick={onAddClick} src={BackArrow} />}

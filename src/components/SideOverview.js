@@ -45,6 +45,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
   const isContactList = pathname === "/ContactsOverview";
   const isChildOverview = pathname === "/ChildOverview";
 
+  //This one
   const handleAddChatClick = () => {
     if (isChatList) {
       setIsAddingChat(true);
@@ -57,17 +58,21 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
     setIsAddingChat(false);
   };
 
+  //Contact is the contact selected for the chat
   const handleNewChatContactClick = async (contact) => {
     try {
+      //Finds the logged in user
       const currentUser = Parse.User.current();
       if (!currentUser) throw new Error("User not logged in");
 
+      //Finds the logged in user in UserProfile
       const senderQuery = new Parse.Query("UserProfile");
       senderQuery.equalTo("userPointer", currentUser);
       const senderProfile = await senderQuery.first();
 
       if (!senderProfile) throw new Error("Sender profile not found");
 
+      //Finds the contact username
       const receiverQuery = new Parse.Query("UserProfile");
       receiverQuery.equalTo("username", contact.username);
       const receiverProfile = await receiverQuery.first();
@@ -79,6 +84,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
       chatQuery.containsAll("Participants", [senderProfile, receiverProfile]);
       let chat = await chatQuery.first();
 
+      //If there is no chat between the sender and receiver
       if (!chat) {
         chat = new Parse.Object("Chat");
         chat.set("Participants", [senderProfile, receiverProfile]);
@@ -87,6 +93,8 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
       }
 
       // update selectedChat and currentReceiverId
+      //I think this is a way to encapsulate username for instance so that it is displayed
+      //in each chat item for instance.
       const newChat = {
         id: chat.id,
         chat,
@@ -96,6 +104,8 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
       setCurrentReceiverId(receiverProfile.id);
 
       setIsAddingChat(false);
+      //the error is in this case handled by being displayed in the console like an error
+      //"Error creating or navigating to chat: Error: Sender profile not found" for instance"
     } catch (error) {
       console.error("Error creating or navigating to chat:", error);
     }
