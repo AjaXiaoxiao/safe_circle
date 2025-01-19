@@ -15,10 +15,11 @@ const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
 
   if (!isVisible || !contact) return null;
 
-  const { child, requests } = contact; 
+  const { child, requests } = contact;
 
   const updateRequestStatus = async (status) => {
     try {
+      //if the first item is undefined it just defines it as undefined instead of throwing an error
       const request = requests?.[0];
       if (!request) {
         throw new Error("No request available to update.");
@@ -75,7 +76,7 @@ const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
       const newContactChild = new ContactChild();
       newContactChild.set("ContactUserProfile", parent);
       newContactChild.set("owner", child);
-      newContactChild.set("isRequest", false)
+      newContactChild.set("isRequest", false);
       newContactChild.set("about", "guardian");
       const savedContactChild = await newContactChild.save();
 
@@ -94,7 +95,6 @@ const PopUpChildRequest = ({ isVisible, onClose, contact }) => {
       displayToast("success", `Request has been ${status}.`);
       onClose();
       triggerChildrenListReload();
-      
     } catch (error) {
       console.error("Error updating the request:", error);
       displayToast("error", "An error occurred. Please try again.");

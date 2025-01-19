@@ -155,7 +155,9 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
           isVisible={isChildApprovalPopupVisible}
           onClose={closeAllPopups}
           contact={{
+            //the details of the first child that wants to create an account
             child: childApprovalDetails,
+            //I think childApprovalRequests is all the requests the child wants to make
             requests: childApprovalRequests,
           }}
         />
