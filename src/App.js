@@ -20,6 +20,7 @@ const PARSE_JAVASCRIPT_KEY = process.env.REACT_APP_PARSE_JAVASCRIPT_KEY;
 Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 
+//Below ChatOverview is passed as a prop to to RequireLogin, and is the child of RequireLogin
 function App() {
   return (
     <ToastProvider>

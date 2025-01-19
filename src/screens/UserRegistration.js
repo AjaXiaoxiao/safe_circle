@@ -15,6 +15,8 @@ import { useToast } from "../contexts/ToastContext";
 const UserRegistration = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  //checks what state we passed from before. where the registrationType is either child or parent
+  //We fall back on parent to prevent errors.
   const registrationType = location.state?.registrationType || "parent";
   const { displayToast } = useToast();
 
@@ -66,7 +68,7 @@ const UserRegistration = () => {
           return;
         }
       }
-
+      //creates a new user object
       const user = new Parse.User();
       user.set("username", username);
       user.set("password", password);
@@ -91,10 +93,12 @@ const UserRegistration = () => {
       }
 
       // signUp method returns a Promise.. await
+      //sends the user data to the parse server and creates a new user account
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
       await userProfile.save();
 
+      //Also create a request
       if (registrationType === "child") {
         const request = new Parse.Object("Requests");
         request.set("Type", "ChildApproval");
@@ -102,7 +106,7 @@ const UserRegistration = () => {
         request.set("child", userProfile);
         request.set("Parent", guardian);
         await request.save();
-
+        //the user name will be passed to the next state.
         navigate("/childregistrationawait", {
           state: {
             username: createdUser.getUsername(),
