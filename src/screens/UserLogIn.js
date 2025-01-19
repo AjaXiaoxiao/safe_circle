@@ -9,17 +9,18 @@ import Lock from "../assets/Lock.png";
 import { useNavigate } from "react-router-dom";
 import PopUpRegistration from "../components/PopUps/PopUpRegistration";
 import colors from "../assets/colors";
+import { usePopUpManager } from "../components/Hooks/usePopUpManager";
 
 export const UserLogin = () => {
+  const {
+    isRegistrationPopupVisible,
+    handleRegistrationClick, 
+  } = usePopUpManager();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [isPopupVisible, setPopupVisible] = useState(false);
-
-  const togglePopup = () => {
-    setPopupVisible(!isPopupVisible);
-  };
 
   const doUserLogIn = async function () {
     const usernameValue = username;
@@ -91,10 +92,10 @@ export const UserLogin = () => {
           fullWidth
           title="Sign up"
           textColor="black"
-          onClick={togglePopup}
+          onClick={handleRegistrationClick}
         />
       </FormContainer>
-      <PopUpRegistration isVisible={isPopupVisible} onClose={togglePopup} />
+      <PopUpRegistration isVisible={isRegistrationPopupVisible} onClose={handleRegistrationClick} />
     </LogInContainer>
   );
 };

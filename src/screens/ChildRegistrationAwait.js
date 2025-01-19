@@ -3,34 +3,36 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PopUpSignedIn from "../components/PopUps/PopUpSignedIn";
 import Topbar from "../components/Topbar";
 import { useToast } from "../contexts/ToastContext";
+import { usePopUpManager } from "../components/Hooks/usePopUpManager";
 
 const ChildRegistrationAwait = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isPopupVisible, setPopupVisible] = useState(true);
   const [username, setUsername] = useState("");
   const { displayToast } = useToast();
+  const { isChildAwaitPopupVisible, handleChildAwaitClick } = usePopUpManager();
 
   useEffect(() => {
     if (location.state?.username) {
       setUsername(location.state.username);
       displayToast("success", "Approval request sent to guardian!");
+      handleChildAwaitClick();
     } else {
       navigate("/userlogin");
     }
-  }, [location.state, navigate]);
+  }, [location.state, navigate, handleChildAwaitClick]);
 
   const closePopup = () => {
-    setPopupVisible(false);
+    handleChildAwaitClick();
     navigate("/userlogin");
   };
 
   return (
     <div>
       <Topbar />
-      {isPopupVisible && (
+      {isChildAwaitPopupVisible && (
         <PopUpSignedIn
-          isVisible={isPopupVisible}
+          isVisible={isChildAwaitPopupVisible}
           onClose={closePopup}
           username={username}
           isChild={true}

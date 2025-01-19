@@ -10,6 +10,8 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
     useState(false);
   const [isSelectContactPopupVisible, setIsSelectContactPopupVisible] =
     useState(false);
+  const [isRegistrationPopupVisible, setIsRegistrationPopupVisible] = useState(false); 
+  const [isChildAwaitPopupVisible, setIsChildAwaitPopupVisible] = useState(false); 
   const [selectedContact, setSelectedContact] = useState(null);
   const [contactRequestData, setContactRequestData] = useState([]);
   const [contactRequestDetails, setContactRequestDetails] = useState(null);
@@ -20,7 +22,9 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
   isAddNewContactPopupVisible ||
     isContactRequestPopupVisible ||
     isChildApprovalPopupVisible ||
-    isSelectContactPopupVisible ;
+    isSelectContactPopupVisible ||
+    isRegistrationPopupVisible ||
+    isChildAwaitPopupVisible;
 
   // side effect to update setIsAnyPopupVisible
   useEffect(() => {
@@ -30,12 +34,19 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
   }, [isAnyPopupVisible, setIsAnyPopupVisible]);
 
   // handlers for popups
+  const handleChildAwaitClick = () => {
+    setIsChildAwaitPopupVisible(true);
+  };  
+
+  const handleRegistrationClick = () => {
+    setIsRegistrationPopupVisible(true); 
+  };
+
   const handleAddContactClick = () => {
     if (pathname === "/ContactsOverview") {
       setIsAddNewContactPopupVisible(true); 
     }
   };
-
 
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
@@ -80,6 +91,8 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
     setIsContactRequestPopupVisible(false);
     setIsChildApprovalPopupVisible(false);
     setIsSelectContactPopupVisible(false);
+    setIsRegistrationPopupVisible(false);
+    setIsChildAwaitPopupVisible(false); 
     setSelectedContact(null);
     setContactRequestData([]);
     setContactRequestDetails(null);
@@ -93,6 +106,8 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
     isContactRequestPopupVisible,
     isChildApprovalPopupVisible,
     isSelectContactPopupVisible,
+    isRegistrationPopupVisible,
+    isChildAwaitPopupVisible,
     selectedContact,
     contactRequestData,
     contactRequestDetails,
@@ -104,6 +119,8 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
 
     // pop up handlers
     handleAddContactClick,
+    handleRegistrationClick,
+    handleChildAwaitClick,
     handleContactClick,
     handleChildClick,
     closeAllPopups,
