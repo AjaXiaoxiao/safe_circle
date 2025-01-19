@@ -24,9 +24,7 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
   const [selectedContact, setSelectedContact] = useState(null);
   //
   const [contactRequestData, setContactRequestData] = useState([]);
-  //
   const [contactRequestDetails, setContactRequestDetails] = useState(null);
-  //
   const [childApprovalRequests, setChildApprovalRequests] = useState([]);
   const [childApprovalDetails, setChildApprovalDetails] = useState(null);
 

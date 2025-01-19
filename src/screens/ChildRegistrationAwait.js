@@ -21,6 +21,7 @@ const ChildRegistrationAwait = () => {
       navigate("/userlogin");
     }
   }, [location.state, navigate, handleChildAwaitClick]);
+  //pretty sure we only need location.state here
 
   const closePopup = () => {
     handleChildAwaitClick();

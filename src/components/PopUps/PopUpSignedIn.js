@@ -10,6 +10,7 @@ const PopUpSignedIn = ({
 }) => {
   if (!isVisible) return null;
 
+  //It will only show for kids since this container only is renedered thorough the child registration await
   const message = isChild
     ? isVerified
       ? `You are now ready to use SafeCircle!`
