@@ -18,7 +18,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
   const location = useLocation();
   const pathname = location.pathname;
 
-  const { setSelectedChat, setCurrentReceiverId } = useChat(); 
+  const { setSelectedChat, setCurrentReceiverId } = useChat();
 
   const {
     // popup states
@@ -49,7 +49,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
     if (isChatList) {
       setIsAddingChat(true);
     } else if (isContactList) {
-      handleAddContactClick(); 
+      handleAddContactClick();
     }
   };
 
@@ -106,11 +106,17 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
       <SideOverviewHeader
         title={isAddingChat ? "New Chat" : title}
         onAddClick={isAddingChat ? handleBackClick : handleAddChatClick}
+        isAddingChat={isAddingChat}
       />
       {!isAddingChat && isChatList && <ChatList />}
-      {isAddingChat && <ContactList onContactClick={handleNewChatContactClick} />}
+      {isAddingChat && (
+        <ContactList onContactClick={handleNewChatContactClick} />
+      )}
       {isContactList && (
-        <ContactList onContactClick={handleContactClick} selectedContact={selectedContact} />
+        <ContactList
+          onContactClick={handleContactClick}
+          selectedContact={selectedContact}
+        />
       )}
       {isChildOverview && (
         <ChildrenList
@@ -119,8 +125,10 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
         />
       )}
       {isAddNewContactPopupVisible && (
-        <PopUpAddNewContact isVisible={isAddNewContactPopupVisible} 
-        onClose={closeAllPopups} />
+        <PopUpAddNewContact
+          isVisible={isAddNewContactPopupVisible}
+          onClose={closeAllPopups}
+        />
       )}
       {isContactRequestPopupVisible && (
         <PopUpContactRequest
