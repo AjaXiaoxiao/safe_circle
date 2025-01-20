@@ -9,12 +9,14 @@ import { useToast } from "../contexts/ToastContext";
 
 const ChatList = () => {
   const [chats, setChats] = useState([]);
+
   const {
     selectedChat,
     setSelectedChat,
     setCurrentReceiverId,
     handleChatClick,
   } = useChat();
+
   const { displayToast } = useToast();
   const { triggerChatListReload } = useListReload();
 
@@ -39,7 +41,7 @@ const ChatList = () => {
 
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser]);
-        const fetchedChats = await chatQuery.find();
+        const fetchedChats = await chatQuery.find(); //fetch matching chats
 
         //stores the receiver profiles in the otherParticipant variable
         const chatDetails = await Promise.all(
@@ -58,8 +60,8 @@ const ChatList = () => {
             let messages = chat.get("Messages") || [];
             const resolvedMessages = await Promise.all(
               messages.map(async (messagePointer) => {
-                const message = await messagePointer.fetch();
-                return message;
+                const message = await messagePointer.fetch(); 
+                return message; //return and include in resolved mes. array
               })
             );
 
@@ -72,7 +74,7 @@ const ChatList = () => {
                 } else {
                   return latest;
                 }
-              }, resolvedMessages[0]);
+              }, resolvedMessages[0]);//initial value
             }
 
             let latestTimestamp;
@@ -106,7 +108,7 @@ const ChatList = () => {
 
         setChats(sortedChats);
         if (fetchedChats.length > 0 && !selectedChat) {
-          setSelectedChat(chatDetails[0]);
+          setSelectedChat(chatDetails[0]); //if none selected, select first chat
         }
       } catch (error) {
         console.error("Error fetching existing chats", error);

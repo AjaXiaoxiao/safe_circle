@@ -16,7 +16,7 @@ import Parse from "parse/dist/parse.min.js";
 
 const SideOverview = ({ title, setIsAnyPopupVisible }) => {
   const location = useLocation();
-  const pathname = location.pathname;
+  const pathname = location.pathname; //extracts cur. path
 
   const { setSelectedChat, setCurrentReceiverId } = useChat(); 
 
@@ -41,6 +41,7 @@ const SideOverview = ({ title, setIsAnyPopupVisible }) => {
 
   const [isAddingChat, setIsAddingChat] = useState(false);
 
+  //what to show based to location
   const isChatList = pathname === "/";
   const isContactList = pathname === "/ContactsOverview";
   const isChildOverview = pathname === "/ChildOverview";

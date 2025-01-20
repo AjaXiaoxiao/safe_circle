@@ -15,7 +15,7 @@ import { useToast } from "../contexts/ToastContext";
 const UserRegistration = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const registrationType = location.state?.registrationType || "parent";
+  const registrationType = location.state?.registrationType || "parent"; //are user reg. as paretn or child
   const { displayToast } = useToast();
 
   const [username, setUsername] = useState("");
@@ -67,6 +67,7 @@ const UserRegistration = () => {
         }
       }
 
+      //create new user obj
       const user = new Parse.User();
       user.set("username", username);
       user.set("password", password);
@@ -90,7 +91,8 @@ const UserRegistration = () => {
         userProfile.set("isVerified", true);
       }
 
-      // signUp method returns a Promise.. await
+      
+      //signup user
       const createdUser = await user.signUp();
       userProfile.set("userPointer", createdUser);
       await userProfile.save();

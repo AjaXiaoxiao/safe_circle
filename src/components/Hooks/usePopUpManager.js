@@ -12,14 +12,16 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
     useState(false);
   const [isRegistrationPopupVisible, setIsRegistrationPopupVisible] = useState(false); 
   const [isChildAwaitPopupVisible, setIsChildAwaitPopupVisible] = useState(false); 
+
   const [selectedContact, setSelectedContact] = useState(null);
   const [contactRequestData, setContactRequestData] = useState([]);
   const [contactRequestDetails, setContactRequestDetails] = useState(null);
   const [childApprovalRequests, setChildApprovalRequests] = useState([]);
   const [childApprovalDetails, setChildApprovalDetails] = useState(null);
 
+  //derived state to check if visible
   const isAnyPopupVisible =
-  isAddNewContactPopupVisible ||
+    isAddNewContactPopupVisible ||
     isContactRequestPopupVisible ||
     isChildApprovalPopupVisible ||
     isSelectContactPopupVisible ||
@@ -65,8 +67,8 @@ export const usePopUpManager = (pathname, setIsAnyPopupVisible) => {
 
     if (childApprovalRequests.length > 0) {
       const firstRequest = childApprovalRequests[0];
-      const childData = firstRequest.get("child");
-      setChildApprovalDetails(childData);
+      const childData = firstRequest.get("child"); 
+      setChildApprovalDetails(childData); //set setails to the childs details
       setChildApprovalRequests(childApprovalRequests);
       setIsChildApprovalPopupVisible(true);
     } else if (contactApprovalRequests.length > 0) {

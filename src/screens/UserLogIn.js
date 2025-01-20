@@ -39,6 +39,7 @@ export const UserLogin = () => {
         return false;
       }
 
+      //check if user is verified
       const isVerified = userProfile.get("isVerified");
       if (isVerified) {
         setUsername("");

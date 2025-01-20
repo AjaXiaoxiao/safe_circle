@@ -61,7 +61,7 @@ const Chatbar = () => {
 
       if (senderProfile.get("isChild")) {
         const contactQuery = new Parse.Query("Contact");
-        contactQuery.equalTo("owner", senderProfile);
+        contactQuery.equalTo("owner", senderProfile); //filter contacts owned by sender
         contactQuery.equalTo("ContactUserProfile", receiverProfile);
         const contact = await contactQuery.first();
 

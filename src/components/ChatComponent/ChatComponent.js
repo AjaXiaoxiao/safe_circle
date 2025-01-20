@@ -10,14 +10,15 @@ import { useChat } from "../../contexts/ChatContext";
 const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [chatUsername, setChatUsername] = useState("No chat selected");
-  const messageListReference = useRef(null);
+  const messageListReference = useRef(null); //reference to the message list container, autoscroll
   const { selectedChat } = useChat();
 
+  //fetch messages from selected chat
   const getChat = async () => {
     if (!selectedChat || !selectedChat.id) return;
 
     try {
-      const chatQuery = new Parse.Query("Chat");
+      const chatQuery = new Parse.Query("Chat"); //fetch chat
       const chat = await chatQuery.get(selectedChat.id);
 
       const selectedMessages = chat.get("Messages");
@@ -51,6 +52,7 @@ const ChatComponent = () => {
     }
   };
 
+  //fetch chats messages.
   useEffect(() => {
     getChat();
 
@@ -61,6 +63,7 @@ const ChatComponent = () => {
     return () => clearInterval(interval);
   }, [selectedChat]);
 
+  //update disp. username
   useEffect(() => {
     if (selectedChat && selectedChat.username) {
       setChatUsername(selectedChat.username);
@@ -69,6 +72,7 @@ const ChatComponent = () => {
     }
   }, [selectedChat]);
 
+  
   useEffect(() => {
     // Scroll to bottom when messages are updated
     if (messageListReference.current) {
