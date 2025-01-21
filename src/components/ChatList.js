@@ -18,7 +18,6 @@ const ChatList = () => {
   const { displayToast } = useToast();
   const { triggerChatListReload } = useListReload();
 
-
   useEffect(() => {
     const fetchChats = async () => {
       try {
@@ -39,6 +38,7 @@ const ChatList = () => {
 
         const chatQuery = new Parse.Query("Chat");
         chatQuery.containsAll("Participants", [currentUser]);
+        //here we should have added chatQuery.include("Participants") to avoid N + 1 problem
         const fetchedChats = await chatQuery.find();
 
         //stores the receiver profiles in the otherParticipant variable
